@@ -14,7 +14,7 @@ keywords: "Hexo, NexT"
 rss:
 
 # Specify the date when the site was setup
-#since: 2015
+since: 2019
 
 # icon between year and author @Footer
 authoricon: heart
@@ -47,10 +47,10 @@ index_with_subtitle: false
 # When running the site in a subdirectory (e.g. domain.tld/blog), remove the leading slash (/archives -> archives)
 menu:
   home: /
-  #categories: /categories/
-  #about: /about/
+  categories: /categories/
+  about: /about/
   archives: /archives/
-  tags: /tags/
+  tags: /tags
   #sitemap: /sitemap.xml
   #commonweal: /404/
 
@@ -77,9 +77,9 @@ menu_icons:
 # ---------------------------------------------------------------
 
 # Schemes
-scheme: Muse
+#scheme: Muse
 #scheme: Mist
-#scheme: Pisces
+scheme: Pisces
 #scheme: Gemini
 
 
@@ -98,6 +98,10 @@ scheme: Muse
 #   Map a menu item to a specific FontAwesome icon name.
 #   Key is the name of the item and value is the name of FontAwesome icon. Key is case-senstive.
 #   When an globe mask icon presenting up means that the item has no mapping icon.
+social:
+  GitHub: https://github.com/wt-git-repository
+  E-Mail: 1139914806@qq.com
+
 social_icons:
   enable: true
   icons_only: false
@@ -126,7 +130,7 @@ social_icons:
 # Sidebar Avatar
 # in theme directory(source/images): /images/avatar.jpg
 # in site  directory(source/uploads): /uploads/avatar.jpg
-#avatar:
+avatar: /images/avator.jpeg
 
 # Table Of Contents in the Sidebar
 toc:
@@ -168,7 +172,7 @@ sidebar:
 
   # Scroll percent label in b2t button
   scrollpercent: false
-  
+
   # Enable sidebar on narrow view
   onmobile: false
 
@@ -249,7 +253,7 @@ custom_logo:
 # Available value:
 #    normal | night | night eighties | night blue | night bright
 # https://github.com/chriskempson/tomorrow-theme
-highlight_theme: normal
+highlight_theme: night
 
 
 # ---------------------------------------------------------------
@@ -320,6 +324,11 @@ han: false
 
 # Duoshuo ShortName
 #duoshuo_shortname:
+
+# Comment support
+duoshuo:
+  enable: true
+  shortname: your-duoshuo-shortname
 
 # Disqus
 disqus:
