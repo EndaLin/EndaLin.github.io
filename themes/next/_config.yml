@@ -351,7 +351,7 @@ changyan:
 
 # Support for LiveRe comments system.
 # You can get your uid from https://livere.com/insight/myCode (General web site)
-#livere_uid: your uid
+# livere_uid: Mi8xLzM=
 
 # Baidu Share
 # Available value:
@@ -360,8 +360,17 @@ changyan:
 #baidushare:
 ##  type: button
 
+gitalk:
+  enable: true
+  githubID: wt-git-repository
+  repo: wt-git-repository.github.io
+  ClientID: afbcc6e2a54ed4e2ebd7
+  ClientSecret: 6c36028e964ef689580f33ec9bd19b720f5f131f
+  adminUser: wt-git-repository
+  distractionFreeMode: false
+
 # Share
-#jiathis:
+# jiathis: true
 # Warning: JiaThis does not support https.
 #add_this_id:
 
@@ -677,7 +686,3 @@ images: images
 
 # Theme version
 version: 5.1.2
-
-# Support for LiveRe comments system.
-# You can get your uid from https://livere.com/insight/myCode (General web site)
-livere_uid: Mi8xLzM=

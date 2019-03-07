@@ -17,10 +17,8 @@ tags: docker
 <!--more-->
 
 #### The discrimination between virtual machines and docker
-- Virtual_Machines
-![Virtual_Machines](./image/Virtual_Machines.png)
-- docker
-![docker](./image/docker.png)
+![Virtual_Machines](https://upload-images.jianshu.io/upload_images/13918038-0362e4f59b7bd67f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![docker](https://upload-images.jianshu.io/upload_images/13918038-5fb043f42f9f3caa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 #### The advantage of Docker
 - 容器不需要硬件模拟或者运行操作系统等额外开外，故相比与传统的虚拟机技术，一个相同配置的主机，可以运行更多数量的容器
@@ -28,7 +26,7 @@ tags: docker
 - 容器可以提供一致的开发环境
 - 使用容器可以定制镜像来实现持续集成，交付和部署
 
-![总结对比](./image/总结对比.png)
+![总结对比](https://upload-images.jianshu.io/upload_images/13918038-cb088fcf5676ac6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 #### Docker Image
 - Docker镜像(Image)，就相当于是一个root文件系统
 - 镜像使用的是分层存储

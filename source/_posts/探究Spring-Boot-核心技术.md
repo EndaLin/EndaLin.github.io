@@ -93,10 +93,10 @@ public @interface EnableAutoConfiguration {
 ```
 - @AutoConfiguraPackage:**将主配置类(@SpringBootApplication标注的类)的所在包以及下面所有子包里面的所有组件都扫描到Spring容器中, 这一点要特别注意!!!**
 > - 举个例子
-> - ![SpringBootApplication](/image/SpringBootApplication.png)
+> - ![SpringBootApplication.png](https://upload-images.jianshu.io/upload_images/13918038-3c61034d507b49d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ## Spring Boot 目录结构
-![目录结构](/image/SpringBoot.png)
+![SpringBoot.png](https://upload-images.jianshu.io/upload_images/13918038-454f30b6a7cd178d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 - 这里主要说resources文件夹下面的结构
 > - static: 保存所以静态资源, 如js css images等等
 > - templates: 保存所以模板页面, Spring Boot默认jar包使用嵌入式tomcat, 默认不支持JSP页面, 可以使用模板引擎(freemarker, 或者Spring Boot推荐的thymeleaf)

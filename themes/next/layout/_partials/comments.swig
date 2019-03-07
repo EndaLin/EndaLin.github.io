@@ -29,5 +29,6 @@
     {% elseif theme.changyan.appid and theme.changyan.appkey %}
       <div id="SOHUCS"></div>
     {% endif %}
+    <div id="gitalk-container"></div>
   </div>
 {% endif %}
