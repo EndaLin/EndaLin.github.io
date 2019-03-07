@@ -11,6 +11,8 @@ tags: docker
 - 标签可忽略，默认为latest
 - 举个例子 **$ docker pull ubuntu:16.04**
 
+<!--more-->
+
 #### 运行容器（容器是镜像的一个实例）
 - 输入命令
 > sudo docker run -it -rm 镜像名[:标签] bash

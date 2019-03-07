@@ -2,6 +2,7 @@
 title: 探究Spring Boot 核心技术
 date: 2019-03-06 20:59:45
 tags: Spring Boot
+copyright: true
 ---
 # 探究Spring Boot
 
@@ -27,6 +28,8 @@ tags: Spring Boot
 ```
 Spring Boot的版本仲裁中心;
 以后我们导入依赖默认是不需要写版本的, (在没有dependencies里面管理的依赖自然要声明版本号)
+
+<!--more-->
 
 ##### 2.起步依赖
 - Spring-boot-starter 场景启动器

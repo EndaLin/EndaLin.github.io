@@ -16,6 +16,8 @@ tags: docker
 > 对数据卷的更新不会影响镜像
 > 数据卷会一直存在，即使容器被删除
 
+<!--more-->
+
 #### 创建一个数据卷
 - 命令
 > sudo docker volume create [volume_name]

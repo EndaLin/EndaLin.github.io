@@ -15,6 +15,9 @@ tags: docker
 - -d：后台运行，启动后会进入容器
 - --name可为容器取名，等同与容器ID
 - 输出结果可以用 docker logs 查看
+
+<!--more-->
+
 > 命令:
 > docker logs [OPTIONS] [container ID or NAMES]
 > -f：跟踪日志输出
@@ -26,7 +29,6 @@ tags: docker
 > 从地址池配置一个 ip 地址给容器
 > 执行用户指定的应用程序
 > 执行完毕后容器被终止
-
 #### 终止运行中的容器
 - 命令
 > sudo docker container stop <Container_ID>

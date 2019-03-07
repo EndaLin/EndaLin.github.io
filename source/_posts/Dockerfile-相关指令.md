@@ -9,6 +9,9 @@ tags: docker
 > 指定基础镜像
 注：scratch是空白镜像
 如：FROM mysql
+
+<!--more-->
+
 ### RUN
 > 执行命令
 > 每一个run指令都会新建一层，并在其上执行这些命令，执行接收，commit这一层的修改，便构成了新的镜像
@@ -19,7 +22,6 @@ tags: docker
   RUN buildDeps='gcc libc6-dev make' \
     && apt-get update \
     && apt-get install -y $buildDeps \
-
 ### 构建镜像
 > 在**Dockerfile**文件所在的目录执行命令
 > **docker build [选项] <上下文路径/URL/->**

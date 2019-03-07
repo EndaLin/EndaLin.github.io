@@ -14,6 +14,8 @@ tags: docker
 - Docker的应用进程是直接运行为宿主的内核上，容器内没有自己的内核，更没有硬件虚拟
 - Docker容器比传统的虚拟机更为轻便
 
+<!--more-->
+
 #### The discrimination between virtual machines and docker
 - Virtual_Machines
 ![Virtual_Machines](./image/Virtual_Machines.png)
