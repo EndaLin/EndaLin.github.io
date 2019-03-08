@@ -9,7 +9,7 @@
           repo: '{{ theme.gitalk.repo }}',
           owner: '{{ theme.gitalk.githubID }}',
           admin: ['{{ theme.gitalk.adminUser }}'],
-          id: 'md5(location.href)',
+          id: md5(location.href),
           distractionFreeMode: {{ theme.gitalk.distractionFreeMode }}
         })
         gitalk.render('gitalk-container')
