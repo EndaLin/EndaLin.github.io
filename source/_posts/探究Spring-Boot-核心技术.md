@@ -44,6 +44,7 @@ Spring Boot的版本仲裁中心;
 > - 一般需要什么功能就导入什么场景的启动器
 
 ## 主程序类,主入口类
+
 ```java
 /**
  * SpringBootApplication 来标注一个主程序类, 说明这是一个Spring Boot 应用
@@ -96,6 +97,7 @@ public @interface EnableAutoConfiguration {
 > - ![SpringBootApplication.png](https://upload-images.jianshu.io/upload_images/13918038-3c61034d507b49d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ## Spring Boot 目录结构
+
 ![SpringBoot.png](https://upload-images.jianshu.io/upload_images/13918038-454f30b6a7cd178d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 - 这里主要说resources文件夹下面的结构
 > - static: 保存所以静态资源, 如js css images等等
@@ -103,6 +105,7 @@ public @interface EnableAutoConfiguration {
 > - application.properties : Spring Boot 的配置文件, 可以修改一些默认配置
 
 ## Spring Boot配置文件
+
 #### 1.配置文件
 Spring Boot 使用一个全局的配置文件, 配置文件名是固定的
 - application.properties
