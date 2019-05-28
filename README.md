@@ -11,6 +11,11 @@
 
 ## 几条必须执行的命令
 ```
+# If you're in China, maybe you should install it from our China mirror:
+npm install cnpm -g --registry=https://r.npm.taobao.org
+
+npm install -g hexo-cli 
+
 cnpm install hexo --save
 
 cnpm install hexo-server
