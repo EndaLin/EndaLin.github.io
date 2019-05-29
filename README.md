@@ -14,7 +14,9 @@
 # If you're in China, maybe you should install it from our China mirror:
 npm install cnpm -g --registry=https://r.npm.taobao.org
 
-npm install -g hexo-cli 
+npm install
+
+cnpm install -g hexo-cli 
 
 cnpm install hexo --save
 
