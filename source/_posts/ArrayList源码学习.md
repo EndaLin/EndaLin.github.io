@@ -16,6 +16,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 - ArrayList 实现了Cloneable接口， 说明它是可克隆的
 - ArrayList 实现了Serialiable接口， 说明它是可以被序列化的
 <!--more-->
+
 ```java
 public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAccess, Cloneable, Serializable {
     private static final long serialVersionUID = 8683452581122892189L;
@@ -279,6 +280,9 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         ++this.size;
     }
 
+    /**
+    * 通过数组间的复制， 使用System.arraycopy去删除指定索引的元素
+    */
     public E remove(int var1) {
         this.rangeCheck(var1);
         ++this.modCount;
@@ -313,6 +317,10 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         return false;
     }
 
+    /*
+     * Private remove method that skips bounds checking and does not
+     * return the value removed.
+     */
     private void fastRemove(int var1) {
         ++this.modCount;
         int var2 = this.size - var1 - 1;
@@ -323,6 +331,9 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         this.elementData[--this.size] = null;
     }
 
+    /*
+    * 删除所有元素
+    */
     public void clear() {
         ++this.modCount;
 
@@ -333,6 +344,9 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         this.size = 0;
     }
 
+    /**
+     * 按指定集合的Iterator返回的顺序将指定集合中的所有元素追加到此列表的末尾。
+     */
     public boolean addAll(Collection<? extends E> var1) {
         Object[] var2 = var1.toArray();
         int var3 = var2.length;
@@ -342,6 +356,9 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         return var3 != 0;
     }
 
+    /**
+     * 将指定集合中的所有元素插入到此列表中，从指定的位置开始。
+     */
     public boolean addAll(int var1, Collection<? extends E> var2) {
         this.rangeCheckForAdd(var1);
         Object[] var3 = var2.toArray();
@@ -370,6 +387,9 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         this.size = var4;
     }
 
+    /*
+    * 检查索引是否越界
+    */
     private void rangeCheck(int var1) {
         if (var1 >= this.size) {
             throw new IndexOutOfBoundsException(this.outOfBoundsMsg(var1));
@@ -382,10 +402,16 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         }
     }
 
+    /**
+     * 返回越界的具体信息
+     */
     private String outOfBoundsMsg(int var1) {
         return "Index: " + var1 + ", Size: " + this.size;
     }
 
+    /**
+     * 删除集合内指定元素
+     */
     public boolean removeAll(Collection<?> var1) {
         Objects.requireNonNull(var1);
         return this.batchRemove(var1, false);
@@ -487,6 +513,11 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
 
     }
 
+    /**
+     * 从列表中的指定位置开始，返回列表中的元素（按正确顺序）的列表迭代器。
+     *指定的索引表示初始调用将返回的第一个元素为next 。 初始调用previous将返回指定索引减1的元素。
+     *返回的列表迭代器是fail-fast 。
+     */
     public ListIterator<E> listIterator(int var1) {
         if (var1 >= 0 && var1 <= this.size) {
             return new ArrayList.ListItr(var1);
@@ -495,10 +526,18 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
         }
     }
 
+    /**
+     *返回列表中的列表迭代器（按适当的顺序）。
+     *返回的列表迭代器是fail-fast 。
+     */
     public ListIterator<E> listIterator() {
         return new ArrayList.ListItr(0);
     }
 
+    /**
+     *以正确的顺序返回该列表中的元素的迭代器。
+     *返回的迭代器是fail-fast 。
+     */
     public Iterator<E> iterator() {
         return new ArrayList.Itr();
     }
@@ -1089,4 +1128,123 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     }
 }
 
+```
+
+#### 小结
+在阅读源码的过程中， 我发现， 源码中使用System.arraycopy这个方法居多， 其次便是Arrays.copyOf  
+System.arraycopy与Arrays.copyOf的**区别**是：
+- arraycopy()需要目标数组，将原数组拷贝到你自己定义的数组里，而且可以选择拷贝的起点和长度以及放入新数组中的位置
+- copyOf()是系统自动在内部新建一个数组，并返回该数组。
+
+##### ArrayList 核心扩容
+```java
+/**
+* 判断是否需要扩容
+*/
+private void ensureCapacityInternal(int var1) {
+    this.ensureExplicitCapacity(calculateCapacity(this.elementData, var1));
+}
+
+private void ensureExplicitCapacity(int var1) {
+    ++this.modCount;
+    if (var1 - this.elementData.length > 0) {
+        this.grow(var1);
+    }
+
+}
+/**
+* 扩容的核心算法
+*/
+private void grow(int var1) {
+    int var2 = this.elementData.length;
+    // 对于大数据的2进制运算,位移运算符比那些普通运算符的运算要快很多,因为程序仅仅移动一下而已,不去计算,这样提高了效率,节省了资源
+    // 右移一位相当于除2，右移n位相当于除以 2 的 n 次方。这里 oldCapacity 明显右移了1位所以相当于oldCapacity /2。
+    int var3 = var2 + (var2 >> 1);
+    if (var3 - var1 < 0) {
+        var3 = var1;
+    }
+
+    if (var3 - 2147483639 > 0) {
+        var3 = hugeCapacity(var1);
+    }
+
+    this.elementData = Arrays.copyOf(this.elementData, var3);
+}
+
+private static int hugeCapacity(int var0) {
+    if (var0 < 0) {
+        throw new OutOfMemoryError();
+    } else {
+        return var0 > 2147483639 ? 2147483647 : 2147483639;
+    }
+}
+```
+
+#### [来自JAVA Guid的demo](https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/collection/ArrayList.md)
+```JAVA
+public class ArrayListDemo {
+
+    public static void main(String[] srgs){
+         ArrayList<Integer> arrayList = new ArrayList<Integer>();
+
+         System.out.printf("Before add:arrayList.size() = %d\n",arrayList.size());
+
+         arrayList.add(1);
+         arrayList.add(3);
+         arrayList.add(5);
+         arrayList.add(7);
+         arrayList.add(9);
+         System.out.printf("After add:arrayList.size() = %d\n",arrayList.size());
+
+         System.out.println("Printing elements of arrayList");
+         // 三种遍历方式打印元素
+         // 第一种：通过迭代器遍历
+         System.out.print("通过迭代器遍历:");
+         Iterator<Integer> it = arrayList.iterator();
+         while(it.hasNext()){
+             System.out.print(it.next() + " ");
+         }
+         System.out.println();
+
+         // 第二种：通过索引值遍历
+         System.out.print("通过索引值遍历:");
+         for(int i = 0; i < arrayList.size(); i++){
+             System.out.print(arrayList.get(i) + " ");
+         }
+         System.out.println();
+
+         // 第三种：for循环遍历
+         System.out.print("for循环遍历:");
+         for(Integer number : arrayList){
+             System.out.print(number + " ");
+         }
+
+         // toArray用法
+         // 第一种方式(最常用)
+         Integer[] integer = arrayList.toArray(new Integer[0]);
+
+         // 第二种方式(容易理解)
+         Integer[] integer1 = new Integer[arrayList.size()];
+         arrayList.toArray(integer1);
+
+         // 抛出异常，java不支持向下转型
+         //Integer[] integer2 = new Integer[arrayList.size()];
+         //integer2 = arrayList.toArray();
+         System.out.println();
+
+         // 在指定位置添加元素
+         arrayList.add(2,2);
+         // 删除指定位置上的元素
+         arrayList.remove(2);    
+         // 删除指定元素
+         arrayList.remove((Object)3);
+         // 判断arrayList是否包含5
+         System.out.println("ArrayList contains 5 is: " + arrayList.contains(5));
+
+         // 清空ArrayList
+         arrayList.clear();
+         // 判断ArrayList是否为空
+         System.out.println("ArrayList is empty: " + arrayList.isEmpty());
+    }
+}
 ```
