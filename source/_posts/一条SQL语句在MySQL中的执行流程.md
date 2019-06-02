@@ -20,7 +20,7 @@ tags: MySQL
 - 存储引擎模块：支持InnoDB、MyISAM等等，InnoDB为默认的存储模块。
 
 # MySQL的日志模块
-这里，我们需要特别主义redi log 和 binlog这两个日志模块，前者是InnoDB自带的日志模块，后者是MySQL自带的日志模式。
+这里，我们需要特别主义redo log 和 binlog这两个日志模块，前者是InnoDB自带的日志模块，后者是MySQL自带的日志模式。
 
 #### SQL 语句的类型
 SQL语句的类型主要分为两种
