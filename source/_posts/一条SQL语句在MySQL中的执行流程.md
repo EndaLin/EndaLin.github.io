@@ -32,7 +32,7 @@ SQL语句的类型主要分为两种
 update tb_student set name = 'wt' where name = 'name'
 ```
 - 首先，要根据where查询到对应那一条数据
-- 根据查询到的数据，先进行修改，然后调用引擎接口，写入这一行数据，Inno会把数据保存在缓存中，同时记录redo log,此时redo log 进入prepare状态，然后告诉执行器，执行结束
+- 根据查询到的数据，先进行修改，然后调用引擎接口，写入这一行数据，InnoDB会把数据保存在缓存中，同时记录redo log,此时redo log 进入prepare状态，然后告诉执行器，执行结束
 - 执行器收到通知后记录binlog，然后调用引擎接口，提交redo log为提交状态
 - 更新完成
 

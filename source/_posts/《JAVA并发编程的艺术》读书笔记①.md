@@ -1,5 +1,5 @@
 ---
-title: 《JAVA并发编程de艺术》读书笔记①
+title: 《JAVA并发编程的艺术》读书笔记①
 copyright: true
 date: 2019-06-01 17:50:59
 tags: JAVA
