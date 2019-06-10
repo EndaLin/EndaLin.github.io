@@ -117,7 +117,6 @@ sentinel master mymaster
 sentinel slaves mymaster
 ```
 
-
 # lettcue
 依赖
 ```
@@ -151,7 +150,6 @@ public interface RedisService {
     public Object get(String key);
 }
 ```
-
 
 # 参考
 [李卫民的教学视频](https://www.bilibili.com/video/av36042649/?p=116)
