@@ -6,9 +6,9 @@ tags: Spring
 ---
 
 # 前言
-在Spring中，那些组成应用程序的主体以及那些由Spring IOC 容器锁管理的对象，被称之为**bean**。
+在Spring中，那些组成应用程序的主体以及那些由Spring IoC 容器锁管理的对象，被称之为**bean**。
 
-简单来讲，bean就是由IOC容器初始化、装配及管理的对象。
+简单来讲，bean就是由IoC容器初始化、装配及管理的对象。
 
 Spring中的bean默认是单例的，Spring的单例基于JVM，每个JVM内只有一个实例。
 
