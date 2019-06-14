@@ -89,6 +89,43 @@ public class GiraffeService {
 - 当要销毁Bean的时候，如果Bean在配置文件中的定义包含destroy-method属性，执行指定的方法。
 ![SpringBean生命周期](https://camo.githubusercontent.com/d275f148f8928ccc284180731f90991891be1a35/687474703a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f31382d392d31372f34383337363237322e6a7067)
 
+# Spring IoC（工厂模式）
+
+IoC 是一种设计思想， 将原本在程序中手动创建对象的控制权， 交由Spring框架来管理。
+
+IoC容器是Spring用来实现IoC的载体， IoC容器实际上就是个Map(K, V)， 存放各种对象。
+
+IoC容器就像是一个工厂一样，当我们需要创建一个对象的时候， 只需要配置好配置文件或注解即可， 完全不用考虑对象是怎么被创建出来的。
+
+**为了更好地去了解IoC， 此处我需要补充几个知识点**
+
+依赖倒置原则： 把原本的高层建筑依赖底层建筑倒置过来， 变成底层建筑依赖高层建筑， 高层建筑需要什么， 底层建筑便去实现这样的需求， 高层并不需要管底层是怎么实现的， 这样就不会出现牵一发而动全身的情况。
+
+DI(Dependecy Inject,依赖注入)是实现控制反转的一种设计模式，依赖注入就是将实例变量传入到一个对象中去
+
+控制反转就是依赖倒置原则的一种代码设计思路， 具体方法是依赖注入。
+
+![](https://pic1.zhimg.com/80/v2-ee924f8693cff51785ad6637ac5b21c1_hd.jpg)
+
+![](https://pic1.zhimg.com/80/v2-c920a0540ce0651003a5326f6ef9891d_hd.jpg)
+
+![](https://pic3.zhimg.com/80/v2-24a96669241e81439c636e83976ba152_hd.jpg)
+
+[Spring IoC有什么好处](https://www.zhihu.com/question/23277575/answer/169698662)
+
+
+# 工厂设计模式
+Spring 使用工厂模式可以通过BeanFactory 和 ApplicationContext创建bean对象
+- BeanFactory： 延迟注入， 需要使用到某个Bean时才会注入， 占用较少内存， 程序启动速度更快
+- ApplicationContext: 启动是一次性创建所有的Bean
+
+对比： BeanFactory仅仅提供了最基本的依赖注入支持， ApplicationContext扩展了BeanFactory， 所以一般会使用**ApplicationContext**会更多一点。
+
+ApplicationContext三个实现类：
+- ClassPathXmlApplication: 从上下文中加载资源文件
+- FileSystemXmlApplication: 从文件系统中加载资源文件
+- XmlWebApplicationContext: 从Web系统中加载资源文件
+
 
 # 参考
 [JavaGuide-Spring Bean](https://github.com/Snailclimb/JavaGuide/blob/master/docs/system-design/framework/spring/SpringBean.md)

@@ -10,7 +10,7 @@ tags: SpringMVC
 
 <!--more-->
 
-# Spring MVC工作原理
+# Spring MVC工作原理（适配器模式）
 #### 1、前端控制器DispatcherServlet（不需要工程师开发）,由框架提供（重要）
 
 作用：Spring MVC 的入口函数。接收请求，响应结果，相当于转发器，中央处理器。有了 DispatcherServlet 减少了其它组件之间的耦合度。用户请求到达前端控制器，它就相当于mvc模式中的c，DispatcherServlet是整个流程控制的中心，由它调用其它组件处理用户的请求，DispatcherServlet的存在降低了组件之间的耦合性。
