@@ -5,7 +5,7 @@ date: 2019-06-17 14:49:49
 tags: JAVA
 ---
 
-# Java线程相关
+# Java并发编程基础
 
 #### 线程优先级
 
@@ -15,6 +15,7 @@ tags: JAVA
 
 偏重计算的线程设置较低的优先级。
 
+<!--more-->
 
 #### 线程的状态
 
@@ -36,7 +37,7 @@ Daemon线程是一种支持型线程，因为它主要被用作程序中后台�
 Deamon线程被用作支持性工作，但是在JAVA虚拟机退出时，Daemo线程中的finally块不一定会执行。
 
 #### 对象、监视器、同步队列和执行线程之间的关系
-![image.png](https://upload-images.jianshu.io/upload_images/13918038-e29a96befabb7a49.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![image.png](https://upload-images.jianshu.io/upload_images/13918038-f517471e37622031.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 #### 线程间的通信
 #### 等待/通知机制
@@ -49,3 +50,30 @@ Deamon线程被用作支持性工作，但是在JAVA虚拟机退出时，Daemo�
 - notify是将等待队列中的一个等待线程从等待队列中移到同步队列中
 - notifyAll是将等待队列中所有的线程全部移到同步队列中，被移动的线程状态由WAITING变为BLOKCED
 - 从wait方法返回后重新执行的前提是获得对象的锁
+
+#### 管道输入\输出流
+
+管道输入输出流主要用于线程之间的数据传输，而传输的媒介是内存。
+
+管道输入输出流主要包括：PipedOutputStream、PipedInputStream、PipedReader和PipedWriter，前两种面向字节，后两种面向字符。
+
+```JAVA
+PipedWriter out = new PipedWriter();
+PipedReader in = new PipedReader();
+out.connect(in);
+```
+
+**对于Piped类型的流，必须先要进行绑定（调用connect方法）**
+
+#### Thread.join()的使用
+
+如果线程A执行了thread.join()语句， 意味着当前线程A等到thread线程终止之后才从thread.join()返回。
+
+除此之外， 线程Thread还提供了join(long millis)和join(long millis, int nanos)两个具备超时特性的方法， 表示：如果线程thread在特定的超时时间里没有终止，那么将会从该超时方法中返回。
+
+
+#### ThreadLocal的使用
+
+ThreadLocal是线程变量，是一个以ThreadLocal对象为键、任意对象为值的存储结构， 这个结构被附带在线程上，也就是说一个线程可以根据一个ThreadLocal对象查询到绑定到这个线程上的一个值。
+
+可以通过set(T)方法来设置一个值，在当前线程下再过get()方法获取到原先设置的值。
