@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="MySQL,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="MySQL存储引擎的基础知识 MySQL的基本存储结构是页，所有记录都存储在页里面。    每个页之间组成的是一个双向链表。 每个数据页里面的记录可以组成一个单向链表。  每个数据页都会为存储在本页里面的数据生成一个页目录，在通过主键查找某条记录时可以使用二分法快速定位 而根据其它列进行检索时，就只能通过遍历的手段     在没有任何索引的的表中，select语句的执行会进行如下两次遍历  遍历双">
+<meta name="keywords" content="MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL索引与锁">
+<meta property="og:url" content="https://wt-git-repository.github.io/2019/06/03/MySQL索引与锁/index.html">
+<meta property="og:site_name" content="Enda Lin">
+<meta property="og:description" content="MySQL存储引擎的基础知识 MySQL的基本存储结构是页，所有记录都存储在页里面。    每个页之间组成的是一个双向链表。 每个数据页里面的记录可以组成一个单向链表。  每个数据页都会为存储在本页里面的数据生成一个页目录，在通过主键查找某条记录时可以使用二分法快速定位 而根据其它列进行检索时，就只能通过遍历的手段     在没有任何索引的的表中，select语句的执行会进行如下两次遍历  遍历双">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/23/164c6d7a53b78847?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/23/164c6d7a5663f62b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-ef9b5d5d6407d80b937ca19d6be9dadc_hd.jpg">
+<meta property="og:image" content="https://img-blog.csdn.net/20170730213729731">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/23/164c6d7ae44d8ac6?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:updated_time" content="2019-07-08T01:15:52.687Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL索引与锁">
+<meta name="twitter:description" content="MySQL存储引擎的基础知识 MySQL的基本存储结构是页，所有记录都存储在页里面。    每个页之间组成的是一个双向链表。 每个数据页里面的记录可以组成一个单向链表。  每个数据页都会为存储在本页里面的数据生成一个页目录，在通过主键查找某条记录时可以使用二分法快速定位 而根据其它列进行检索时，就只能通过遍历的手段     在没有任何索引的的表中，select语句的执行会进行如下两次遍历  遍历双">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/7/23/164c6d7a53b78847?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wt-git-repository.github.io/2019/06/03/MySQL索引与锁/">
+
+
+
+
+
+  <title>MySQL索引与锁 | Enda Lin</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Enda Lin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep foolish, keep sharp</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/03/MySQL索引与锁/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySQL索引与锁</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-03T10:58:02+08:00">
+                2019-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/03/MySQL索引与锁/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/03/MySQL索引与锁/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="MySQL存储引擎的基础知识"><a href="#MySQL存储引擎的基础知识" class="headerlink" title="MySQL存储引擎的基础知识"></a>MySQL存储引擎的基础知识</h1><ul>
+<li>MySQL的基本存储结构是页，所有记录都存储在页里面。</li>
+</ul>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/23/164c6d7a53b78847?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt></p>
+<ul>
+<li>每个页之间组成的是一个双向链表。</li>
+<li>每个数据页里面的记录可以组成一个单向链表。<blockquote>
+<ul>
+<li>每个数据页都会为存储在本页里面的数据生成一个页目录，在通过主键查找某条记录时可以使用二分法快速定位</li>
+<li>而根据其它列进行检索时，就只能通过遍历的手段</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<p>在没有任何索引的的表中，select语句的执行会进行如下两次遍历</p>
+<ul>
+<li>遍历双向链表，找到所在页</li>
+<li>遍历页内的单链表，找到所在的记录</li>
+</ul>
+<a id="more"></a>
+<h1 id="索引提高检索速度"><a href="#索引提高检索速度" class="headerlink" title="索引提高检索速度"></a>索引提高检索速度</h1><p>索引的主要作用就是将无序变成有序。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/23/164c6d7a5663f62b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt></p>
+<p>record_type=1 代表存放的是普通目录项的记录<br>record_type=0 代表存放的是普通用户的记录</p>
+<p>底层结构一般都是<strong>B+树</strong>，B+树是平衡树的一种，它是一个空树或者是左右子树的高度差的绝对值不会超过1，左右子树都是一颗平衡二叉树。深度为lgn</p>
+<p>索引在提高检索速度的同时，同时会降低增删改的速度，因为要对B+树做增删改的话，会破坏它原来的结构，而且要维护平衡树，就必要做额外的工作。</p>
+<h1 id="聚集索引和非聚集索引"><a href="#聚集索引和非聚集索引" class="headerlink" title="聚集索引和非聚集索引"></a>聚集索引和非聚集索引</h1><p>概括：</p>
+<ul>
+<li>聚集索引是以<strong>主键</strong>创建的索引。</li>
+<li>非聚集索引是以<strong>非主键</strong>创建的索引。<br>InnoDB要求表必须有主键（MyISAM可以没有），Innodb会按照如下规则进行处理：</li>
+<li><ul>
+<li>如果一个主键被定义了，那么这个主键就是作为聚集索引</li>
+</ul>
+</li>
+<li><ul>
+<li>如果没有主键被定义，那么该表的第一个唯一非空索引被作为聚集索引</li>
+</ul>
+</li>
+<li><ul>
+<li>如果没有主键也没有合适的唯一索引，那么innodb内部会生成一个隐藏的主键作为聚集索引，这个隐藏的主键是一个6个字节的列，改列的值会随着数据的插入自增。</li>
+</ul>
+</li>
+</ul>
+<p>区别：</p>
+<ul>
+<li>聚集索引在叶子节点存储的是表中的数据。</li>
+<li>非聚集索引在叶子节点存储的是主键和索引列。</li>
+<li>使用非聚集索引查询出数据时，拿到叶子上的主键再去查想要查找的数据。（拿到主键再去查找的这个过程叫做<strong>回表</strong>）</li>
+<li><strong>聚集索引是物理上的连续，而非聚集索引是逻辑上的连续，物理存储并不连续。</strong></li>
+<li>非聚集索引和聚集索引的区别在于:通过聚集索引可以查到需要查找的数据， 而通过非聚集索引可以查到记录对应的主键值 ， 再使用主键的值通过聚集索引查找到需要的数据</li>
+</ul>
+<p>覆盖索引：</p>
+<ul>
+<li>如果不是聚集索引，叶子节点存储的是主键+索引列，如果需要查询的列，叶子节点都存在，那么就不用回表，提高效率。</li>
+</ul>
+<p><img src="https://pic1.zhimg.com/80/v2-ef9b5d5d6407d80b937ca19d6be9dadc_hd.jpg" alt></p>
+<p><img src="https://img-blog.csdn.net/20170730213729731" alt></p>
+<h1 id="索引最左匹配原则"><a href="#索引最左匹配原则" class="headerlink" title="索引最左匹配原则"></a>索引最左匹配原则</h1><h4 id="最左匹配原则："><a href="#最左匹配原则：" class="headerlink" title="最左匹配原则："></a>最左匹配原则：</h4><ul>
+<li>索引可以简单如一个列(a)，也可以复杂如多个列(a, b, c, d)，即联合索引。</li>
+<li>如果是联合索引，那么key也由多个列组成，同时，索引只能用于查找key是否存在（相等），遇到范围查询(&gt;、&lt;、between、like左匹配)等就不能进一步匹配了，后续退化为线性查找。</li>
+<li>因此，列的排列顺序决定了可命中索引的列数。</li>
+</ul>
+<h4 id="例子："><a href="#例子：" class="headerlink" title="例子："></a>例子：</h4><ul>
+<li>如有索引(a, b, c, d)，查询条件a = 1 and b = 2 and c &gt; 3 and d = 4，则会在每个节点依次命中a、b、c，无法命中d。(很简单：索引命中只能是相等的情况，不能是范围匹配)</li>
+</ul>
+<h1 id="索引总结"><a href="#索引总结" class="headerlink" title="索引总结"></a>索引总结</h1><ul>
+<li>最左匹配原则</li>
+<li>尽量选择区分度高的列作为索引</li>
+<li>索引列不能参与计算，尽量保持列干净</li>
+<li>尽可能扩展索引，不要新建立索引</li>
+</ul>
+<h1 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h1><p><img src="https://user-gold-cdn.xitu.io/2018/7/23/164c6d7ae44d8ac6?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt></p>
+<ul>
+<li>对于UPDATE、DELETE、INSERT语句，InnoDB会自动给涉及数据集加排他锁</li>
+</ul>
+<h4 id="表锁（InnoDB行锁表锁都支持，MyISAM只支持表锁）"><a href="#表锁（InnoDB行锁表锁都支持，MyISAM只支持表锁）" class="headerlink" title="表锁（InnoDB行锁表锁都支持，MyISAM只支持表锁）"></a>表锁（InnoDB行锁表锁都支持，MyISAM只支持表锁）</h4><ul>
+<li>表锁：开销小，加锁快，不会出现死锁，锁的粒度大，并发度低。</li>
+<li>行锁：开销大，加锁慢，会出现死锁，锁的粒度小，并发度大</li>
+</ul>
+<h4 id="行锁"><a href="#行锁" class="headerlink" title="行锁"></a>行锁</h4><ul>
+<li>InnoDB支持行锁</li>
+<li>InnoDB支持表锁</li>
+</ul>
+<h4 id="行锁类型："><a href="#行锁类型：" class="headerlink" title="行锁类型："></a>行锁类型：</h4><ul>
+<li>共享锁（S锁）：允许多个获得共享锁的事物同时读取同一个资源，但不允许其他客户端修改</li>
+<li>排他锁（X锁）：允许获得排他锁的事物更新数据，阻止其他事物修改或读取同一数据集。</li>
+</ul>
+<h4 id="乐观锁与悲观锁"><a href="#乐观锁与悲观锁" class="headerlink" title="乐观锁与悲观锁"></a>乐观锁与悲观锁</h4><ul>
+<li>乐观锁（认为一个用户读数据时，别人不会去写自己所读的数据）：在表中添加一个版本字段，第一次读的时候，获取到这个字段，处理完业务逻辑准备更新的时候，需要再次查看这个字段是否和第一次获取到的字段是否一样，若一样则更新，否则则拒绝。</li>
+<li>悲观锁（在读取数据是，不允许别人去修改）：直接在把数据库层面上加锁。</li>
+</ul>
+<h1 id="事物的隔离级别"><a href="#事物的隔离级别" class="headerlink" title="事物的隔离级别"></a>事物的隔离级别</h1><h4 id="什么是事务"><a href="#什么是事务" class="headerlink" title="什么是事务"></a>什么是事务</h4><p>事物是逻辑上的一组操作，要么全部执行，要么全部不执行。</p>
+<h4 id="事务的特性（ACID）"><a href="#事务的特性（ACID）" class="headerlink" title="事务的特性（ACID）"></a>事务的特性（ACID）</h4><ul>
+<li>原子性：事务是最小的执行单位，要么全部执行，要么全部不执行</li>
+<li>一致性：在事务执行的前后，所有事务对同一数据源的读取结果的一致的</li>
+<li>隔离性：并发访问数据库时，各个事务互不干扰</li>
+<li>持久性：在事务提交之后，它对数据库的改变是持久的，即使数据库发生故障，也不会有任何影响。</li>
+</ul>
+<h4 id="并发事务带来的问题"><a href="#并发事务带来的问题" class="headerlink" title="并发事务带来的问题"></a>并发事务带来的问题</h4><ul>
+<li>脏读：当一个事务对数据进行了修改之后就马上释放了排它锁，导致其它事务对未修改的数据进行了“脏数据”。</li>
+<li>丢失修改：指两个事务同时对同一个数据进行了修改操作，导致一个事务的修改丢失</li>
+<li>不可重复读：指在同一个事务中，对同一个数据进行多次读取，但是读出来的结果不一致，这里侧重于数据修改</li>
+<li>幻读：在同一个事务中，同一次查询会多出或者少了一些数据，这是因为另一个并发的任务作出了增删操作，这里侧重与数据的增删</li>
+</ul>
+<h4 id="SQL标准定义的四个隔离级别-InnoDB-默认支持可重复读"><a href="#SQL标准定义的四个隔离级别-InnoDB-默认支持可重复读" class="headerlink" title="SQL标准定义的四个隔离级别(InnoDB 默认支持可重复读)"></a>SQL标准定义的四个隔离级别(InnoDB 默认支持可重复读)</h4><ul>
+<li>READ-UNCOMMITTED(读取未提交)： 最低的隔离级别，允许读取尚未提交的数据变更，可能会导致脏读、幻读或不可重复读。</li>
+<li>READ-COMMITTED(读取已提交)： 允许读取并发事务已经提交的数据，可以阻止脏读，但是幻读或不可重复读仍有可能发生。</li>
+<li>REPEATABLE-READ(可重复读)： 对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，可以阻止脏读和不可重复读，但幻读仍有可能发生。</li>
+<li>SERIALIZABLE(可串行化)： 最高的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，该级别可以防止脏读、不可重复读以及幻读。</li>
+</ul>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a href="https://github.com/Snailclimb/JavaGuide/tree/master/docs/database" target="_blank" rel="noopener">JavaGuide</a>  </li>
+<li><a href="https://juejin.im/post/5b55b842f265da0f9e589e79" target="_blank" rel="noopener">MySQL索引与锁</a>  </li>
+<li><a href="https://zhuanlan.zhihu.com/p/23624390" target="_blank" rel="noopener">深入浅出数据库索引原理</a>  </li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/06/03/MySQL索引与锁/">MySQL索引与锁</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Enda Lin 的个人博客">Enda Lin</a></p>
+  <p><span>发布时间:</span>2019年06月03日 - 10:58</p>
+  <p><span>最后更新:</span>2019年07月08日 - 09:15</p>
+  <p><span>原始链接:</span><a href="/2019/06/03/MySQL索引与锁/" title="MySQL索引与锁">https://wt-git-repository.github.io/2019/06/03/MySQL索引与锁/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://wt-git-repository.github.io/2019/06/03/MySQL索引与锁/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>
+</div>
+<script>
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({
+          title: "",
+          text: '复制成功',
+          icon: "success",
+          showConfirmButton: true
+          });
+	});
+    });
+</script>
+
+
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/03/《JAVA并发编程的艺术》读书笔记④/" rel="next" title="《JAVA并发编程的艺术》读书笔记④">
+                <i class="fa fa-chevron-left"></i> 《JAVA并发编程的艺术》读书笔记④
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/03/SpringCloud微服务架构实战读书笔记②/" rel="prev" title="SpringCloud微服务架构实战读书笔记②">
+                SpringCloud微服务架构实战读书笔记② <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/06/03/MySQL索引与锁/" data-title="MySQL索引与锁" data-url="https://wt-git-repository.github.io/2019/06/03/MySQL索引与锁/">
+      </div>
+    
+    <div id="gitalk-container"></div>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avator.jpeg" alt="Enda Lin">
+          <p class="site-author-name" itemprop="name">Enda Lin</p>
+           
+              <p class="site-description motion-element" itemprop="description">所有的伟大都是从零开始</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wt-git-repository" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="endawt.lin@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL存储引擎的基础知识"><span class="nav-number">1.</span> <span class="nav-text">MySQL存储引擎的基础知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#索引提高检索速度"><span class="nav-number">2.</span> <span class="nav-text">索引提高检索速度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#聚集索引和非聚集索引"><span class="nav-number">3.</span> <span class="nav-text">聚集索引和非聚集索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#索引最左匹配原则"><span class="nav-number">4.</span> <span class="nav-text">索引最左匹配原则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#最左匹配原则："><span class="nav-number">4.0.0.1.</span> <span class="nav-text">最左匹配原则：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#例子："><span class="nav-number">4.0.0.2.</span> <span class="nav-text">例子：</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#索引总结"><span class="nav-number">5.</span> <span class="nav-text">索引总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#锁"><span class="nav-number">6.</span> <span class="nav-text">锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#表锁（InnoDB行锁表锁都支持，MyISAM只支持表锁）"><span class="nav-number">6.0.0.1.</span> <span class="nav-text">表锁（InnoDB行锁表锁都支持，MyISAM只支持表锁）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#行锁"><span class="nav-number">6.0.0.2.</span> <span class="nav-text">行锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#行锁类型："><span class="nav-number">6.0.0.3.</span> <span class="nav-text">行锁类型：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#乐观锁与悲观锁"><span class="nav-number">6.0.0.4.</span> <span class="nav-text">乐观锁与悲观锁</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事物的隔离级别"><span class="nav-number">7.</span> <span class="nav-text">事物的隔离级别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是事务"><span class="nav-number">7.0.0.1.</span> <span class="nav-text">什么是事务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事务的特性（ACID）"><span class="nav-number">7.0.0.2.</span> <span class="nav-text">事务的特性（ACID）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#并发事务带来的问题"><span class="nav-number">7.0.0.3.</span> <span class="nav-text">并发事务带来的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SQL标准定义的四个隔离级别-InnoDB-默认支持可重复读"><span class="nav-number">7.0.0.4.</span> <span class="nav-text">SQL标准定义的四个隔离级别(InnoDB 默认支持可重复读)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Enda Lin</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 您是博主的第
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位小伙伴
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="/js/md5.min.js"></script>
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'afbcc6e2a54ed4e2ebd7',
+          clientSecret: '6c36028e964ef689580f33ec9bd19b720f5f131f',
+          repo: 'wt-git-repository.github.io',
+          owner: 'wt-git-repository',
+          admin: ['wt-git-repository'],
+          id: md5(location.href),
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

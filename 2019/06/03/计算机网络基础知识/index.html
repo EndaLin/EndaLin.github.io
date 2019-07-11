@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="计算机网络,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="运输层基本术语 进程：指计算机正在运行的实体 应用进程的相互通信： 一台主机的进程和另一台主机的一个进程交换数据的过程 传输层的复用与分用：复用是指发送方不同的进程可以通过一个传输层协议传送数据， 分用指的是接收方的传输层在剥去报文的首部后能把这些数据正确地交到目的应用进程中。 TCP：传输控制协议 UDP：用户数据报协议 端口：为的是确认对方机器是哪一个进程在和自己交互 停止等待协议：指发送方每">
+<meta name="keywords" content="计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络基础知识之运输层">
+<meta property="og:url" content="https://wt-git-repository.github.io/2019/06/03/计算机网络基础知识/index.html">
+<meta property="og:site_name" content="Enda Lin">
+<meta property="og:description" content="运输层基本术语 进程：指计算机正在运行的实体 应用进程的相互通信： 一台主机的进程和另一台主机的一个进程交换数据的过程 传输层的复用与分用：复用是指发送方不同的进程可以通过一个传输层协议传送数据， 分用指的是接收方的传输层在剥去报文的首部后能把这些数据正确地交到目的应用进程中。 TCP：传输控制协议 UDP：用户数据报协议 端口：为的是确认对方机器是哪一个进程在和自己交互 停止等待协议：指发送方每">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-4f839deaa49aa6cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-981cca096c3c7dee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-07-08T01:15:52.734Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计算机网络基础知识之运输层">
+<meta name="twitter:description" content="运输层基本术语 进程：指计算机正在运行的实体 应用进程的相互通信： 一台主机的进程和另一台主机的一个进程交换数据的过程 传输层的复用与分用：复用是指发送方不同的进程可以通过一个传输层协议传送数据， 分用指的是接收方的传输层在剥去报文的首部后能把这些数据正确地交到目的应用进程中。 TCP：传输控制协议 UDP：用户数据报协议 端口：为的是确认对方机器是哪一个进程在和自己交互 停止等待协议：指发送方每">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/13918038-4f839deaa49aa6cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wt-git-repository.github.io/2019/06/03/计算机网络基础知识/">
+
+
+
+
+
+  <title>计算机网络基础知识之运输层 | Enda Lin</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Enda Lin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep foolish, keep sharp</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/03/计算机网络基础知识/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">计算机网络基础知识之运输层</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-03T18:39:19+08:00">
+                2019-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/03/计算机网络基础知识/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/03/计算机网络基础知识/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  1.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="运输层"><a href="#运输层" class="headerlink" title="运输层"></a>运输层</h1><h4 id="基本术语"><a href="#基本术语" class="headerlink" title="基本术语"></a>基本术语</h4><ul>
+<li>进程：指计算机正在运行的实体</li>
+<li>应用进程的相互通信： 一台主机的进程和另一台主机的一个进程交换数据的过程</li>
+<li>传输层的复用与分用：复用是指发送方不同的进程可以通过一个传输层协议传送数据， 分用指的是接收方的传输层在剥去报文的首部后能把这些数据正确地交到目的应用进程中。</li>
+<li>TCP：传输控制协议</li>
+<li>UDP：用户数据报协议</li>
+<li>端口：为的是确认对方机器是哪一个进程在和自己交互</li>
+<li>停止等待协议：指发送方每发送完一个分组就停止发送，等待对方确认，在收到确认之后再发送下一个分组。</li>
+<li>流量控制：控制对方的发送速率，既要让接收方来得及接收，也不要使网络发送拥塞</li>
+<li>拥塞控制：防止过多数据注入网络中，防止路由器或者链路过载。</li>
+</ul>
+<a id="more"></a>
+<h4 id="重要知识"><a href="#重要知识" class="headerlink" title="重要知识"></a>重要知识</h4><ul>
+<li>网络层为主机提供逻辑通信，运输层为进程提供逻辑通信。</li>
+<li>运输层两个重要协议：TCP和UDP。</li>
+<li>硬件端口是不同硬件设备进行交互的接口，而软件端口是应用层各种进程交互的一种地址。</li>
+<li>运输层的端口号分为服务器端使用的端口号和客户端暂时使用的端口号。</li>
+<li>UDP的主要特点：无连接、尽最大努力交互、面向报文、无拥塞控制、支持一对一，一对多，多对一和多对多的交互通信，首部开销小</li>
+<li>TCP：面向连接、只能是一对一，提供可靠交互，提供全双工通信，面向字节流</li>
+<li>TCP用主机的IP地址加上主机上的端口号作为TCP连接的端点，这个端点就称为套接字，每一条TCP连接都被两个可确定的端口所确定。</li>
+<li>停止等待协议：为了实现可靠传输，每传输完一个分组就停止发送，等对方确认之后，再继续发送下一个分组。</li>
+<li>停止等待协议的超时重传（自动重传ARQ）：只要超过一段时间仍然没有收到确定，就重传前面发送过的分组。若在该协议中收到重复分组，则还要继续发送确认（因为确认分组也有可能会丢失）</li>
+<li>发送维持一个发送窗口，凡是位于窗口之内的分组可以连续发送出去，而不需要等待对方确认，接收方按最后一个分组发送确认，表面到这个分组的位置的全部分组已经全部接收。（<strong>滑动窗口机制</strong>）</li>
+<li>滑动窗口机制：用于<strong>流量控制</strong></li>
+<li>发送窗口：拥塞控制窗口的大小取决于网络的拥挤程度，并且动态变化，TCP发送方让自己的发送窗口取为拥塞窗口和接收方的接受窗口较小的一个。</li>
+<li>流量控制：点对点通信量的控制，是个端对端的问题，流量控制所要做到的就是抑制发送端发送数据的速率，以适应接收方的接受能力。</li>
+<li>拥塞：在某段时间，软对某一资源的需求超过了该资源所能提供的可用部分，网络性能就会变差，如信道运输数据的能力</li>
+<li>拥塞控制：复制过多的数据注入到网络中，防止路由器或者链路不至于过载，拥塞控制是一个全局性的过程，设计到所有主机、路由器以及降低网络传输性能有关的所有因素</li>
+<li>TCP拥塞控制的四种算法：慢开始、拥塞避免、快重传和快恢复。</li>
+<li>运输层连接的三个阶段：连接建立、数据传送和连接释放。</li>
+</ul>
+<h4 id="TCP三次握手四次挥手"><a href="#TCP三次握手四次挥手" class="headerlink" title="TCP三次握手四次挥手"></a>TCP三次握手四次挥手</h4><p>一开始，服务器首先创建传输块TCB（存储每一个连接中的重要信息），准备接受客户进程的连接请求，此处，服务器进程便进入的<strong>LISTEN</strong>（监听）状态。</p>
+<p><strong>三次握手</strong></p>
+<ul>
+<li>客户端首先创建一个TCB，在打算建立TCP连接之时，向服务器发出连接请求报文，<strong>SYM=1（SYM=1的报文段表示为一个连接请求报文），seq=x</strong> ，TCP规定，SYM=1的报文段需要消耗掉一个序列号。此处客户端进入<strong>SYN-SENT（同步已发送）</strong>状态</li>
+<li>服务器收到请求之后，如果同意建立连接，则向客户端发出确认。<strong>ACK=1,SYM=1,ack=x+1,seq=y</strong>.TCP 规定，在连接建立后，所有传送的报文端都需要把ACK置为1，此时服务器端进入<strong>SYN-RCVD(同步收到)</strong>状态</li>
+<li>客户端收到服务器端的确认后，还要给服务器确认。<strong>ACK=1,ack=y+1,seq=x+1</strong>, 此时不是SYN请求连接报文了，ACK报文段是可以携带数据的，但是此处不用，所以seq=x+1.此时客户端进入<strong>ESTABLISHED(已经建立)</strong>的状态</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-4f839deaa49aa6cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><strong>四次挥手</strong><br>数据传输结束后，通信双方都可释放连接，现在客户端和服务器端都处于ESTABLISHED状态。</p>
+<ul>
+<li>客户端发送连接释放报文，<strong>FIN=1，seq=u</strong>，u是前面已经传送过的数据的最后一个字节加1.TCP规定，FIN报文段即使不携带数据，它也要消耗一个序号。此时，客户端进入<strong>FIN-WAIT-1（终止等待1）</strong>状态，等待B确认。</li>
+<li>服务器收到连接释放报文段后发出确认，<strong>ACK=1(ACK=1时，ack才有效),ack=u+1,seq=v</strong>，V是服务器之前传送过的数据的最后一个字节的序号+1，此时服务器进入<strong>CLOSE-WAIT(关闭等待)</strong>状态<br>此时客户端进入<strong>FIN-WAIT-2(终止等待2)</strong>状态,等待B发出连接释放报文</li>
+<li>若服务器已经没有要向客户端发出的数据，应用进程就通知TCP释放连接。<strong>FIN=1，ACK=1，ack=u+1,seq=w</strong>，seq之所以为w，是因为B可能还有一些数据发送到了给A，此时服务器进入<strong>LAST-ACK(最后确认状态)</strong>。</li>
+<li>客户端收到服务器段的连接释放报文后，必须要对服务器进行确认。<strong>ACK=1，ack=w+1,seq=u+1</strong>客户端进入<strong>TIME—WAIT（时间等待）</strong>状态，然后在进入<strong>CLOSE</strong>状态。</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-981cca096c3c7dee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><ul>
+<li>端口和套接字的意义</li>
+<li>无连接UDP的特点</li>
+<li>面向连接TCP的特点</li>
+<li>在不可靠的网络上实现可靠传输的工作原理，停止等待协议和APQ协议</li>
+<li>TCP滑动窗口、流量控制、拥塞控制和连接管理。</li>
+</ul>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://blog.csdn.net/qzcsu/article/details/72861891" target="_blank" rel="noopener">TCP三次握手四次挥手</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/06/03/计算机网络基础知识/">计算机网络基础知识之运输层</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Enda Lin 的个人博客">Enda Lin</a></p>
+  <p><span>发布时间:</span>2019年06月03日 - 18:39</p>
+  <p><span>最后更新:</span>2019年07月08日 - 09:15</p>
+  <p><span>原始链接:</span><a href="/2019/06/03/计算机网络基础知识/" title="计算机网络基础知识之运输层">https://wt-git-repository.github.io/2019/06/03/计算机网络基础知识/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://wt-git-repository.github.io/2019/06/03/计算机网络基础知识/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>
+</div>
+<script>
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({
+          title: "",
+          text: '复制成功',
+          icon: "success",
+          showConfirmButton: true
+          });
+	});
+    });
+</script>
+
+
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/计算机网络/" rel="tag"># 计算机网络</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/03/SpringCloud微服务架构实战读书笔记②/" rel="next" title="SpringCloud微服务架构实战读书笔记②">
+                <i class="fa fa-chevron-left"></i> SpringCloud微服务架构实战读书笔记②
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/05/RabbitMQ/" rel="prev" title="RabbitMQ">
+                RabbitMQ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/06/03/计算机网络基础知识/" data-title="计算机网络基础知识之运输层" data-url="https://wt-git-repository.github.io/2019/06/03/计算机网络基础知识/">
+      </div>
+    
+    <div id="gitalk-container"></div>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avator.jpeg" alt="Enda Lin">
+          <p class="site-author-name" itemprop="name">Enda Lin</p>
+           
+              <p class="site-description motion-element" itemprop="description">所有的伟大都是从零开始</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wt-git-repository" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="endawt.lin@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#运输层"><span class="nav-number">1.</span> <span class="nav-text">运输层</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本术语"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">基本术语</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重要知识"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">重要知识</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP三次握手四次挥手"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">TCP三次握手四次挥手</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#问题"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Enda Lin</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 您是博主的第
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位小伙伴
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="/js/md5.min.js"></script>
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'afbcc6e2a54ed4e2ebd7',
+          clientSecret: '6c36028e964ef689580f33ec9bd19b720f5f131f',
+          repo: 'wt-git-repository.github.io',
+          owner: 'wt-git-repository',
+          admin: ['wt-git-repository'],
+          id: md5(location.href),
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

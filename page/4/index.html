@@ -1,0 +1,2430 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="所有的伟大都是从零开始">
+<meta name="keywords" content="docker, Spring Boot, JAVA, Java虚拟机, LeetCode, Python, 操作系统, MySQL, 计算机网络, 消息队列， 运维, 数据结构, Spring, SpringMVC, Nosql, 软件过程管理, 设计模式">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Enda Lin">
+<meta property="og:url" content="https://wt-git-repository.github.io/page/4/index.html">
+<meta property="og:site_name" content="Enda Lin">
+<meta property="og:description" content="所有的伟大都是从零开始">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Enda Lin">
+<meta name="twitter:description" content="所有的伟大都是从零开始">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wt-git-repository.github.io/page/4/">
+
+
+
+
+
+  <title>Enda Lin</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Enda Lin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep foolish, keep sharp</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/05/数据结构-树相关/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/05/数据结构-树相关/" itemprop="url">数据结构-树相关</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-05T15:53:43+08:00">
+                2019-06-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/05/数据结构-树相关/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/05/数据结构-树相关/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  514
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h1><p>堆分为最大堆和最小堆</p>
+<h4 id="最大堆"><a href="#最大堆" class="headerlink" title="最大堆"></a>最大堆</h4><p>定义：设数组a存放了n个数据元素，数组下标从0开始，如果当数组下标2i+1&lt;n时存在a[i].key&gt;a[2i+1].key&gt;=a[i].key，当数组下标2i+2&lt;n时，有a[i].key&gt;=a[2i+2].key，这样的数据结构称为最大堆。</p>
+<p>最大堆的根节点是堆值中最大的数据元素。</p>
+<p>对于最大堆，从根结点到每个叶结点的路径，数组元素组成的序列都是递减有序的</p>
+<p>通常把堆的根节点称为堆顶元素。</p>
+<p>最小堆（与最大堆类似，这里不再累赘）</p>
+<h4 id="创建堆"><a href="#创建堆" class="headerlink" title="创建堆"></a>创建堆</h4><p>在完全二叉树中，第一个非叶子结点a[i] (i = (n - 2) / 2)</p>
+<p>创建思路：从第一个非叶子结点开始，找出a[2i+1]和a[2i+2]的最大值，并与a[i]进行比对，若比a[i]小，则说明以a[i]为更结点的堆已经是最大堆，否则，二者交换。以此类推，直到调整到根节点。</p>
+<p>值得注意的是：若左右子节点并非叶子结点，与a[i]的调换可能会引起子节点的一连串调整，这也是值得我们注意的地方</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> data 待排序的数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> n    元素的总个数</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> h    当前的根节点</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createHeap</span><span class="params">(<span class="keyword">int</span>[] data, <span class="keyword">int</span> n, <span class="keyword">int</span> h)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = h;</span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">2</span> * i + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> temp = data[i];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (j &lt; n) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 寻找左右子节点的最大值</span></span><br><span class="line">        <span class="keyword">if</span> (j + <span class="number">1</span> &lt; n &amp;&amp; data[j] &lt; data[j + <span class="number">1</span>]) j++;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对比根节点与左右子节点的最大值</span></span><br><span class="line">        <span class="keyword">if</span> (temp &gt; data[j]) &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            data[i] = data[j];</span><br><span class="line">            i = j;</span><br><span class="line">            j = <span class="number">2</span> * i + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    data[i] = temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initHeap</span><span class="params">(<span class="keyword">int</span>[] data, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = (n - <span class="number">2</span>) / <span class="number">2</span>; i &gt; -<span class="number">1</span>; i--) &#123;</span><br><span class="line">        createHeap(data, n, i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="利用最大堆来进行排序"><a href="#利用最大堆来进行排序" class="headerlink" title="利用最大堆来进行排序"></a>利用最大堆来进行排序</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">heapSort</span><span class="params">(<span class="keyword">int</span>[] data, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    initHeap(data, n);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = n - <span class="number">1</span>;i &gt; -<span class="number">1</span>;i--) &#123;</span><br><span class="line">        <span class="keyword">int</span> temp = data[i];</span><br><span class="line">        data[i] = data[<span class="number">0</span>];</span><br><span class="line">        data[<span class="number">0</span>] = temp;</span><br><span class="line">        createHeap(data, i, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/05/Nginx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/05/Nginx/" itemprop="url">Nginx</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-05T14:20:12+08:00">
+                2019-06-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/05/Nginx/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/05/Nginx/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  647
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Nginx简介"><a href="#Nginx简介" class="headerlink" title="Nginx简介"></a>Nginx简介</h1><p>Nginx是一款高性能Http服务器、反向代理服务器以及电子邮件（IMAP、POP3）代理服务器，能支撑5万并发，CPU、内存等资源消耗非常低，运行稳定。</p>
+<h1 id="Nginx应用场景"><a href="#Nginx应用场景" class="headerlink" title="Nginx应用场景"></a>Nginx应用场景</h1><ul>
+<li>HTTP服务器：Nginx是一个HTTP服务，可以独立提供HTTP服务，可以做网页静态服务器。</li>
+<li>虚拟主机：可以实在一台服务器虚拟出多个网站。</li>
+<li>反向代理、负载均衡：可以使用Nginx反向代理到多个集群。</li>
+</ul>
+<h1 id="docker-compose-yml"><a href="#docker-compose-yml" class="headerlink" title="docker-compose.yml"></a>docker-compose.yml</h1><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.1'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">        tomcat9090:</span></span><br><span class="line"><span class="attr">                image:</span> <span class="string">tomcat</span></span><br><span class="line"><span class="attr">                container_name:</span> <span class="string">tomcat9090</span></span><br><span class="line"><span class="attr">                restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">                ports:</span></span><br><span class="line"><span class="bullet">                    -</span> <span class="number">9090</span><span class="string">:8080</span></span><br><span class="line"><span class="attr">        tomcat9091:</span></span><br><span class="line"><span class="attr">                image:</span> <span class="string">tomcat</span></span><br><span class="line"><span class="attr">                container_name:</span> <span class="string">tomcat9091</span></span><br><span class="line"><span class="attr">                restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">                ports:</span></span><br><span class="line"><span class="bullet">                    -</span> <span class="number">9091</span><span class="string">:8080</span></span><br><span class="line"><span class="attr">        nginx:</span></span><br><span class="line"><span class="attr">                image:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">                container_name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">                restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">                ports:</span></span><br><span class="line"><span class="bullet">                    -</span> <span class="number">80</span><span class="string">:80</span></span><br><span class="line"><span class="bullet">                    -</span> <span class="number">9000</span><span class="string">:9000</span></span><br><span class="line"><span class="attr">                volumes:</span></span><br><span class="line"><span class="bullet">                    -</span> <span class="string">./conf/nginx.conf:/etc/nginx/nginx.conf</span></span><br><span class="line"><span class="bullet">                    -</span> <span class="string">./web:/usr/share/nginx/wwwroot</span></span><br></pre></td></tr></table></figure>
+<h1 id="虚拟主机"><a href="#虚拟主机" class="headerlink" title="虚拟主机"></a>虚拟主机</h1><p>虚拟主机是一种特殊的软硬件技术，它可以将网络上的每一台计算机分成多个虚拟主机，每个虚拟主机可以独立对外提供www服务，这样就实现一台主机对外提供web服务。</p>
+<p>通过Nginx可以实现虚拟主机的配置，Nginx支持三种类型的虚拟主机的配置</p>
+<ul>
+<li>基于IP的虚拟主机</li>
+<li>基于域名的虚拟主机</li>
+<li>基于端口的虚拟主机</li>
+</ul>
+<h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"># CPU多少核就填多少核，充分利用CPU资源</span><br><span class="line">worker_processes 1;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">        worker_connections 1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">        include   mime.types;</span><br><span class="line">        default_type   application:octet-stream;</span><br><span class="line"></span><br><span class="line">        sendfile   on;</span><br><span class="line"></span><br><span class="line">        keepalive_timeout  65;</span><br><span class="line"></span><br><span class="line">        server &#123;</span><br><span class="line">                listen 80;</span><br><span class="line">                # 基于 IP</span><br><span class="line">                server_name  172.28.7.36;</span><br><span class="line"></span><br><span class="line">                # 基于域名</span><br><span class="line">                # server_name endalin.com;</span><br><span class="line">                location / &#123;</span><br><span class="line">                        root    /usr/share/nginx/wwwroot/welcome;</span><br><span class="line">                        index index.html;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        server &#123;</span><br><span class="line">                # 基于端口</span><br><span class="line">                # listen 81;</span><br><span class="line">                listen 80;</span><br><span class="line">                server_name  172.28.7.36;</span><br><span class="line"></span><br><span class="line">                # 基于域名</span><br><span class="line">                # server_name oj.endalin.com;</span><br><span class="line">                location / &#123;</span><br><span class="line">                        root    /usr/share/nginx/wwwroot/welcome81;</span><br><span class="line">                        index index.html;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="反向代理、负载均衡"><a href="#反向代理、负载均衡" class="headerlink" title="反向代理、负载均衡"></a>反向代理、负载均衡</h1><p>反向代理服务器架设在服务器端，通过缓存经常被请求的页面来缓解服务器的工作量，将客户机请求转发给内部网络上的目标服务器，并将从服务器上得到的结果返回给Internet上请求连接的客户端，此时代理服务器和目标主机对外表现为一个服务器。</p>
+<h4 id="docker-compose-yml-1"><a href="#docker-compose-yml-1" class="headerlink" title="docker-compose.yml"></a>docker-compose.yml</h4><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.1'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">        tomcat9090:</span></span><br><span class="line"><span class="attr">                image:</span> <span class="string">tomcat</span></span><br><span class="line"><span class="attr">                container_name:</span> <span class="string">tomcat9090</span></span><br><span class="line"><span class="attr">                restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">                ports:</span></span><br><span class="line"><span class="bullet">                    -</span> <span class="number">9090</span><span class="string">:8080</span></span><br><span class="line"><span class="attr">        tomcat9091:</span></span><br><span class="line"><span class="attr">                image:</span> <span class="string">tomcat</span></span><br><span class="line"><span class="attr">                container_name:</span> <span class="string">tomcat9091</span></span><br><span class="line"><span class="attr">                restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">                ports:</span></span><br><span class="line"><span class="bullet">                    -</span> <span class="number">9091</span><span class="string">:8080</span></span><br><span class="line"><span class="attr">        nginx:</span></span><br><span class="line"><span class="attr">                image:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">                container_name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">                restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">                ports:</span></span><br><span class="line"><span class="bullet">                    -</span> <span class="number">80</span><span class="string">:80</span></span><br><span class="line"><span class="bullet">                    -</span> <span class="number">9000</span><span class="string">:9000</span></span><br><span class="line"><span class="attr">                volumes:</span></span><br><span class="line"><span class="bullet">                    -</span> <span class="string">./conf/nginx.conf:/etc/nginx/nginx.conf</span></span><br><span class="line"><span class="bullet">                    -</span> <span class="string">./web:/usr/share/nginx/wwwroot</span></span><br></pre></td></tr></table></figure>
+<h4 id="配置文件-1"><a href="#配置文件-1" class="headerlink" title="配置文件"></a>配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">worker_processes 1;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">	worker_connections 1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">        include   mime.types;</span><br><span class="line">        default_type   application:octet-stream;</span><br><span class="line"></span><br><span class="line">        sendfile   on;</span><br><span class="line"></span><br><span class="line">        keepalive_timeout  65;</span><br><span class="line"></span><br><span class="line">        upstream tomcatServer&#123;</span><br><span class="line">				        server 10.42.29.120:9000 weight=10;</span><br><span class="line">								server 10.42.29.120:9091 weight=10;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">        server &#123;</span><br><span class="line">                listen 80;</span><br><span class="line">                server_name 10.42.29.120;</span><br><span class="line">                location / &#123;</span><br><span class="line">                        proxy_pass http://tomcatServer;</span><br><span class="line">                        index index.html index.jsp;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/05/RabbitMQ/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/05/RabbitMQ/" itemprop="url">RabbitMQ</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-05T09:27:13+08:00">
+                2019-06-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/05/RabbitMQ/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/05/RabbitMQ/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  564
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="RabbitMQ相关概念"><a href="#RabbitMQ相关概念" class="headerlink" title="RabbitMQ相关概念"></a>RabbitMQ相关概念</h1><h4 id="生产者和消费者"><a href="#生产者和消费者" class="headerlink" title="生产者和消费者"></a>生产者和消费者</h4><ul>
+<li>producer：消息的生产者</li>
+<li>consumer：消息的消费者</li>
+</ul>
+<h4 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h4><ul>
+<li>消息队列：提供了FIFO的处理机制，具有缓存数据的能力</li>
+<li>在RabbitMQ中，队列消息可以设置为持久化、临时或自动删除</li>
+<li><ul>
+<li>持久化队列：队列中的消息会在Server本地磁盘存储一份，防止系统挂掉，导致数据丢失。</li>
+</ul>
+</li>
+<li><ul>
+<li>临时队列：队列中的数据在系统重启后就会丢失。</li>
+</ul>
+</li>
+<li><ul>
+<li>自动删除的队列：当不存在用户连接到Server，队列中的数据就会被自动删除。</li>
+</ul>
+</li>
+</ul>
+<h4 id="ExChange"><a href="#ExChange" class="headerlink" title="ExChange"></a>ExChange</h4><p>类似于交换机，提供消息路由策略。在RabbitMQ中，Producer不是通过信道直接将消息发送给Queue的，而是先发给ExChange，一个ExChange与多个Queue绑定，Producer在传递消息的时候，会传递一个ROUTING_KEY,ExChange会根据这个值按照特定的路由算法，将消息分配给指定的Queue，与Queue一样，ExChange也有持久、临时和自动删除的。</p>
+<h4 id="Binding"><a href="#Binding" class="headerlink" title="Binding"></a>Binding</h4><p>所谓绑定就是一个特定的Exchange与一个特定的Queue绑定起来。ExChange和Queue的绑定可以是多对多的关系。</p>
+<h4 id="Virtual"><a href="#Virtual" class="headerlink" title="Virtual"></a>Virtual</h4><h1 id="RabbitMQ的使用过程"><a href="#RabbitMQ的使用过程" class="headerlink" title="RabbitMQ的使用过程"></a>RabbitMQ的使用过程</h1><ul>
+<li>客户端连接到消息队列服务器，打开一个Channel</li>
+<li>客户端声明一个ExChange，并设置相关属性</li>
+<li>客户端声明一个Queue，并设置相关属性</li>
+<li>客户端使用Routing Key，在ExChange与Queue之间建立好绑定关系</li>
+<li>客户端投递消息到ExChange</li>
+<li>ExChange接收到消息之后，就根据消息的key和已经绑定好的binging，进行消息路由，将消息投递到一个或多个队列里</li>
+</ul>
+<h1 id="docker-compose-yml"><a href="#docker-compose-yml" class="headerlink" title="docker-compose.yml"></a>docker-compose.yml</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">version: '3.1'</span><br><span class="line">services:</span><br><span class="line">    rabbitmq:</span><br><span class="line">        restart: always</span><br><span class="line">        image: rabbitmq:management</span><br><span class="line">        container_name: rabbitmq</span><br><span class="line">        ports:</span><br><span class="line">                - 5672:5672</span><br><span class="line">                - 15672:15672</span><br><span class="line">        environment:</span><br><span class="line">                RABBITMQ_DEFAULT_USER: rabbit</span><br><span class="line">                RABBITMQ_DEFAULT_PASS: 123456</span><br><span class="line">        volumes:</span><br><span class="line">                - ./data:/var/lib/rabbitmq</span><br></pre></td></tr></table></figure>
+<h1 id="消息提供者"><a href="#消息提供者" class="headerlink" title="消息提供者"></a>消息提供者</h1><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  rabbitmq:</span></span><br><span class="line"><span class="attr">    host:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line"><span class="attr">    port:</span> <span class="number">5672</span></span><br><span class="line"><span class="attr">    username:</span> <span class="string">rabbit</span></span><br><span class="line"><span class="attr">    password:</span> <span class="number">123456</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RabbitConfiguration</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Queue <span class="title">queue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Queue(<span class="string">"helloRabbit"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RabbitProvider</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> AmqpTemplate amqpTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String content = <span class="string">"Hello World "</span> + <span class="keyword">new</span> Date();</span><br><span class="line">        System.out.println(<span class="string">"Provider: "</span> + content);</span><br><span class="line">        amqpTemplate.convertAndSend(<span class="string">"helloRabbit"</span>, content);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="消息消费者"><a href="#消息消费者" class="headerlink" title="消息消费者"></a>消息消费者</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@RabbitListener</span>(queues = <span class="string">"helloRabbit"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RabbitConsumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RabbitHandler</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">process</span><span class="params">(String content)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Consumer:"</span> + content);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><ul>
+<li>如何保证消息队列中的数据百分之一百被消费掉</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/03/计算机网络基础知识/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/03/计算机网络基础知识/" itemprop="url">计算机网络基础知识之运输层</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-03T18:39:19+08:00">
+                2019-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/03/计算机网络基础知识/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/03/计算机网络基础知识/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  1.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="运输层"><a href="#运输层" class="headerlink" title="运输层"></a>运输层</h1><h4 id="基本术语"><a href="#基本术语" class="headerlink" title="基本术语"></a>基本术语</h4><ul>
+<li>进程：指计算机正在运行的实体</li>
+<li>应用进程的相互通信： 一台主机的进程和另一台主机的一个进程交换数据的过程</li>
+<li>传输层的复用与分用：复用是指发送方不同的进程可以通过一个传输层协议传送数据， 分用指的是接收方的传输层在剥去报文的首部后能把这些数据正确地交到目的应用进程中。</li>
+<li>TCP：传输控制协议</li>
+<li>UDP：用户数据报协议</li>
+<li>端口：为的是确认对方机器是哪一个进程在和自己交互</li>
+<li>停止等待协议：指发送方每发送完一个分组就停止发送，等待对方确认，在收到确认之后再发送下一个分组。</li>
+<li>流量控制：控制对方的发送速率，既要让接收方来得及接收，也不要使网络发送拥塞</li>
+<li>拥塞控制：防止过多数据注入网络中，防止路由器或者链路过载。</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/03/计算机网络基础知识/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/03/SpringCloud微服务架构实战读书笔记②/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/03/SpringCloud微服务架构实战读书笔记②/" itemprop="url">SpringCloud微服务架构实战读书笔记②</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-03T15:45:27+08:00">
+                2019-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/03/SpringCloud微服务架构实战读书笔记②/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/03/SpringCloud微服务架构实战读书笔记②/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  301
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="使用Feign实现声明式REST调用"><a href="#使用Feign实现声明式REST调用" class="headerlink" title="使用Feign实现声明式REST调用"></a>使用Feign实现声明式REST调用</h1><h4 id="为服务消费者整合Feign"><a href="#为服务消费者整合Feign" class="headerlink" title="为服务消费者整合Feign"></a>为服务消费者整合Feign</h4><ul>
+<li><p>添加依赖</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-cloud-starter-feign&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建一个Feign接口，并添加@FeignClient注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient</span>(name=<span class="string">"applicationName"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserFeignClient</span> </span>&#123;</span><br><span class="line">  <span class="meta">@RequestMapping</span>(value = <span class="string">"/&#123;id&#125;"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> User <span class="title">findById</span><span class="params">(@PathVatiable(<span class="string">"id"</span>)</span>Long id)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>@FeignClient注解</strong>是任意一个服务提供方的名称，用以创建Ribbon负载均衡器。</p>
+</li>
+</ul>
+<h4 id="自定义Feign配置"><a href="#自定义Feign配置" class="headerlink" title="自定义Feign配置"></a>自定义Feign配置</h4><p>修改接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient</span>(name=<span class="string">"applicationName"</span>， configuration = FeignConfiguration.class)</span><br></pre></td></tr></table></figure></p>
+<p>有一点值得注意的是，本例中的FeignConfiguration类不能包括在主程序上下文的@ComponentScan中，否则该类中的配置信息就会被所有的@FeignClient共享， 如果只想定义某个FeignClient客户端的配置，该点需要特别注意。此处可以配置@ComponentScan不扫描配置类的所在包</p>
+<h4 id="手动创建Feign"><a href="#手动创建Feign" class="headerlink" title="手动创建Feign"></a>手动创建Feign</h4><h4 id="Feign对继承的支持"><a href="#Feign对继承的支持" class="headerlink" title="Feign对继承的支持"></a>Feign对继承的支持</h4><h4 id="Feign对压缩的支持"><a href="#Feign对压缩的支持" class="headerlink" title="Feign对压缩的支持"></a>Feign对压缩的支持</h4><h4 id="Feign的日志"><a href="#Feign的日志" class="headerlink" title="Feign的日志"></a>Feign的日志</h4><h4 id="使用Feign构造多参数请求"><a href="#使用Feign构造多参数请求" class="headerlink" title="使用Feign构造多参数请求"></a>使用Feign构造多参数请求</h4><p>Spring Cloud为Feign添加了Spring MVC的注解支持。</p>
+<ul>
+<li><p>例子一</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient</span>(name=<span class="string">"applicationName"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserFeignClient</span> </span>&#123;</span><br><span class="line">  <span class="meta">@GetMapping</span>(value = <span class="string">"/&#123;id&#125;"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> User <span class="title">findById</span><span class="params">(@RequestParam Map&lt;String, Object&gt; map)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>例子二</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient</span>(name=<span class="string">"applicationName"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserFeignClient</span> </span>&#123;</span><br><span class="line">  <span class="meta">@PostMapping</span>(value = <span class="string">"/&#123;id&#125;"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> User <span class="title">findById</span><span class="params">(User user)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/03/MySQL索引与锁/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/03/MySQL索引与锁/" itemprop="url">MySQL索引与锁</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-03T10:58:02+08:00">
+                2019-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/03/MySQL索引与锁/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/03/MySQL索引与锁/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="MySQL存储引擎的基础知识"><a href="#MySQL存储引擎的基础知识" class="headerlink" title="MySQL存储引擎的基础知识"></a>MySQL存储引擎的基础知识</h1><ul>
+<li>MySQL的基本存储结构是页，所有记录都存储在页里面。</li>
+</ul>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/23/164c6d7a53b78847?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt></p>
+<ul>
+<li>每个页之间组成的是一个双向链表。</li>
+<li>每个数据页里面的记录可以组成一个单向链表。<blockquote>
+<ul>
+<li>每个数据页都会为存储在本页里面的数据生成一个页目录，在通过主键查找某条记录时可以使用二分法快速定位</li>
+<li>而根据其它列进行检索时，就只能通过遍历的手段</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<p>在没有任何索引的的表中，select语句的执行会进行如下两次遍历</p>
+<ul>
+<li>遍历双向链表，找到所在页</li>
+<li>遍历页内的单链表，找到所在的记录</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/03/MySQL索引与锁/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/03/《JAVA并发编程的艺术》读书笔记④/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/03/《JAVA并发编程的艺术》读书笔记④/" itemprop="url">《JAVA并发编程的艺术》读书笔记④</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-03T09:24:05+08:00">
+                2019-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/03/《JAVA并发编程的艺术》读书笔记④/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/03/《JAVA并发编程的艺术》读书笔记④/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  792
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="数据依赖性"><a href="#数据依赖性" class="headerlink" title="数据依赖性"></a>数据依赖性</h1><p><img src="https://upload-images.jianshu.io/upload_images/13918038-11fa21b09576a040.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>如果两个操作之间访问同一个变量，且这两个操作有一个为写操作，此时这两个操作就存在数据依赖性。</p>
+<p>编译器和处理器在重排序时，会遵守数据依赖性，编译器和处理器不会改变存在数据依赖关系的两个操作的执行顺序。</p>
+<p>这里所说的数据依赖性针对单个处理器中的指令序列和单个线程中执行的操作，不同处理器之间和不同线程之间的数据依赖性不被编译器和处理器考虑。</p>
+<h1 id="as-if-serial语义"><a href="#as-if-serial语义" class="headerlink" title="as-if-serial语义"></a>as-if-serial语义</h1><p>as-if-serial意思就是说：不管怎么重排序（编译器和处理器为了提高并行度），单线程程序的执行结果不能改变。</p>
+<h1 id="同步程序的顺序一致性效果"><a href="#同步程序的顺序一致性效果" class="headerlink" title="同步程序的顺序一致性效果"></a>同步程序的顺序一致性效果</h1><p><img src="https://upload-images.jianshu.io/upload_images/13918038-057638a8c7f6a0d5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>JMM在具体实现的基本方针是：在不改变正确同步的程序执行结果的前提下，尽可能地为编译器和处理器的优化打开方便之门。</p>
+<p>JMM不保证对64位的long型和double型变量的写操作具有原子性。因为当JVM在一些32位的处理器上运行的时候，如果对64为数据的写操作要求原子性，会有比较大的开销，所以JVM可能会把一个64位的long/double写操作拆分成两个32位的写操作的来执行，这两个32位的写操作可能会被分配到不同的总线事务中，此时对这个64位的变量的写操作不具有原子性。</p>
+<h1 id="未同步程序的执行特性"><a href="#未同步程序的执行特性" class="headerlink" title="未同步程序的执行特性"></a>未同步程序的执行特性</h1><p>对于未同步或未正确同步的多线程程序,JMM只提供最小安全性: 线程执行时读取到的值, 要么是之前某个线程写入的值, 要么是默认值(0, NULL, false), JMM保证线程读操作读到的值不会无中生有.</p>
+<p>为了实现最小安全性, JVM在堆上分配对象时,<strong>首先会对内存空间进行清零, 然后才会在上面分配对象(JVM会同步这两个操作)</strong>, 因此, 在已清零的内存空间分配对象是,域的默认初始化已经完成了.</p>
+<h1 id="锁的内存语义"><a href="#锁的内存语义" class="headerlink" title="锁的内存语义"></a>锁的内存语义</h1><h4 id="锁的释放和获取的内存语义"><a href="#锁的释放和获取的内存语义" class="headerlink" title="锁的释放和获取的内存语义"></a>锁的释放和获取的内存语义</h4><p>当线程获取锁的时候,JMM会把该线程对应的本地内存置为无效,从而是的被监视器保护的临界区代码必须从主内存中读取共享变量.</p>
+<p>对锁释放和锁获取的内存含义做个总结:</p>
+<ul>
+<li>线程A释放一个锁, 实质上是线程A向接下来将要获取这个锁的某个线程发出了线程A对共享变量所做出了修改的消息</li>
+<li>线程B获取一个锁,实质上是线程B接收了之前某个线程(即A线程)对这个变量所作出的修改的消息</li>
+<li><strong>线程A释放锁, 然后线程B获取锁, 这个过程实质上是线程A通过主内存向线程B发送消息.</strong></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/02/《JAVA并发编程的艺术》读书笔记③/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/02/《JAVA并发编程的艺术》读书笔记③/" itemprop="url">《JAVA并发编程的艺术》读书笔记③</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-02T19:20:48+08:00">
+                2019-06-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/02/《JAVA并发编程的艺术》读书笔记③/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/02/《JAVA并发编程的艺术》读书笔记③/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  991
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="JAVA内存模型的基础"><a href="#JAVA内存模型的基础" class="headerlink" title="JAVA内存模型的基础"></a>JAVA内存模型的基础</h1><p>在命令式编程中，线程之间的通信机制有两种：共享内存和消息传递。</p>
+<ul>
+<li>在共享内存的并发模型中，线程之间共享程序的公共状态，通过读写内存中的公共状态来进行隐式通信。</li>
+<li>在消息传递的并发模型中，线程之间没有公共状态，线程之间必须通过发送消息来显式进行通信。</li>
+</ul>
+<p>JAVA的并发采用的是<strong>共享内存模型</strong>。</p>
+<h4 id="JAVA内存模型的抽象结构"><a href="#JAVA内存模型的抽象结构" class="headerlink" title="JAVA内存模型的抽象结构"></a>JAVA内存模型的抽象结构</h4><ul>
+<li>在JAVA中，所有实例域、静态域和数组元素都在堆内存中，堆内存在线程之间共享。</li>
+<li>局部变量、方法定义参数和异常处理函数，在栈内存里面，不会在线程之间共享。</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-32ce6a246e0c8cdd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>线程之间的共享变量存储在主内存中，每个线程都有一个私有的本地内存，本地内存存储了该内存以读写共享变量的副本。<br>A与B之间的通信，需要通过以下2个步骤</p>
+<ul>
+<li>线程A把本地内存A中更新过的共享变量刷新的主内存中。</li>
+<li>线程B到主内存中去读取线程A之前已经更新过的共享变量。</li>
+</ul>
+<h4 id="从源代码到指令序列的重排序"><a href="#从源代码到指令序列的重排序" class="headerlink" title="从源代码到指令序列的重排序"></a>从源代码到指令序列的重排序</h4><p>在执行程序时，为了提高性能，编译器和处理器通常会对指令做重排序，重排序分为三种：</p>
+<ul>
+<li>编译器优化的重排序：编译器在不改变单线程语义的前提下，可以重新安排语句的执行顺序。</li>
+<li>指令级并行的重排序：现代处理器采用了指令级并行技术来将多条指令重叠执行，如果不存在数据依赖性，处理器可以改变语句对应的机器指令的执行顺序。</li>
+<li>内存系统的重排序：由于处理器使用缓存和读写缓冲区，这使得加载和存储操作看上去可能是乱序执行。</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-c82ce2df3c4d9e08.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>对于指令重排，JAVA内存模型的处理器重排序规则可以要求JAVA编译器在生成指令序列时，插入特定类型的内存屏障指令，通过内存屏障指令来禁止特定类型的处理器重排序。</p>
+<p><strong>内存屏障</strong>：指的是重排序时不能把后面的指令重排序到内存屏障之前的位置。</p>
+<h4 id="展示一个由于内存操作重排带来问题的例子（经典）"><a href="#展示一个由于内存操作重排带来问题的例子（经典）" class="headerlink" title="展示一个由于内存操作重排带来问题的例子（经典）"></a>展示一个由于内存操作重排带来问题的例子（经典）</h4><p>在展示之前，首先补充一点知识：现代处理器使用写缓存区临时保存向内存下入的数据，以保证指令流水线持续运行，避免处理器停顿下来等待向内存写入数据而产生延迟，同时，以批处理的方式刷新缓存区，以及合并写缓存区对统一内存地址的多次写，减少堆内存总线的占用。</p>
+<p>这个特性会对内存操作的顺序产生影响：处理器堆内存的读写操作的执行顺序，不一定与内存实际发生的读写操作顺序一致（因为内存操作重排）</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-640d065ce10355d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>如果AB同时执行，可能会得到读取到脏数据，原因如下：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-ac6059838ed563db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>此处由于指令重排，导致1-&gt;A2的顺序变成了A2-&gt;A1，所以读取了脏数据。</p>
+<p>一般情况下，处理器都不允许对存在数据依赖的操作做重排序。</p>
+<h1 id="happens-before"><a href="#happens-before" class="headerlink" title="happens-before"></a>happens-before</h1><p>在JMM中，如果一个操作的结果需要对另一个操作可见，那么这两个操作之间必须要存在happens-before关系。</p>
+<p>A happens-before B, JMM 并不要求A一定要在B之前执行, JMM仅仅要求前一个操作的结果对后一个操作课件,且前一个操作按顺序排在第二个操作之前.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/02/一条SQL语句在MySQL中的执行流程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/02/一条SQL语句在MySQL中的执行流程/" itemprop="url">一条SQL语句在MySQL中的执行流程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-02T16:24:55+08:00">
+                2019-06-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/02/一条SQL语句在MySQL中的执行流程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/02/一条SQL语句在MySQL中的执行流程/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  568
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="MySQL-架构分析"><a href="#MySQL-架构分析" class="headerlink" title="MySQL 架构分析"></a>MySQL 架构分析</h1><p>首先，我们需要了解MySQL的一个简要的架构</p>
+<ul>
+<li>连接器： 身份验证与权限相关</li>
+<li>查询缓存：执行查询语句时，会先查询缓存（失效率过高，不推荐用）</li>
+<li>分析器：分析SQL语句</li>
+<li>优化器：优化SQL语句</li>
+<li>执行器：执行SQL语句，并从存储引擎用返回数据</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-ee859e1716a3b4e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>值得注意的是，Mysql分为了Server层和存储引擎层：</p>
+<ul>
+<li>Server层： 主要包括连接器、查询缓存、分析器、优化器和执行器等组件，很多功能都是在这一层实现的，如存储过程、触发器、视图、函数等等，还有一个日志模块binglog</li>
+<li>存储引擎模块：支持InnoDB、MyISAM等等，InnoDB为默认的存储模块。</li>
+</ul>
+<h1 id="MySQL的日志模块"><a href="#MySQL的日志模块" class="headerlink" title="MySQL的日志模块"></a>MySQL的日志模块</h1><p>这里，我们需要特别主义redo log 和 binlog这两个日志模块，前者是InnoDB自带的日志模块，后者是MySQL自带的日志模式。</p>
+<h4 id="SQL-语句的类型"><a href="#SQL-语句的类型" class="headerlink" title="SQL 语句的类型"></a>SQL 语句的类型</h4><p>SQL语句的类型主要分为两种</p>
+<ul>
+<li>查询： select</li>
+<li>更新：update、delete</li>
+</ul>
+<h4 id="执行更新语句时，该如何操作这两个日志模块"><a href="#执行更新语句时，该如何操作这两个日志模块" class="headerlink" title="执行更新语句时，该如何操作这两个日志模块"></a>执行更新语句时，该如何操作这两个日志模块</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> tb_student <span class="keyword">set</span> <span class="keyword">name</span> = <span class="string">'wt'</span> <span class="keyword">where</span> <span class="keyword">name</span> = <span class="string">'name'</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>首先，要根据where查询到对应那一条数据</li>
+<li>根据查询到的数据，先进行修改，然后调用引擎接口，写入这一行数据，InnoDB会把数据保存在缓存中，同时记录redo log,此时redo log 进入prepare状态，然后告诉执行器，执行结束</li>
+<li>执行器收到通知后记录binlog，然后调用引擎接口，提交redo log为提交状态</li>
+<li>更新完成</li>
+</ul>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><ul>
+<li>MySQL 主要分为 Server 层和引擎层，Server 层主要包括连接器、查询缓存、分析器、优化器、执行器，同时还有一个日志模块（binlog），这个日志模块所有执行引擎都可以共用,redolog 只有 InnoDB 有。</li>
+<li>引擎层是插件式的，目前主要包括，MyISAM,InnoDB,Memory 等。</li>
+<li>查询语句的执行流程如下：权限校验（如果命中缓存）—》查询缓存—》分析器—》优化器—》权限校验—》执行器—》引擎</li>
+<li>更新语句执行流程如下：分析器—-》权限校验—-》执行器—》引擎—redo log(prepare 状态—》binlog—》redo log(commit状态)</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/01/《JAVA并发编程的艺术》读书笔记②/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/01/《JAVA并发编程的艺术》读书笔记②/" itemprop="url">《JAVA并发编程的艺术》读书笔记②</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-01T18:44:37+08:00">
+                2019-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/01/《JAVA并发编程的艺术》读书笔记②/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/01/《JAVA并发编程的艺术》读书笔记②/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  697
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>JAVA代码在编译之后会变成JAVA字节码，字节码被类加载器加载到JVM里面，JVM执行字节码，将字节码装换成汇编指令在CPU上执行。</p>
+<p>JAVA中所执行的并发机制依赖JVM的实现和CPU的指令。</p>
+<h1 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h1><p>在多线程并发编程中，volatile是轻量级的synchronized，它在多处理器开发中保证了共享变量的可见性，如果volatile变量修饰符使用恰当，它比synchronized的使用或执行成本更低，因为它不会引起线程上下文的切换和调度。</p>
+<h4 id="作用1（保证共享变量的可见性）"><a href="#作用1（保证共享变量的可见性）" class="headerlink" title="作用1（保证共享变量的可见性）"></a>作用1（保证共享变量的可见性）</h4><ul>
+<li>将当前处理器缓存行的数据写会到系统内存中。</li>
+<li>这个写会内存的操作会使其他CPU里缓存了该内存地址的数据无效。</li>
+</ul>
+<h4 id="对作用1的解释："><a href="#对作用1的解释：" class="headerlink" title="对作用1的解释："></a>对作用1的解释：</h4><p>为了提高处理速度，处理器不直接与内存进行通信，而是将内存中的数据读到内部的缓存里面再进行操作，而为了保持缓存的一致性，在多处理器模式下，就实现缓存一致性的协议，每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是否已经过期，当处理器发现自己缓存行对应的内存地址被修改，将会将当前处理器的缓存行设置为无效状态，当处理器对这个数据进行修改操作的时候，就会重新从系统内存中把数据督导处理器缓存中。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-0fc8744f2e22d249.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-45e0d382f422f64e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="volatile实现原则"><a href="#volatile实现原则" class="headerlink" title="volatile实现原则"></a>volatile实现原则</h4><ul>
+<li>Lock前缀指令会引起处理器缓存写回到内存中。</li>
+<li>一个处理器的缓存回写到内存中会导致其他处理器的缓存无效。</li>
+</ul>
+<h4 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h4><ul>
+<li>可见性：对一个Volatile变量的读，总是能够看到任意线程对这个volatile的最后写入。</li>
+<li>原子性：对任意单个volatile的变量的读写具有原子性，但是类似于volatile++这种复合操作不具有原子性。</li>
+</ul>
+<h4 id="volatile写-读建立的happens-before关系"><a href="#volatile写-读建立的happens-before关系" class="headerlink" title="volatile写-读建立的happens-before关系"></a>volatile写-读建立的happens-before关系</h4><ul>
+<li>从内存语义的角度来说，volatile的写-读与锁的释放-获取有相同的内存效果。</li>
+</ul>
+<h1 id="synchronized"><a href="#synchronized" class="headerlink" title="synchronized"></a>synchronized</h1><ul>
+<li>对于普通同步方法，锁是当前实例对象。</li>
+<li>对于静态同步方法，锁是当前类的Class对象。</li>
+<li>对于同步方法块，锁是synchronized括号里配置的对象。</li>
+</ul>
+<h1 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h1><p>原子操作意思就是不可被中断的一个或一系列的操作。</p>
+<h4 id="处理器保证原子操作的措施"><a href="#处理器保证原子操作的措施" class="headerlink" title="处理器保证原子操作的措施"></a>处理器保证原子操作的措施</h4><ul>
+<li>总线锁：举个例子，当CPU获取到共享变量时，会发出LOCK#信号去组织其它处理器对这个变量的请求</li>
+<li>缓存锁：</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avator.jpeg" alt="Enda Lin">
+          <p class="site-author-name" itemprop="name">Enda Lin</p>
+           
+              <p class="site-description motion-element" itemprop="description">所有的伟大都是从零开始</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wt-git-repository" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="endawt.lin@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Enda Lin</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 您是博主的第
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位小伙伴
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

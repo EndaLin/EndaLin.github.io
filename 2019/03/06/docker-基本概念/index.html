@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="docker,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="dockerwhat is docker Docker是基于Go语言开发实现的，是一种对进程进行封装隔离，属于操作系统层面的虚拟化技术 由于隔离的进程独立于宿主和其它隔离的进程，Docker也因此被称为容器  The discrimination between virtual machines and docker 传统虚拟机技术是虚拟出一套硬件，在其运行一个完整的操作系统，然后在这个系统运行所">
+<meta name="keywords" content="docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker| 基本概念">
+<meta property="og:url" content="https://wt-git-repository.github.io/2019/03/06/docker-基本概念/index.html">
+<meta property="og:site_name" content="Enda Lin">
+<meta property="og:description" content="dockerwhat is docker Docker是基于Go语言开发实现的，是一种对进程进行封装隔离，属于操作系统层面的虚拟化技术 由于隔离的进程独立于宿主和其它隔离的进程，Docker也因此被称为容器  The discrimination between virtual machines and docker 传统虚拟机技术是虚拟出一套硬件，在其运行一个完整的操作系统，然后在这个系统运行所">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-0362e4f59b7bd67f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-5fb043f42f9f3caa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-cb088fcf5676ac6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-07-08T01:15:52.698Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="docker| 基本概念">
+<meta name="twitter:description" content="dockerwhat is docker Docker是基于Go语言开发实现的，是一种对进程进行封装隔离，属于操作系统层面的虚拟化技术 由于隔离的进程独立于宿主和其它隔离的进程，Docker也因此被称为容器  The discrimination between virtual machines and docker 传统虚拟机技术是虚拟出一套硬件，在其运行一个完整的操作系统，然后在这个系统运行所">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/13918038-0362e4f59b7bd67f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wt-git-repository.github.io/2019/03/06/docker-基本概念/">
+
+
+
+
+
+  <title>docker| 基本概念 | Enda Lin</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Enda Lin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep foolish, keep sharp</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/03/06/docker-基本概念/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">docker| 基本概念</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-06T20:56:53+08:00">
+                2019-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/03/06/docker-基本概念/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/03/06/docker-基本概念/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  759
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h1><h4 id="what-is-docker"><a href="#what-is-docker" class="headerlink" title="what is docker"></a>what is docker</h4><ul>
+<li>Docker是基于Go语言开发实现的，是一种对进程进行封装隔离，属于操作系统层面的虚拟化技术</li>
+<li>由于隔离的进程独立于宿主和其它隔离的进程，Docker也因此被称为容器</li>
+</ul>
+<h4 id="The-discrimination-between-virtual-machines-and-docker"><a href="#The-discrimination-between-virtual-machines-and-docker" class="headerlink" title="The discrimination between virtual machines and docker"></a>The discrimination between virtual machines and docker</h4><ul>
+<li>传统虚拟机技术是虚拟出一套硬件，在其运行一个完整的操作系统，然后在这个系统运行所需的应用进程</li>
+<li>Docker的应用进程是直接运行为宿主的内核上，容器内没有自己的内核，更没有硬件虚拟</li>
+<li>Docker容器比传统的虚拟机更为轻便</li>
+</ul>
+<a id="more"></a>
+<h4 id="The-discrimination-between-virtual-machines-and-docker-1"><a href="#The-discrimination-between-virtual-machines-and-docker-1" class="headerlink" title="The discrimination between virtual machines and docker"></a>The discrimination between virtual machines and docker</h4><p><img src="https://upload-images.jianshu.io/upload_images/13918038-0362e4f59b7bd67f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Virtual_Machines"><br><img src="https://upload-images.jianshu.io/upload_images/13918038-5fb043f42f9f3caa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="docker"></p>
+<h4 id="The-advantage-of-Docker"><a href="#The-advantage-of-Docker" class="headerlink" title="The advantage of Docker"></a>The advantage of Docker</h4><ul>
+<li>容器不需要硬件模拟或者运行操作系统等额外开外，故相比与传统的虚拟机技术，一个相同配置的主机，可以运行更多数量的容器</li>
+<li>容器直接运行于宿主内核，无需启动完整的操作系统，因此可以做到毫秒级的启动</li>
+<li>容器可以提供一致的开发环境</li>
+<li>使用容器可以定制镜像来实现持续集成，交付和部署</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-cb088fcf5676ac6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="总结对比"></p>
+<h4 id="Docker-Image"><a href="#Docker-Image" class="headerlink" title="Docker Image"></a>Docker Image</h4><ul>
+<li>Docker镜像(Image)，就相当于是一个root文件系统</li>
+<li>镜像使用的是分层存储<blockquote>
+<p>例如：官方镜像 ubuntu:16.04 就包含了完整的一套 Ubuntu 16.04 最小系统的 root 文件系统　　</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="Docker-Container"><a href="#Docker-Container" class="headerlink" title="Docker Container"></a>Docker Container</h4><ul>
+<li>镜像(Image)和容器(Container)的关系，就相当于面向对象程序设计的<strong>类</strong>和<strong>实例</strong>一样</li>
+<li>镜像是静态的定义</li>
+<li>容器是镜像运行时的实体</li>
+<li>容器可以被创建，启动，停止，删除，暂停等等</li>
+<li>容器是一个运行在隔离环境下的进程，与其它进程不同的是，容器可以拥有只属于自己的root文件系统,自己的网络配置，自己的进程空间以及自己的ID空间等等</li>
+<li>如同镜像一样，容器也是使用分层存储，每一个容器运行时，以镜像为基础层，在其上创建一个当前容器的存储层，可称为容器运行时而准备的存储层，又称容器存储层</li>
+<li>容器消亡时，容器存储层也随之消亡，<strong>故，容器不应向存储层写入任何数据需保持无状态化</strong></li>
+<li>所以的文件写入操作，都应该使用<strong>数据卷</strong>,或者<strong>绑定宿主目录</strong>,在这些位置的读写会跳过容器存储层，直接对宿主或者网络存储发生读写</li>
+<li>容器消亡，数据卷不会消亡，使用数据卷后，容器删除或者重新运行之后，数据不会丢失</li>
+</ul>
+<h4 id="Docker-Register"><a href="#Docker-Register" class="headerlink" title="Docker Register"></a>Docker Register</h4><ul>
+<li>一个 Docker Registry 中可以包含多个仓库（Repository）</li>
+<li>每个仓库可以包含多个标签（Tag）,每个标签对应一个镜像，如版本标签,如果忽略标签，则使用latest作为默认标签</li>
+<li>Docker Hub</li>
+<li>阿里云加速器</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"># docker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/06/docker-镜像使用/" rel="next" title="docker| 镜像使用">
+                <i class="fa fa-chevron-left"></i> docker| 镜像使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/06/docker-操作容器/" rel="prev" title="docker| 操作容器">
+                docker| 操作容器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/03/06/docker-基本概念/" data-title="docker| 基本概念" data-url="https://wt-git-repository.github.io/2019/03/06/docker-基本概念/">
+      </div>
+    
+    <div id="gitalk-container"></div>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avator.jpeg" alt="Enda Lin">
+          <p class="site-author-name" itemprop="name">Enda Lin</p>
+           
+              <p class="site-description motion-element" itemprop="description">所有的伟大都是从零开始</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wt-git-repository" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="endawt.lin@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#docker"><span class="nav-number">1.</span> <span class="nav-text">docker</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#what-is-docker"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">what is docker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#The-discrimination-between-virtual-machines-and-docker"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">The discrimination between virtual machines and docker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#The-discrimination-between-virtual-machines-and-docker-1"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">The discrimination between virtual machines and docker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#The-advantage-of-Docker"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">The advantage of Docker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker-Image"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">Docker Image</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker-Container"><span class="nav-number">1.0.0.6.</span> <span class="nav-text">Docker Container</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker-Register"><span class="nav-number">1.0.0.7.</span> <span class="nav-text">Docker Register</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Enda Lin</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 您是博主的第
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位小伙伴
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="/js/md5.min.js"></script>
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'afbcc6e2a54ed4e2ebd7',
+          clientSecret: '6c36028e964ef689580f33ec9bd19b720f5f131f',
+          repo: 'wt-git-repository.github.io',
+          owner: 'wt-git-repository',
+          admin: ['wt-git-repository'],
+          id: md5(location.href),
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

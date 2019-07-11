@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="JAVA,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Java并发编程基础线程优先级在Java线程中，通过一个整型成员变量priority来控制优先级， 优先级分为从1-10， 在线程构建的时候可以通过setPriority(int)方法来修改优先级， 默认优先级是5， 优先级高的线程分配时间片的数量要多余优先级低的线程。 针对阻塞频繁的线程需要设置较高的优先级。 偏重计算的线程设置较低的优先级。">
+<meta name="keywords" content="JAVA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《JAVA并发编程的艺术》读书笔记⑥">
+<meta property="og:url" content="https://wt-git-repository.github.io/2019/06/17/《JAVA并发编程的艺术》读书笔记⑥/index.html">
+<meta property="og:site_name" content="Enda Lin">
+<meta property="og:description" content="Java并发编程基础线程优先级在Java线程中，通过一个整型成员变量priority来控制优先级， 优先级分为从1-10， 在线程构建的时候可以通过setPriority(int)方法来修改优先级， 默认优先级是5， 优先级高的线程分配时间片的数量要多余优先级低的线程。 针对阻塞频繁的线程需要设置较高的优先级。 偏重计算的线程设置较低的优先级。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-7a5d39835efdf469.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-f517471e37622031.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-3625a595fa1e836f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-07-08T01:15:52.724Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《JAVA并发编程的艺术》读书笔记⑥">
+<meta name="twitter:description" content="Java并发编程基础线程优先级在Java线程中，通过一个整型成员变量priority来控制优先级， 优先级分为从1-10， 在线程构建的时候可以通过setPriority(int)方法来修改优先级， 默认优先级是5， 优先级高的线程分配时间片的数量要多余优先级低的线程。 针对阻塞频繁的线程需要设置较高的优先级。 偏重计算的线程设置较低的优先级。">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/13918038-7a5d39835efdf469.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wt-git-repository.github.io/2019/06/17/《JAVA并发编程的艺术》读书笔记⑥/">
+
+
+
+
+
+  <title>《JAVA并发编程的艺术》读书笔记⑥ | Enda Lin</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Enda Lin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep foolish, keep sharp</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/17/《JAVA并发编程的艺术》读书笔记⑥/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">《JAVA并发编程的艺术》读书笔记⑥</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-17T14:49:49+08:00">
+                2019-06-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/17/《JAVA并发编程的艺术》读书笔记⑥/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/17/《JAVA并发编程的艺术》读书笔记⑥/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  904
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Java并发编程基础"><a href="#Java并发编程基础" class="headerlink" title="Java并发编程基础"></a>Java并发编程基础</h1><h4 id="线程优先级"><a href="#线程优先级" class="headerlink" title="线程优先级"></a>线程优先级</h4><p>在Java线程中，通过一个整型成员变量priority来控制优先级， 优先级分为从1-10， 在线程构建的时候可以通过setPriority(int)方法来修改优先级， 默认优先级是5， 优先级高的线程分配时间片的数量要多余优先级低的线程。</p>
+<p>针对阻塞频繁的线程需要设置较高的优先级。</p>
+<p>偏重计算的线程设置较低的优先级。</p>
+<a id="more"></a>
+<h4 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h4><ul>
+<li>NEW： 初始状态， 线程被构建， 但是还没有调用start()方法</li>
+<li>RUNNABLE： 运行状态， Java线程将操作系统中的就绪和运行两种状态笼统地称作“运行中”</li>
+<li>BLOCKED：阻塞状态，表示线程阻塞干锁</li>
+<li>WAITING：等待状态， 表示线程进入等待状态，进入该状态的线程表示当前线程需要等待其他线程作出一些特定的动作</li>
+<li>TIME_WAITING：超时等待状态， 它是可以在指定的时间自行返回</li>
+<li>TERMINATED：终止状态，表示当前线程已经执行完毕</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-7a5d39835efdf469.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="Daemon线程"><a href="#Daemon线程" class="headerlink" title="Daemon线程"></a>Daemon线程</h4><p>Daemon线程是一种支持型线程，因为它主要被用作程序中后台调度以及支持工作，当一个JAVA虚拟机中不存在非Daemon线程的时候，JAVA虚拟机将会退出。</p>
+<p>可以使用<strong>Thread.setDaemon(true)</strong>来设置Daemon线程。</p>
+<p>Deamon线程被用作支持性工作，但是在JAVA虚拟机退出时，Daemo线程中的finally块不一定会执行。</p>
+<h4 id="对象、监视器、同步队列和执行线程之间的关系"><a href="#对象、监视器、同步队列和执行线程之间的关系" class="headerlink" title="对象、监视器、同步队列和执行线程之间的关系"></a>对象、监视器、同步队列和执行线程之间的关系</h4><p><img src="https://upload-images.jianshu.io/upload_images/13918038-f517471e37622031.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="线程间的通信"><a href="#线程间的通信" class="headerlink" title="线程间的通信"></a>线程间的通信</h4><h4 id="等待-通知机制"><a href="#等待-通知机制" class="headerlink" title="等待/通知机制"></a>等待/通知机制</h4><p><img src="https://upload-images.jianshu.io/upload_images/13918038-3625a595fa1e836f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>有一些细节上的东西需要注意一下：</p>
+<ul>
+<li>使用wait、notify、notifyAll时需要对调用对象加锁。</li>
+<li>调用wait方法后，线程状态由RUNNING变成WAITING，并将当前线程放置在对象的等待队列中。</li>
+<li>notify和notifyAll调用后，等到线程依旧不会从wait返回，而是要等本线程释放锁之后，等待线程才有机会返回</li>
+<li>notify是将等待队列中的一个等待线程从等待队列中移到同步队列中</li>
+<li>notifyAll是将等待队列中所有的线程全部移到同步队列中，被移动的线程状态由WAITING变为BLOKCED</li>
+<li>从wait方法返回后重新执行的前提是获得对象的锁</li>
+</ul>
+<h4 id="管道输入-输出流"><a href="#管道输入-输出流" class="headerlink" title="管道输入\输出流"></a>管道输入\输出流</h4><p>管道输入输出流主要用于线程之间的数据传输，而传输的媒介是内存。</p>
+<p>管道输入输出流主要包括：PipedOutputStream、PipedInputStream、PipedReader和PipedWriter，前两种面向字节，后两种面向字符。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PipedWriter out = <span class="keyword">new</span> PipedWriter();</span><br><span class="line">PipedReader in = <span class="keyword">new</span> PipedReader();</span><br><span class="line">out.connect(in);</span><br></pre></td></tr></table></figure>
+<p><strong>对于Piped类型的流，必须先要进行绑定（调用connect方法）</strong></p>
+<h4 id="Thread-join-的使用"><a href="#Thread-join-的使用" class="headerlink" title="Thread.join()的使用"></a>Thread.join()的使用</h4><p>如果线程A执行了thread.join()语句， 意味着当前线程A等到thread线程终止之后才从thread.join()返回。</p>
+<p>除此之外， 线程Thread还提供了join(long millis)和join(long millis, int nanos)两个具备超时特性的方法， 表示：如果线程thread在特定的超时时间里没有终止，那么将会从该超时方法中返回。</p>
+<h4 id="ThreadLocal的使用"><a href="#ThreadLocal的使用" class="headerlink" title="ThreadLocal的使用"></a>ThreadLocal的使用</h4><p>ThreadLocal是线程变量，是一个以ThreadLocal对象为键、任意对象为值的存储结构， 这个结构被附带在线程上，也就是说一个线程可以根据一个ThreadLocal对象查询到绑定到这个线程上的一个值。</p>
+<p>可以通过set(T)方法来设置一个值，在当前线程下再过get()方法获取到原先设置的值。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/06/17/《JAVA并发编程的艺术》读书笔记⑥/">《JAVA并发编程的艺术》读书笔记⑥</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Enda Lin 的个人博客">Enda Lin</a></p>
+  <p><span>发布时间:</span>2019年06月17日 - 14:49</p>
+  <p><span>最后更新:</span>2019年07月08日 - 09:15</p>
+  <p><span>原始链接:</span><a href="/2019/06/17/《JAVA并发编程的艺术》读书笔记⑥/" title="《JAVA并发编程的艺术》读书笔记⑥">https://wt-git-repository.github.io/2019/06/17/《JAVA并发编程的艺术》读书笔记⑥/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://wt-git-repository.github.io/2019/06/17/《JAVA并发编程的艺术》读书笔记⑥/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>
+</div>
+<script>
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({
+          title: "",
+          text: '复制成功',
+          icon: "success",
+          showConfirmButton: true
+          });
+	});
+    });
+</script>
+
+
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/17/《JAVA并发编程的艺术》读书笔记⑤/" rel="next" title="《JAVA并发编程的艺术》读书笔记⑤">
+                <i class="fa fa-chevron-left"></i> 《JAVA并发编程的艺术》读书笔记⑤
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/19/Vue常用命令/" rel="prev" title="Vue常用命令">
+                Vue常用命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/06/17/《JAVA并发编程的艺术》读书笔记⑥/" data-title="《JAVA并发编程的艺术》读书笔记⑥" data-url="https://wt-git-repository.github.io/2019/06/17/《JAVA并发编程的艺术》读书笔记⑥/">
+      </div>
+    
+    <div id="gitalk-container"></div>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avator.jpeg" alt="Enda Lin">
+          <p class="site-author-name" itemprop="name">Enda Lin</p>
+           
+              <p class="site-description motion-element" itemprop="description">所有的伟大都是从零开始</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wt-git-repository" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="endawt.lin@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java并发编程基础"><span class="nav-number">1.</span> <span class="nav-text">Java并发编程基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程优先级"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">线程优先级</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程的状态"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">线程的状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Daemon线程"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">Daemon线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对象、监视器、同步队列和执行线程之间的关系"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">对象、监视器、同步队列和执行线程之间的关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程间的通信"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">线程间的通信</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#等待-通知机制"><span class="nav-number">1.0.0.6.</span> <span class="nav-text">等待/通知机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#管道输入-输出流"><span class="nav-number">1.0.0.7.</span> <span class="nav-text">管道输入\输出流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Thread-join-的使用"><span class="nav-number">1.0.0.8.</span> <span class="nav-text">Thread.join()的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ThreadLocal的使用"><span class="nav-number">1.0.0.9.</span> <span class="nav-text">ThreadLocal的使用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Enda Lin</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 您是博主的第
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位小伙伴
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="/js/md5.min.js"></script>
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'afbcc6e2a54ed4e2ebd7',
+          clientSecret: '6c36028e964ef689580f33ec9bd19b720f5f131f',
+          repo: 'wt-git-repository.github.io',
+          owner: 'wt-git-repository',
+          admin: ['wt-git-repository'],
+          id: md5(location.href),
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

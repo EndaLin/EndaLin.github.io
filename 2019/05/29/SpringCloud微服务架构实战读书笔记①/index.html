@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="JAVA,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="微服务架构概述微服务设计原则 单一设计原则： 单一职责原则指的是一个单元（类、方法或者是服务）关注的应该只是整个系统中单独且有界限的一部分。 服务自治原则： 服务自治指的是每个微服务都应具备独立的业务能力、依赖与运行环境， 服务与服务之间需要高度解耦， 每个服务从开发、测试、构建到部署都应该可以独立的运行， 而不需要依赖其它服务。 轻量级通信机制： 微服务之间应该通过轻量级的通信机制进行交互。 微">
+<meta name="keywords" content="JAVA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringCloud微服务架构实战读书笔记①">
+<meta property="og:url" content="https://wt-git-repository.github.io/2019/05/29/SpringCloud微服务架构实战读书笔记①/index.html">
+<meta property="og:site_name" content="Enda Lin">
+<meta property="og:description" content="微服务架构概述微服务设计原则 单一设计原则： 单一职责原则指的是一个单元（类、方法或者是服务）关注的应该只是整个系统中单独且有界限的一部分。 服务自治原则： 服务自治指的是每个微服务都应具备独立的业务能力、依赖与运行环境， 服务与服务之间需要高度解耦， 每个服务从开发、测试、构建到部署都应该可以独立的运行， 而不需要依赖其它服务。 轻量级通信机制： 微服务之间应该通过轻量级的通信机制进行交互。 微">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-ea202a8b6cfc0a3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-23d39681d04f8e38.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-a502e8b0978441bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-26f6b2a271ef2fc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-3ee039946a47b453.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-0d8849fe445595af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-1420a77c674b973d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-65a9f43bcd1a020a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-6285ccb925df4da5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-ff1babc38ad51a81.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-9ecbeafbb4bb8f63.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-749611dfbfde1bea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-07-08T01:15:52.693Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringCloud微服务架构实战读书笔记①">
+<meta name="twitter:description" content="微服务架构概述微服务设计原则 单一设计原则： 单一职责原则指的是一个单元（类、方法或者是服务）关注的应该只是整个系统中单独且有界限的一部分。 服务自治原则： 服务自治指的是每个微服务都应具备独立的业务能力、依赖与运行环境， 服务与服务之间需要高度解耦， 每个服务从开发、测试、构建到部署都应该可以独立的运行， 而不需要依赖其它服务。 轻量级通信机制： 微服务之间应该通过轻量级的通信机制进行交互。 微">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/13918038-ea202a8b6cfc0a3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wt-git-repository.github.io/2019/05/29/SpringCloud微服务架构实战读书笔记①/">
+
+
+
+
+
+  <title>SpringCloud微服务架构实战读书笔记① | Enda Lin</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Enda Lin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep foolish, keep sharp</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/05/29/SpringCloud微服务架构实战读书笔记①/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SpringCloud微服务架构实战读书笔记①</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-29T15:27:56+08:00">
+                2019-05-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/29/SpringCloud微服务架构实战读书笔记①/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/29/SpringCloud微服务架构实战读书笔记①/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  1.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="微服务架构概述"><a href="#微服务架构概述" class="headerlink" title="微服务架构概述"></a>微服务架构概述</h1><h3 id="微服务设计原则"><a href="#微服务设计原则" class="headerlink" title="微服务设计原则"></a>微服务设计原则</h3><ul>
+<li>单一设计原则： 单一职责原则指的是一个单元（类、方法或者是服务）关注的应该只是整个系统中单独且有界限的一部分。</li>
+<li>服务自治原则： 服务自治指的是每个微服务都应具备独立的业务能力、依赖与运行环境， 服务与服务之间需要高度解耦， 每个服务从开发、测试、构建到部署都应该可以独立的运行， 而不需要依赖其它服务。</li>
+<li>轻量级通信机制： 微服务之间应该通过轻量级的通信机制进行交互。</li>
+<li>微服务粒度： 根据合理的粒度划分微服务， 而并非越小越好。</li>
+</ul>
+<a id="more"></a>
+<h1 id="Spring-Cloud-实战"><a href="#Spring-Cloud-实战" class="headerlink" title="Spring Cloud 实战"></a>Spring Cloud 实战</h1><h3 id="服务提供者与服务消费者"><a href="#服务提供者与服务消费者" class="headerlink" title="服务提供者与服务消费者"></a>服务提供者与服务消费者</h3><h4 id="服务提供者"><a href="#服务提供者" class="headerlink" title="服务提供者"></a>服务提供者</h4><p>定义： 服务的被调用方， 即为其它服务提供服务的服务</p>
+<h4 id="服务消费者"><a href="#服务消费者" class="headerlink" title="服务消费者"></a>服务消费者</h4><p>定义： 服务的消费方， 即依赖其它服务的服务</p>
+<h4 id="Spring-Boot-Actuator"><a href="#Spring-Boot-Actuator" class="headerlink" title="Spring Boot Actuator"></a>Spring Boot Actuator</h4><p>提供了一些监控的端点</p>
+<h4 id="硬编码的问题"><a href="#硬编码的问题" class="headerlink" title="硬编码的问题"></a>硬编码的问题</h4><p>硬编码指的是把网络地址嵌套在代码中， 如<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/user/&#123;id&#125;"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>在不使用注册中心的前提下， 最好将路径提取出来， 放在配置文件中，使用分布式配置中心统一去管理。</p>
+<h3 id="服务注册与发现"><a href="#服务注册与发现" class="headerlink" title="服务注册与发现"></a>服务注册与发现</h3><p><img src="https://upload-images.jianshu.io/upload_images/13918038-ea202a8b6cfc0a3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ul>
+<li>各个微服务在启动时，将自己的网络地址等信息注册到服务发现组件中，服务发现组件会存储这些信息。</li>
+<li>服务消费者可以从服务发现组件查询服务提供者的网络地址，并使用该地址调用服务提供者的接口。</li>
+<li>各个微服务与服务发现组件使用一定机制（如心跳）进行通信。服务发现组件若长时间服务与某服务实例通信，就会注销该实例。</li>
+<li>微服务网络地址发生变更， 会重新注册到服务发现组件。</li>
+</ul>
+<p>综上所述， 服务发现组件应该具备如下功能：</p>
+<ul>
+<li>服务注册表： 服务发现组件的核心，它用来记录各个微服务的信息，例如微服务的名称、IP、端口等等，该表提供查询API和管理API， 查询API用于查询可用的微服务实例， 管理API用于管理服务的注册与注销。</li>
+<li>服务注册与服务发现： 服务注册是指在微服务启动时，将自己的信息注册到服务发现组件上的过程。服务发现是指查询可用微服务列表及网络地址的机制。</li>
+<li>服务检查： 服务发现组件使用一定机制定时检测已注册的服务。</li>
+</ul>
+<h3 id="Eureka"><a href="#Eureka" class="headerlink" title="Eureka"></a>Eureka</h3><h4 id="Region-and-Avaliability-Zone"><a href="#Region-and-Avaliability-Zone" class="headerlink" title="Region and Avaliability Zone"></a>Region and Avaliability Zone</h4><p><img src="https://upload-images.jianshu.io/upload_images/13918038-23d39681d04f8e38.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="Eureka-工作原理"><a href="#Eureka-工作原理" class="headerlink" title="Eureka 工作原理"></a>Eureka 工作原理</h4><p><img src="https://upload-images.jianshu.io/upload_images/13918038-a502e8b0978441bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ul>
+<li>MakeRemoteCall 是RESTFul API的调用行为</li>
+<li>us-east-1c、us-east-1d等都是Avaliability Zone, 他们都属于us-east-1这个region</li>
+<li>Eureka 包含两个组件：一个是Eureka server， 另一个是Eureka client， 在Eureka集群的情况下， Eureka Server也是Eureka Client， 多个Eureka Server之间通过相互复制的方式来实现服务注册表中的数据同步。</li>
+</ul>
+<p>几个比较重要的配置：</p>
+<ul>
+<li>eureka.client.registerWithEureka：表示是否将自己注册到EurekaServer</li>
+<li>eureka.client.fetchRegistry：表示是否从Eureka Server获取注册信息，默认为true。</li>
+<li>eureka.client.serviceUrl.defaultZone：设置与EurekaServer交互的地址，查询服务和注册服务都需要依赖这个地址。默认是<a href="http://localhost:8761/eureka；多个地址间可使用,分隔。" target="_blank" rel="noopener">http://localhost:8761/eureka；多个地址间可使用,分隔。</a></li>
+</ul>
+<h4 id="将微服务注册到Eureka-Server中"><a href="#将微服务注册到Eureka-Server中" class="headerlink" title="将微服务注册到Eureka Server中"></a>将微服务注册到Eureka Server中</h4><p>几个比较重要的配置</p>
+<ul>
+<li>Spring.application.name: 用于注册到Eureka Server上的应用名称</li>
+<li>eureka.instance.prefer-ip-address=true 表示将自己的IP注册到Eureka Server中， 若为false， 一般会将操作系统的hostname注册到Eureka Server中。</li>
+</ul>
+<h4 id="为Eureka-Server添加安全认证的支持，-可以使用Spring-Security"><a href="#为Eureka-Server添加安全认证的支持，-可以使用Spring-Security" class="headerlink" title="为Eureka Server添加安全认证的支持， 可以使用Spring Security"></a>为Eureka Server添加安全认证的支持， 可以使用Spring Security</h4><p><img src="https://upload-images.jianshu.io/upload_images/13918038-26f6b2a271ef2fc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png">  </p>
+<p>   将eureka.client.serviceUrl.defaultZone配置为<a href="http://user:password@EUREKA_HOST:EUREKA_PORT/eureka/的形式" target="_blank" rel="noopener">http://user:password@EUREKA_HOST:EUREKA_PORT/eureka/的形式</a>, 即可成功注册。<br><img src="https://upload-images.jianshu.io/upload_images/13918038-3ee039946a47b453.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="Eureka-元数据"><a href="#Eureka-元数据" class="headerlink" title="Eureka 元数据"></a>Eureka 元数据</h4><p>Eureka 的元数据包括两种，分别是标准元数据和自定义元数据。</p>
+<ul>
+<li>标准元数据指的是主机名、IP地址、端口号、状态页和健康检查等信息，这些信息都会被发布在服务注册表中，用于服务之间的调用。</li>
+<li>自定义元数据， 可以使用eureka.instance.metadata-map配置，这些元数据可以被远程客户端访问， 通过提前的约定使得远程客户端知道该如何使用</li>
+</ul>
+<h4 id="Eureka-Server的REST端点"><a href="#Eureka-Server的REST端点" class="headerlink" title="Eureka Server的REST端点"></a>Eureka Server的REST端点</h4><p><img src="https://upload-images.jianshu.io/upload_images/13918038-0d8849fe445595af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br><img src="https://upload-images.jianshu.io/upload_images/13918038-1420a77c674b973d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="Eureka-的自我保护模式"><a href="#Eureka-的自我保护模式" class="headerlink" title="Eureka 的自我保护模式"></a>Eureka 的自我保护模式</h4><p><img src="https://upload-images.jianshu.io/upload_images/13918038-65a9f43bcd1a020a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ul>
+<li>默认情况下， Eureka Server心跳检测的默认限度是90s, 超过之后没有收到回复将会注销该服务</li>
+<li>但在极端情况下， 如网络故障， 则会出现短时间内大规模注销的情况， 这时Eureka server将会启动自我保护模式， 在该模式下， 不会注销任何服务， 当网络恢复时， Eureka server会自动退出自我保护模式。</li>
+<li>eureka.server.enable-self-preservation=false禁用自我保护模式</li>
+</ul>
+<h4 id="多网卡环境下的IP选择"><a href="#多网卡环境下的IP选择" class="headerlink" title="多网卡环境下的IP选择"></a>多网卡环境下的IP选择</h4><p>建议直接使用eureka.instance.ipAddress手动指定IP地址， 特别是在Docker容器中</p>
+<h4 id="Eureka-健康检查"><a href="#Eureka-健康检查" class="headerlink" title="Eureka 健康检查"></a>Eureka 健康检查</h4><p>我们上面所说的心跳之类的，都只是Eureka与服务之间的通信是否正常，而通信正常不代表服务正常， 如服务不能与数据库进行连接， 此时便需要更加细化的检查了。</p>
+<h3 id="使用Ribbon实现客户端负载均衡"><a href="#使用Ribbon实现客户端负载均衡" class="headerlink" title="使用Ribbon实现客户端负载均衡"></a>使用Ribbon实现客户端负载均衡</h3><p>在Spring Cloud中，当Ribbon与Eureka配合使用时，Ribbon可自动从Eureka Server获取服务提供者的地址列表，并基于负载均衡算法，请求其中一个服务提供者的实例。<br><img src="https://upload-images.jianshu.io/upload_images/13918038-6285ccb925df4da5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>为RestTemplate添加@LoadBalanced注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@LoadBalanced</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> RestTemplate <span class="title">restTemplate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> RestTemplate();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>相关注意事项：</p>
+<ul>
+<li>不能将restTemplate.getForObject与loadBalancedClient.choose写在同一个方法中，因为前者已经有选择的意思，前者包括后者，restTemplate实际上已经是Ribbon客户端本身，已经包含Choose行为</li>
+<li>虚拟主机名不能包括 _ 字符  </li>
+</ul>
+<h4 id="Ribbon配置自定义-翻下官方文档自己配"><a href="#Ribbon配置自定义-翻下官方文档自己配" class="headerlink" title="Ribbon配置自定义(翻下官方文档自己配)"></a>Ribbon配置自定义(翻下官方文档自己配)</h4><h4 id="脱离Eureka使用Ribbon"><a href="#脱离Eureka使用Ribbon" class="headerlink" title="脱离Eureka使用Ribbon"></a>脱离Eureka使用Ribbon</h4><p>有一些遗留的微服务，它们没有注册到Eureka Server上， 这个时候， 仍然可以使用Ribbon实现负载均衡<br><img src="https://upload-images.jianshu.io/upload_images/13918038-ff1babc38ad51a81.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>配置：microservice-provider-user.ribbon.listOfServers<br><img src="https://upload-images.jianshu.io/upload_images/13918038-9ecbeafbb4bb8f63.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="饥饿加载"><a href="#饥饿加载" class="headerlink" title="饥饿加载"></a>饥饿加载</h4><p>Spring cloud 为每个名称的Ribbon Client维护一个子应用上下文，这个上下文默认的懒加载的，指定名称的Ribbon Client第一次请求的时候，对应的上下文才会被加载，因此第一次加载时，会比较慢，此时，我们可以配置懒加载<br><img src="https://upload-images.jianshu.io/upload_images/13918038-749611dfbfde1bea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>这样，对于名为client1、client2的Ribbon Client，将在启动时加载对应的子应用程序上下文。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/29/ArrayList源码学习/" rel="next" title="ArrayList源码学习">
+                <i class="fa fa-chevron-left"></i> ArrayList源码学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/30/利用Python进行数据分析－数据结构准备（元组、列表、字典、集合、函数、推导式、柯里化、生成器、itertools模块以及文件读写）/" rel="prev" title="利用Python进行数据分析－数据结构准备（元组、列表、字典、集合、函数、推导式、柯里化、生成器、itertools模块以及文件读写）">
+                利用Python进行数据分析－数据结构准备（元组、列表、字典、集合、函数、推导式、柯里化、生成器、itertools模块以及文件读写） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/05/29/SpringCloud微服务架构实战读书笔记①/" data-title="SpringCloud微服务架构实战读书笔记①" data-url="https://wt-git-repository.github.io/2019/05/29/SpringCloud微服务架构实战读书笔记①/">
+      </div>
+    
+    <div id="gitalk-container"></div>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avator.jpeg" alt="Enda Lin">
+          <p class="site-author-name" itemprop="name">Enda Lin</p>
+           
+              <p class="site-description motion-element" itemprop="description">所有的伟大都是从零开始</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wt-git-repository" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="endawt.lin@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#微服务架构概述"><span class="nav-number">1.</span> <span class="nav-text">微服务架构概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#微服务设计原则"><span class="nav-number">1.0.1.</span> <span class="nav-text">微服务设计原则</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Cloud-实战"><span class="nav-number">2.</span> <span class="nav-text">Spring Cloud 实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务提供者与服务消费者"><span class="nav-number">2.0.1.</span> <span class="nav-text">服务提供者与服务消费者</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#服务提供者"><span class="nav-number">2.0.1.1.</span> <span class="nav-text">服务提供者</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务消费者"><span class="nav-number">2.0.1.2.</span> <span class="nav-text">服务消费者</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Boot-Actuator"><span class="nav-number">2.0.1.3.</span> <span class="nav-text">Spring Boot Actuator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#硬编码的问题"><span class="nav-number">2.0.1.4.</span> <span class="nav-text">硬编码的问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务注册与发现"><span class="nav-number">2.0.2.</span> <span class="nav-text">服务注册与发现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Eureka"><span class="nav-number">2.0.3.</span> <span class="nav-text">Eureka</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Region-and-Avaliability-Zone"><span class="nav-number">2.0.3.1.</span> <span class="nav-text">Region and Avaliability Zone</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Eureka-工作原理"><span class="nav-number">2.0.3.2.</span> <span class="nav-text">Eureka 工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将微服务注册到Eureka-Server中"><span class="nav-number">2.0.3.3.</span> <span class="nav-text">将微服务注册到Eureka Server中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为Eureka-Server添加安全认证的支持，-可以使用Spring-Security"><span class="nav-number">2.0.3.4.</span> <span class="nav-text">为Eureka Server添加安全认证的支持， 可以使用Spring Security</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Eureka-元数据"><span class="nav-number">2.0.3.5.</span> <span class="nav-text">Eureka 元数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Eureka-Server的REST端点"><span class="nav-number">2.0.3.6.</span> <span class="nav-text">Eureka Server的REST端点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Eureka-的自我保护模式"><span class="nav-number">2.0.3.7.</span> <span class="nav-text">Eureka 的自我保护模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多网卡环境下的IP选择"><span class="nav-number">2.0.3.8.</span> <span class="nav-text">多网卡环境下的IP选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Eureka-健康检查"><span class="nav-number">2.0.3.9.</span> <span class="nav-text">Eureka 健康检查</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Ribbon实现客户端负载均衡"><span class="nav-number">2.0.4.</span> <span class="nav-text">使用Ribbon实现客户端负载均衡</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Ribbon配置自定义-翻下官方文档自己配"><span class="nav-number">2.0.4.1.</span> <span class="nav-text">Ribbon配置自定义(翻下官方文档自己配)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#脱离Eureka使用Ribbon"><span class="nav-number">2.0.4.2.</span> <span class="nav-text">脱离Eureka使用Ribbon</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#饥饿加载"><span class="nav-number">2.0.4.3.</span> <span class="nav-text">饥饿加载</span></a></li></ol></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Enda Lin</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 您是博主的第
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位小伙伴
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="/js/md5.min.js"></script>
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'afbcc6e2a54ed4e2ebd7',
+          clientSecret: '6c36028e964ef689580f33ec9bd19b720f5f131f',
+          repo: 'wt-git-repository.github.io',
+          owner: 'wt-git-repository',
+          admin: ['wt-git-repository'],
+          id: md5(location.href),
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

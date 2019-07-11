@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hadoop,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="分布式数据库HBaseHBase 是BigTable的开源实现， 高可靠、高性能、面向列、可伸缩的分布式数据库， 主要用来存储非结构化数据和半结构化的松散数据， HBase支持超大规模数据存储， 可以通过水平扩展的方式， 利用廉价计算机集群处理超过10亿行数据和数百位列组成的数据表。 BigTableBigTable是一个分布式存储系统， 利用谷歌提出的MapReduce分布式并行计算模型来处理海">
+<meta name="keywords" content="Hadoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop学习笔记③">
+<meta property="og:url" content="https://wt-git-repository.github.io/2019/06/27/hadoop学习笔记③/index.html">
+<meta property="og:site_name" content="Enda Lin">
+<meta property="og:description" content="分布式数据库HBaseHBase 是BigTable的开源实现， 高可靠、高性能、面向列、可伸缩的分布式数据库， 主要用来存储非结构化数据和半结构化的松散数据， HBase支持超大规模数据存储， 可以通过水平扩展的方式， 利用廉价计算机集群处理超过10亿行数据和数百位列组成的数据表。 BigTableBigTable是一个分布式存储系统， 利用谷歌提出的MapReduce分布式并行计算模型来处理海">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-5c7205b6274a54a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-05fd05458b2736a7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-3f133e270f84c602.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-747bd59b17a162f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-5738bc978d24e27f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-aa15aaa24d9eebdc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-cefa8a1b14a11571.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-07-08T01:15:52.716Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop学习笔记③">
+<meta name="twitter:description" content="分布式数据库HBaseHBase 是BigTable的开源实现， 高可靠、高性能、面向列、可伸缩的分布式数据库， 主要用来存储非结构化数据和半结构化的松散数据， HBase支持超大规模数据存储， 可以通过水平扩展的方式， 利用廉价计算机集群处理超过10亿行数据和数百位列组成的数据表。 BigTableBigTable是一个分布式存储系统， 利用谷歌提出的MapReduce分布式并行计算模型来处理海">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/13918038-5c7205b6274a54a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wt-git-repository.github.io/2019/06/27/hadoop学习笔记③/">
+
+
+
+
+
+  <title>Hadoop学习笔记③ | Enda Lin</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Enda Lin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep foolish, keep sharp</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/27/hadoop学习笔记③/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Hadoop学习笔记③</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-27T12:53:00+08:00">
+                2019-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/27/hadoop学习笔记③/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/27/hadoop学习笔记③/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  1.8k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="分布式数据库HBase"><a href="#分布式数据库HBase" class="headerlink" title="分布式数据库HBase"></a>分布式数据库HBase</h1><p>HBase 是BigTable的开源实现， 高可靠、高性能、面向列、可伸缩的分布式数据库， 主要用来存储非结构化数据和半结构化的松散数据， HBase支持超大规模数据存储， 可以通过水平扩展的方式， 利用廉价计算机集群处理超过10亿行数据和数百位列组成的数据表。</p>
+<h4 id="BigTable"><a href="#BigTable" class="headerlink" title="BigTable"></a>BigTable</h4><p>BigTable是一个分布式存储系统， 利用谷歌提出的MapReduce分布式并行计算模型来处理海量初级， 利用GFS作为底层数据存储， 并采用Chubby提供协同服务管理， 可以扩展到PB级别的数据和上千台机器。</p>
+<a id="more"></a>
+<h4 id="HBase"><a href="#HBase" class="headerlink" title="HBase"></a>HBase</h4><ul>
+<li>利用Hadoop MapReduce来处理HBase中的海量数据， 实现高性能计算</li>
+<li>利用Zookpper来作为协同服务， 实现稳定服务和失败恢复</li>
+<li>利用HDFS作为高可靠的底层存储， 利用廉价集群提供海量数据存储能力</li>
+</ul>
+<p>为了方便在HBase上进行数据处理， Sqoop为HBase提供了高效、便捷的RDBMS数据导入功能， Pig和Hive为HBase提供了高层语言支持。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-5c7205b6274a54a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="HBase-数据类型"><a href="#HBase-数据类型" class="headerlink" title="HBase 数据类型"></a>HBase 数据类型</h4><p>HBase 是一个稀疏、多维度、排序的映射表， 这张表的索引是行健、列族、列限定符和时间戳， 每个值是一个未经解释的字符串byte[]， 没有数据类型。</p>
+<p>用户在表中存储数据， 每一行都有一个可排序的<strong>行键</strong>和任意多的列。</p>
+<p>表在水平方向有一个或者多个<strong>列族</strong>组成， 一个列族可以包含任意多个列， 同一个列族里面的数据存储在一起。 列族支持动态扩展， 无需预定列的数量以及类型， 所有列均以字符串形式存储， 同一张表里面的每一行数据都可以有截然不同的列。</p>
+<p>在HBase 中执行更新操作时， 并不会删除数据旧的版本， 而是生成一个新的版本， 旧的版本仍然保留， HBase 可以对允许保留的版本的数量进行设置。</p>
+<h4 id="HBase-数据模型的相关概念"><a href="#HBase-数据模型的相关概念" class="headerlink" title="HBase 数据模型的相关概念"></a>HBase 数据模型的相关概念</h4><ul>
+<li>表</li>
+<li>行</li>
+<li>列族</li>
+<li>列限定符</li>
+<li>单元格</li>
+<li>时间戳</li>
+</ul>
+<p>HBase 使用坐标来定位表中数据， 四维坐标[行键， 列族， 列限定符， 时间戳]。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-05fd05458b2736a7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="行式数据库和列式数据库"><a href="#行式数据库和列式数据库" class="headerlink" title="行式数据库和列式数据库"></a>行式数据库和列式数据库</h4><p>行式数据库主要适合于小批量的数据处理</p>
+<p>列式数据库适合于批量数据处理和即席查询， 可以降低I/O开销， 支持大量并发用户查询， 其数据处理速度比传统方法快100倍， 因为仅仅需要处理可以回答这些查询的列， 而不是分类整理与特定查询无关的数据行， 具有较高的数据压缩比。</p>
+<h4 id="HBase-的实现原理"><a href="#HBase-的实现原理" class="headerlink" title="HBase 的实现原理"></a>HBase 的实现原理</h4><p><strong>HBase 的功能组件</strong>：</p>
+<ul>
+<li>库函数（链接到每个客户端）</li>
+<li>一个Master主服务器： 负责管理和维护HBase 表的分区信息。</li>
+<li>许多个Region服务器: 负责维护存储和维护分配给自己的Region， 处理来自客户端的读写请求。</li>
+</ul>
+<p>客户端并不是直接从Master主服务器读取数据， 而是在获取Region 的存储位置信息后， 直接从Region上读取数据， HBase 客户端并不依赖Master 而是借助 Zookeeper 来获取Region的位置信息的。</p>
+<p><strong>表与Region</strong></p>
+<p>对于每一个HBase 表而言， 表中的行是根据行键的值的字段序进行维护的， 由于表中包含的行的数量可能非常庞大， 无法存储在一台机器上， 所有需要分布式存储， 需要根据行键的值对表中的行进行分区， 每个行区间构成一个Region， 它是负载均衡和数据分发的基本单位， 这些Region会被分发到不同的Region服务器。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-3f133e270f84c602.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><strong>Region 的定位</strong></p>
+<p>每个Region 都有一个Region ID（表名 + 开始主键 + Region ID）来标识它的唯一性。</p>
+<p>Region 映射表（元数据表 or .META表）： Region 标识符 + Region服务器标识符。</p>
+<p>-ROOT-表（根数据表）， 当.META表的条目非常多时， 也会被分裂成多个Rigion， 其映射表是根数据表-ROOT-表。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-747bd59b17a162f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="HBase-运行机制"><a href="#HBase-运行机制" class="headerlink" title="HBase 运行机制"></a>HBase 运行机制</h4><p><strong>访问流程</strong>： 首先访问Zookeeper。 获取-ROOT-表的位置信息， 然后访问-ROOT-表， 获取.META表的信息， 接着访问.META表， 找到所需的Region具体位于哪个Region服务器， 最后找到该Region服务器读取数据。（客户端会缓存位置信息， 提高寻址效率）</p>
+<p>Zoopkeeper 中保存了-ROOT-表的地址和Master 的地址， 客户端可以通过访问ZoopKeeper 获得-ROOT-表的地址， 最后通过三级寻址来找到所需要的地址。</p>
+<p>HBase自身不具备数据复制和维护数据副本的功能， 而HDFS可以为HBase提供这些支持。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-5738bc978d24e27f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="Region-服务器的工作原理"><a href="#Region-服务器的工作原理" class="headerlink" title="Region 服务器的工作原理"></a>Region 服务器的工作原理</h4><p>Region 服务器内部管理一系列的<strong>Region 对象</strong>和一个<strong>HLog 文件</strong>。</p>
+<p><strong>HLog 文件</strong>： 磁盘上面的记录文件， 它记录着所有的更新操作。</p>
+<p><strong>Region 对象</strong>： 由多个Store 组成， 每个Store 对应表中的一个列族的存储</p>
+<p><strong>Store</strong>： 包含一个MemStore 和若干个StoreFile， 其中， MemStore 是内存中的缓存， 保存最近更新的数据， StoreFile 是磁盘中的文件（B+树结构）， StoreFile 在底层的实现方式是HDFS 文件系统的HFile， 而HFile 的数据块通过采用压缩的方式存储， 压缩之后可以大大减少网络IO和磁盘IO。<br><img src="https://upload-images.jianshu.io/upload_images/13918038-aa15aaa24d9eebdc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ol>
+<li>用户读写数据的过程<br>当用户写入数据时， 会被分配到相应的Region 服务器执行操作， 用户数据被写入MemStore 和HLog 中， 当操作写入Hlog 之后， commit()调用才会将其返回给客户端。</li>
+</ol>
+<p>当用户读取数据时， Region 服务器首先会访问MemStore 缓存， 如果数据不在缓存中， 才会到磁盘上面的StoreFile 中去寻找。</p>
+<ol start="2">
+<li>缓存的刷新<br>MemStore的缓存容量有限， 所有会周期性地将MemStore 的数据存入到磁盘的StoreFile 中， 同时在HLog中写入一个标记， 以表示缓存中的内容已经写入到磁盘中， 每次刷新操作都会在磁盘中生成一个新的StoreFile， 所有每个Store 都会含有多个StoreFile。</li>
+</ol>
+<p>Region 每次启动都会去检查HLog， 以确保缓存中的数据已经写入到StoreFile 中， 若没有， 则先将更新写入MemStore， 再刷新缓存， 写入到StoreFile中， 最后删除旧的HLog。</p>
+<ol start="3">
+<li>StoreFile 的合并<br>当StoreFile文化的数量达到一个阀值时， 会进行合并操作。</li>
+</ol>
+<h4 id="Store-的工作原理"><a href="#Store-的工作原理" class="headerlink" title="Store 的工作原理"></a>Store 的工作原理</h4><p><img src="https://upload-images.jianshu.io/upload_images/13918038-cefa8a1b14a11571.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="HLog-的工作原理"><a href="#HLog-的工作原理" class="headerlink" title="HLog 的工作原理"></a>HLog 的工作原理</h4><p>每个Region 服务器维护共同一个HLog, 当Region服务器出现故障时， Zoopkeeper 会同时Master， 首先处理故障服务器上遗留的HLog 文件， 根据Region对象拆分日志， 分配到各自对象的目录下， 然后再将失效的Region分配到可用的Region服务器中， 新的服务器会将分配到给自己的HLog 日志重新执行一边， 然后刷新缓存。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/06/27/hadoop学习笔记③/">Hadoop学习笔记③</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Enda Lin 的个人博客">Enda Lin</a></p>
+  <p><span>发布时间:</span>2019年06月27日 - 12:53</p>
+  <p><span>最后更新:</span>2019年07月08日 - 09:15</p>
+  <p><span>原始链接:</span><a href="/2019/06/27/hadoop学习笔记③/" title="Hadoop学习笔记③">https://wt-git-repository.github.io/2019/06/27/hadoop学习笔记③/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://wt-git-repository.github.io/2019/06/27/hadoop学习笔记③/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>
+</div>
+<script>
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({
+          title: "",
+          text: '复制成功',
+          icon: "success",
+          showConfirmButton: true
+          });
+	});
+    });
+</script>
+
+
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag"># Hadoop</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/25/hadoop学习笔记②/" rel="next" title="Hadoop学习笔记②">
+                <i class="fa fa-chevron-left"></i> Hadoop学习笔记②
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/28/hadoop学习笔记④/" rel="prev" title="Hadoop学习笔记④">
+                Hadoop学习笔记④ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/06/27/hadoop学习笔记③/" data-title="Hadoop学习笔记③" data-url="https://wt-git-repository.github.io/2019/06/27/hadoop学习笔记③/">
+      </div>
+    
+    <div id="gitalk-container"></div>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avator.jpeg" alt="Enda Lin">
+          <p class="site-author-name" itemprop="name">Enda Lin</p>
+           
+              <p class="site-description motion-element" itemprop="description">所有的伟大都是从零开始</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wt-git-repository" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="endawt.lin@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式数据库HBase"><span class="nav-number">1.</span> <span class="nav-text">分布式数据库HBase</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#BigTable"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">BigTable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HBase"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">HBase</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HBase-数据类型"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">HBase 数据类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HBase-数据模型的相关概念"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">HBase 数据模型的相关概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#行式数据库和列式数据库"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">行式数据库和列式数据库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HBase-的实现原理"><span class="nav-number">1.0.0.6.</span> <span class="nav-text">HBase 的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HBase-运行机制"><span class="nav-number">1.0.0.7.</span> <span class="nav-text">HBase 运行机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Region-服务器的工作原理"><span class="nav-number">1.0.0.8.</span> <span class="nav-text">Region 服务器的工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Store-的工作原理"><span class="nav-number">1.0.0.9.</span> <span class="nav-text">Store 的工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HLog-的工作原理"><span class="nav-number">1.0.0.10.</span> <span class="nav-text">HLog 的工作原理</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Enda Lin</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 您是博主的第
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位小伙伴
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="/js/md5.min.js"></script>
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'afbcc6e2a54ed4e2ebd7',
+          clientSecret: '6c36028e964ef689580f33ec9bd19b720f5f131f',
+          repo: 'wt-git-repository.github.io',
+          owner: 'wt-git-repository',
+          admin: ['wt-git-repository'],
+          id: md5(location.href),
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Python,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="本文出自＜利用Python进行数据分析　第２版＞　　侵删  NumPyNumPy　是Python数值计算最重要的基础包，可以高效处理大数组的数据． NumPy的ndarray：一种多维的数组对象ndarray是一个快速而又灵活的同构数据多维容器，是一个Ｎ维数组对象，其中所有的元素对象必须要是相同的数据类型，每一个对象包含一个元组和一个属性，分别是shape（一个表示各维度大小的元组）和dtype">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用Python进行数据分析－NumPy基础">
+<meta property="og:url" content="https://wt-git-repository.github.io/2019/05/30/利用Python进行数据分析－NumPy基础/index.html">
+<meta property="og:site_name" content="Enda Lin">
+<meta property="og:description" content="本文出自＜利用Python进行数据分析　第２版＞　　侵删  NumPyNumPy　是Python数值计算最重要的基础包，可以高效处理大数组的数据． NumPy的ndarray：一种多维的数组对象ndarray是一个快速而又灵活的同构数据多维容器，是一个Ｎ维数组对象，其中所有的元素对象必须要是相同的数据类型，每一个对象包含一个元组和一个属性，分别是shape（一个表示各维度大小的元组）和dtype">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-989f18bfae94317c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-b972d8d088894734.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-0fb878cc77a58b9e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-c21dca76a3df33dd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-c16ca18c373640a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-a3e05d1ba5a77eee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-55566c55ac395f12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-32ccede03dd82010.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-ef4600a822a2f32f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-168d6241b2b875ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-6030bfac0c34df21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-b6137d41de9e6f2b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-472fc829c5796d26.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-10ea37a05a3fd1ce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-e2225612c5e3936a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-07-08T01:15:52.728Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用Python进行数据分析－NumPy基础">
+<meta name="twitter:description" content="本文出自＜利用Python进行数据分析　第２版＞　　侵删  NumPyNumPy　是Python数值计算最重要的基础包，可以高效处理大数组的数据． NumPy的ndarray：一种多维的数组对象ndarray是一个快速而又灵活的同构数据多维容器，是一个Ｎ维数组对象，其中所有的元素对象必须要是相同的数据类型，每一个对象包含一个元组和一个属性，分别是shape（一个表示各维度大小的元组）和dtype">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/13918038-989f18bfae94317c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wt-git-repository.github.io/2019/05/30/利用Python进行数据分析－NumPy基础/">
+
+
+
+
+
+  <title>利用Python进行数据分析－NumPy基础 | Enda Lin</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Enda Lin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep foolish, keep sharp</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/05/30/利用Python进行数据分析－NumPy基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">利用Python进行数据分析－NumPy基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-30T12:59:21+08:00">
+                2019-05-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/30/利用Python进行数据分析－NumPy基础/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/30/利用Python进行数据分析－NumPy基础/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  2.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文出自＜利用Python进行数据分析　第２版＞　　侵删</p>
+</blockquote>
+<h1 id="NumPy"><a href="#NumPy" class="headerlink" title="NumPy"></a>NumPy</h1><p>NumPy　是Python数值计算最重要的基础包，可以高效处理大数组的数据．</p>
+<h1 id="NumPy的ndarray：一种多维的数组对象"><a href="#NumPy的ndarray：一种多维的数组对象" class="headerlink" title="NumPy的ndarray：一种多维的数组对象"></a>NumPy的ndarray：一种多维的数组对象</h1><p>ndarray是一个快速而又灵活的同构数据多维容器，是一个Ｎ维数组对象，其中所有的元素对象必须要是相同的数据类型，每一个对象包含一个元组和一个属性，分别是shape（一个表示各维度大小的元组）和dtype（一个说明数组数据类型的对象）</p>
+<a id="more"></a>
+<h1 id="创建ndarray"><a href="#创建ndarray" class="headerlink" title="创建ndarray"></a>创建ndarray</h1><p>创建ndarray最简单的方法是使用array函数，它接受一切序列型的对象（包括其它数组），然后产生一个新的含有传入数据的NumPy数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">In [1]: list1 = (1,2,3)</span><br><span class="line">In [3]: import numpy as np</span><br><span class="line">In [5]: data = np.array(list1)</span><br><span class="line"></span><br><span class="line">In [6]: data</span><br><span class="line">Out[6]: array([1, 2, 3])</span><br></pre></td></tr></table></figure></p>
+<p>嵌套序列会被转换成一个多维的数组，array函数会为新建的数组推断出一个较为合适的数据类型，数据类型保存在一个特殊的dtype对象中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">In [7]: list2 = [[1,2,3],[4,5,6]]</span><br><span class="line"></span><br><span class="line">In [8]: data2 = np.array(list2)</span><br><span class="line"></span><br><span class="line">In [9]: data2</span><br><span class="line">Out[9]:</span><br><span class="line">array([[1, 2, 3],</span><br><span class="line">       [4, 5, 6]])</span><br><span class="line"></span><br><span class="line">In [10]: data2.shape  #查看维度大小</span><br><span class="line">Out[10]: (2, 3)</span><br><span class="line"></span><br><span class="line">In [11]: data2.dtype　#查看元素类型</span><br><span class="line">Out[11]: dtype(&apos;int64&apos;)</span><br></pre></td></tr></table></figure></p>
+<h1 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h1><h4 id="zeros：创建指定长度或者形状全为０的数组"><a href="#zeros：创建指定长度或者形状全为０的数组" class="headerlink" title="zeros：创建指定长度或者形状全为０的数组"></a>zeros：创建指定长度或者形状全为０的数组</h4><h4 id="ones：创建指定长度或者形状全为１的数组"><a href="#ones：创建指定长度或者形状全为１的数组" class="headerlink" title="ones：创建指定长度或者形状全为１的数组"></a>ones：创建指定长度或者形状全为１的数组</h4><h4 id="empty：可以创建一个没有任何具体值的数组"><a href="#empty：可以创建一个没有任何具体值的数组" class="headerlink" title="empty：可以创建一个没有任何具体值的数组"></a>empty：可以创建一个没有任何具体值的数组</h4><p>使用这些方法创建数组，只需要传入一个可以表示形状的元组便可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">In [12]: np.zeros((10))</span><br><span class="line">Out[12]: array([ 0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.])</span><br><span class="line"></span><br><span class="line">In [13]: np.ones((2,3))</span><br><span class="line">Out[13]:</span><br><span class="line">array([[ 1.,  1.,  1.],</span><br><span class="line">       [ 1.,  1.,  1.]])</span><br><span class="line"></span><br><span class="line">In [14]: np.empty((2,3,4))</span><br><span class="line">Out[14]:</span><br><span class="line">array([[[  6.94667955e-310,   4.65986064e-310,   6.94667972e-310,</span><br><span class="line">           6.94667971e-310],</span><br><span class="line">        [  6.94667972e-310,   6.94667971e-310,   6.94667852e-310,</span><br><span class="line">           6.94667972e-310],</span><br><span class="line">        [  6.94667852e-310,   6.94667852e-310,   3.55727265e-321,</span><br><span class="line">           5.53353523e-322]],</span><br><span class="line"></span><br><span class="line">       [[  0.00000000e+000,   6.94667867e-310,   6.94666603e-310,</span><br><span class="line">           6.94666605e-310],</span><br><span class="line">        [  6.94666603e-310,   6.94667969e-310,   6.94666603e-310,</span><br><span class="line">           6.94667725e-310],</span><br><span class="line">        [  6.94667974e-310,   6.94666603e-310,   6.94667974e-310,</span><br><span class="line">           6.94667971e-310]]])</span><br></pre></td></tr></table></figure></p>
+<h4 id="arange是Python内置函数range的数组版"><a href="#arange是Python内置函数range的数组版" class="headerlink" title="arange是Python内置函数range的数组版"></a>arange是Python内置函数range的数组版</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">In [15]: np.arange(10)</span><br><span class="line">Out[15]: array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-989f18bfae94317c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="数组创建函数"><br>备注：数据类型基本都是float64(浮点数)<br><img src="https://upload-images.jianshu.io/upload_images/13918038-b972d8d088894734.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="NumPy的数据类型"><br><img src="https://upload-images.jianshu.io/upload_images/13918038-0fb878cc77a58b9e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="NumPy的数据类型"></p>
+<h4 id="创建时可以指定类型"><a href="#创建时可以指定类型" class="headerlink" title="创建时可以指定类型"></a>创建时可以指定类型</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">In [21]: data2 = np.array([1,2,3],dtype=np.float64)</span><br><span class="line"></span><br><span class="line">In [22]: data2</span><br><span class="line">Out[22]: array([ 1.,  2.,  3.])</span><br><span class="line"></span><br><span class="line">In [23]: data2.dtype</span><br><span class="line">Out[23]: dtype(&apos;float64&apos;)</span><br></pre></td></tr></table></figure>
+<h4 id="创建后可以修改类型，astype函数"><a href="#创建后可以修改类型，astype函数" class="headerlink" title="创建后可以修改类型，astype函数"></a>创建后可以修改类型，astype函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">In [24]: data2.astype(int)</span><br><span class="line">Out[24]: array([1, 2, 3])</span><br><span class="line"></span><br><span class="line">In [25]: data2.dtype   #注意，astype只会返回转换后的类型，但并不会实际地去转换元素类型  </span><br><span class="line">Out[25]: dtype(&apos;float64&apos;)</span><br></pre></td></tr></table></figure>
+<p>#NumPy 数组的运算<br>数组不需要通过循环便可执行批量运算<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">In [51]: arr = np.array([[1., 2., 3.], [4., 5., 6.]])</span><br><span class="line"></span><br><span class="line">In [52]: arr</span><br><span class="line">Out[52]:</span><br><span class="line">array([[ 1.,  2.,  3.],</span><br><span class="line">       [ 4.,  5.,  6.]])</span><br><span class="line"></span><br><span class="line">In [53]: arr * arr 　　#乘</span><br><span class="line">Out[53]:</span><br><span class="line">array([[  1.,   4.,   9.],</span><br><span class="line">       [ 16.,  25.,  36.]])</span><br><span class="line"></span><br><span class="line">In [54]: arr - arr　　#减</span><br><span class="line">Out[54]:</span><br><span class="line">array([[ 0.,  0.,  0.],</span><br><span class="line">       [ 0.,  0.,  0.]])</span><br><span class="line">In [55]: 1 / arr　　#除</span><br><span class="line">Out[55]:</span><br><span class="line">array([[ 1.    ,  0.5   ,  0.3333],</span><br><span class="line">       [ 0.25  ,  0.2   ,  0.1667]])</span><br><span class="line"></span><br><span class="line">In [56]: arr ** 0.5　#指数</span><br><span class="line">Out[56]:</span><br><span class="line">array([[ 1.    ,  1.4142,  1.7321],</span><br><span class="line">       [ 2.    ,  2.2361,  2.4495]])</span><br></pre></td></tr></table></figure></p>
+<p>大小相同的数组可以产生布尔值数组<br>大小不同的数组之间的运算叫做广播<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">In [57]: arr2 = np.array([[0., 4., 1.], [7., 2., 12.]])</span><br><span class="line"></span><br><span class="line">In [58]: arr2</span><br><span class="line">Out[58]:</span><br><span class="line">array([[  0.,   4.,   1.],</span><br><span class="line">       [  7.,   2.,  12.]])</span><br><span class="line"></span><br><span class="line">In [59]: arr2 &gt; arr</span><br><span class="line">Out[59]:</span><br><span class="line">array([[False,  True, False],</span><br><span class="line">       [ True, False,  True]], dtype=bool)</span><br></pre></td></tr></table></figure></p>
+<h1 id="切片和索引"><a href="#切片和索引" class="headerlink" title="切片和索引"></a>切片和索引</h1><p>NumPy产生的切片是视图，而并非是新的对象，当将一个标量值传给一个切片时，如arr[5:8]=12时，该值会自动传播到整个选区，这意味这在视图上，任意数据的修改都会影响到源数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">In [32]: data2 = np.array([1,2,3])</span><br><span class="line"></span><br><span class="line">In [33]: data3 = data2[1:2]</span><br><span class="line"></span><br><span class="line">In [34]: data3</span><br><span class="line">Out[34]: array([2])</span><br><span class="line"></span><br><span class="line">In [35]: data3[0] = 12     #通过索引去赋值，也可以通过索引去访问</span><br><span class="line"></span><br><span class="line">In [36]: data3</span><br><span class="line">Out[36]: array([12])</span><br><span class="line"></span><br><span class="line">In [37]: data2</span><br><span class="line">Out[37]: array([ 1, 12,  3])</span><br></pre></td></tr></table></figure></p>
+<p>切片［：］会给所有值赋值，例如arr[:] = 13<br>NumPy对数据的处理不包括复制粘贴的优势将体现在处理大规模的数据中 ，如果我们需要的是一份副本而不是一个视图的话，我们可以使用arr[5:8].copy()<br>索引的返回值可为元素也可为数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">In [39]: arr</span><br><span class="line">Out[39]:</span><br><span class="line">array([[[ 1,  2,  3],</span><br><span class="line">        [ 4,  5,  6]],</span><br><span class="line"></span><br><span class="line">       [[ 7,  8,  9],</span><br><span class="line">        [10, 11, 12]]])</span><br><span class="line"></span><br><span class="line">In [40]: arr[1]</span><br><span class="line">Out[40]:</span><br><span class="line">array([[ 7,  8,  9],</span><br><span class="line">       [10, 11, 12]])</span><br><span class="line"></span><br><span class="line">In [41]: arr[1,1]    #访问索引以（１，１）开头的那些值</span><br><span class="line">Out[41]: array([10, 11, 12])</span><br><span class="line"></span><br><span class="line">In [45]: arr[:1,1:,2:3]　　#切片的用法基本一致</span><br><span class="line">Out[45]: array([[[6]]])</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-c21dca76a3df33dd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="切片示意图"></p>
+<h1 id="布尔型索引"><a href="#布尔型索引" class="headerlink" title="布尔型索引"></a>布尔型索引</h1><p>常用于数据的匹配<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">In [46]: names = np.array([&apos;wt&apos;,&apos;Bob&apos;])</span><br><span class="line"></span><br><span class="line">In [47]: scores = np.array([90,80])</span><br><span class="line"></span><br><span class="line">In [48]: names == &apos;wt&apos;</span><br><span class="line">Out[48]: array([ True, False], dtype=bool)</span><br><span class="line"></span><br><span class="line">In [49]: scores[names == &apos;wt&apos;]</span><br><span class="line">Out[49]: array([90])</span><br></pre></td></tr></table></figure></p>
+<p>注意：布尔型数组的长度需要匹配对应数组的最高维度，在匹配的同事，我们还可以索引列，例如scores[name == ‘wt’,2:]，还可以通过这样来赋值，例如：scores[names == ‘wt’] = 0<br>备注：～操作符可以用来反转条件，例如cond = names == ‘wt’，~cond就等同于names != ‘wt’<br>还有一点值得注意的是：Python关键字and和or在布尔型数组中无效，要使用＆和｜．</p>
+<h1 id="花式索引"><a href="#花式索引" class="headerlink" title="花式索引"></a>花式索引</h1><h1 id="数组装置"><a href="#数组装置" class="headerlink" title="数组装置"></a>数组装置</h1><p>转置是重塑的一种特殊形式，它返回的是源数据的视图，不会进行任何的复制操作，转置使用数组的Ｔ属性<br>高维数组的装置需要使用transpose<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">array([[ 0.,  0.,  0.,  0.],</span><br><span class="line">       [ 0.,  0.,  0.,  0.],</span><br><span class="line">       [ 0.,  0.,  0.,  0.],</span><br><span class="line">       [ 0.,  0.,  0.,  0.],</span><br><span class="line">       [ 0.,  0.,  0.,  0.],</span><br><span class="line">       [ 0.,  0.,  0.,  0.],</span><br><span class="line">       [ 0.,  0.,  0.,  0.],</span><br><span class="line">       [ 0.,  0.,  0.,  0.]])</span><br><span class="line"></span><br><span class="line">In [11]: arr.T</span><br><span class="line">Out[11]:</span><br><span class="line">array([[ 0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.],</span><br><span class="line">       [ 0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.],</span><br><span class="line">       [ 0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.],</span><br><span class="line">       [ 0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.]])</span><br></pre></td></tr></table></figure></p>
+<h1 id="计算矩阵内积"><a href="#计算矩阵内积" class="headerlink" title="计算矩阵内积"></a>计算矩阵内积</h1><p>使用np.dot(arr1, arr2)来计算两个矩阵的内积</p>
+<h1 id="通用函数：快速的元素级数组函数"><a href="#通用函数：快速的元素级数组函数" class="headerlink" title="通用函数：快速的元素级数组函数"></a>通用函数：快速的元素级数组函数</h1><p>通用函数是一种对ndarray中的数据执行元素级运算的函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [15]: arr1 = np.array([2,2])</span><br><span class="line"></span><br><span class="line">In [16]: np.sqrt(arr1)</span><br><span class="line">Out[16]: array([ 1.41421356,  1.41421356])</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-c16ca18c373640a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="常用的ufunc"><br><img src="https://upload-images.jianshu.io/upload_images/13918038-a3e05d1ba5a77eee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="常用的ufunc"><br><img src="https://upload-images.jianshu.io/upload_images/13918038-55566c55ac395f12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="常用的ufunc"><br><img src="https://upload-images.jianshu.io/upload_images/13918038-32ccede03dd82010.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="常用的ufunc"><br><img src="https://upload-images.jianshu.io/upload_images/13918038-ef4600a822a2f32f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="常用的ufunc"></p>
+<h1 id="将条件逻辑表述为数组运算"><a href="#将条件逻辑表述为数组运算" class="headerlink" title="将条件逻辑表述为数组运算"></a>将条件逻辑表述为数组运算</h1><p>假设我们想根据cond中的值来选取xarr和yarr的值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">In [29]: xarr = np.array([1.1,1.2,1.3,1.4,1.5])</span><br><span class="line"></span><br><span class="line">In [30]: yarr = np.array([2.1,2.2,2.3,2.4,2.5])</span><br><span class="line"></span><br><span class="line">In [31]: cond = np.array([True,False,True,True,False])</span><br><span class="line"></span><br><span class="line">In [32]: result = [(x if c else y) for x,y,c in zip(xarr,yarr,cond)]</span><br><span class="line"></span><br><span class="line">In [33]: result</span><br><span class="line">Out[33]: [1.1000000000000001, 2.2000000000000002, 1.3, 1.3999999999999999, 2.5]</span><br></pre></td></tr></table></figure></p>
+<p>等同于<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [34]: result = np.where(cond,xarr,yarr)</span><br><span class="line"></span><br><span class="line">In [35]: result</span><br><span class="line">Out[35]: array([ 1.1,  2.2,  1.3,  1.4,  2.5])</span><br></pre></td></tr></table></figure></p>
+<p>np.where的第二个和第三个不必是数组，它们都可以是标量值．在数据分析的工作中，where的工作通常是根据一个数组产生另一个数组．假设一个由随机数组组成的矩阵，大于零的数都变成３，小于０的数都变成－３，若此时用利用where，则会变得非常方便<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">In [36]: arr = np.random.randn(6,6)</span><br><span class="line"></span><br><span class="line">In [37]: arr</span><br><span class="line">Out[37]:</span><br><span class="line">array([[-1.45536948, -0.01610929, -0.02849423, -0.82497092,  1.05006367,</span><br><span class="line">        -0.20924655],</span><br><span class="line">       [-0.4434815 , -0.33147041, -0.61486327, -0.5423556 ,  1.512384  ,</span><br><span class="line">        -1.35921009],</span><br><span class="line">       [-0.53875138, -0.25256538,  0.32190533, -0.20779243,  0.48525456,</span><br><span class="line">         0.97019284],</span><br><span class="line">       [ 0.12193935, -0.26348046,  0.86740783, -0.32927907,  0.35186663,</span><br><span class="line">         2.24697225],</span><br><span class="line">       [-0.49439342,  0.38880278,  0.52902035,  0.86600846,  1.31413569,</span><br><span class="line">         0.58566283],</span><br><span class="line">       [ 0.34011322,  0.96141724, -1.00353822, -0.30896308, -1.03500063,</span><br><span class="line">        -0.43719574]])</span><br><span class="line"></span><br><span class="line">In [38]: arr&gt;0</span><br><span class="line">Out[38]:</span><br><span class="line">array([[False, False, False, False,  True, False],</span><br><span class="line">       [False, False, False, False,  True, False],</span><br><span class="line">       [False, False,  True, False,  True,  True],</span><br><span class="line">       [ True, False,  True, False,  True,  True],</span><br><span class="line">       [False,  True,  True,  True,  True,  True],</span><br><span class="line">       [ True,  True, False, False, False, False]], dtype=bool)</span><br><span class="line"></span><br><span class="line">In [39]: np.where(arr&gt;0,3,-3)</span><br><span class="line">Out[39]:</span><br><span class="line">array([[-3, -3, -3, -3,  3, -3],</span><br><span class="line">       [-3, -3, -3, -3,  3, -3],</span><br><span class="line">       [-3, -3,  3, -3,  3,  3],</span><br><span class="line">       [ 3, -3,  3, -3,  3,  3],</span><br><span class="line">       [-3,  3,  3,  3,  3,  3],</span><br><span class="line">       [ 3,  3, -3, -3, -3, -3]])</span><br><span class="line"></span><br><span class="line">In [40]: np.where(arr&gt;0,3,arr)   #把大于０的数赋值为３，其余赋值arr</span><br><span class="line">Out[40]:</span><br><span class="line">array([[-1.45536948, -0.01610929, -0.02849423, -0.82497092,  3.        ,</span><br><span class="line">        -0.20924655],</span><br><span class="line">       [-0.4434815 , -0.33147041, -0.61486327, -0.5423556 ,  3.        ,</span><br><span class="line">        -1.35921009],</span><br><span class="line">       [-0.53875138, -0.25256538,  3.        , -0.20779243,  3.        ,</span><br><span class="line">         3.        ],</span><br><span class="line">       [ 3.        , -0.26348046,  3.        , -0.32927907,  3.        ,</span><br><span class="line">         3.        ],</span><br><span class="line">       [-0.49439342,  3.        ,  3.        ,  3.        ,  3.        ,</span><br><span class="line">         3.        ],</span><br><span class="line">       [ 3.        ,  3.        , -1.00353822, -0.30896308, -1.03500063,</span><br><span class="line">        -0.43719574]])</span><br><span class="line"></span><br><span class="line">In [41]: np.where(arr&gt;0,arr,3)    #把大于０的赋值为arr,其余赋值为３</span><br><span class="line">Out[41]:</span><br><span class="line">array([[ 3.        ,  3.        ,  3.        ,  3.        ,  1.05006367,</span><br><span class="line">         3.        ],</span><br><span class="line">       [ 3.        ,  3.        ,  3.        ,  3.        ,  1.512384  ,</span><br><span class="line">         3.        ],</span><br><span class="line">       [ 3.        ,  3.        ,  0.32190533,  3.        ,  0.48525456,</span><br><span class="line">         0.97019284],</span><br><span class="line">       [ 0.12193935,  3.        ,  0.86740783,  3.        ,  0.35186663,</span><br><span class="line">         2.24697225],</span><br><span class="line">       [ 3.        ,  0.38880278,  0.52902035,  0.86600846,  1.31413569,</span><br><span class="line">         0.58566283],</span><br><span class="line">       [ 0.34011322,  0.96141724,  3.        ,  3.        ,  3.        ,</span><br><span class="line">         3.        ]])</span><br></pre></td></tr></table></figure></p>
+<h1 id="数学和统计方法"><a href="#数学和统计方法" class="headerlink" title="数学和统计方法"></a>数学和统计方法</h1><p><img src="https://upload-images.jianshu.io/upload_images/13918038-168d6241b2b875ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br><img src="https://upload-images.jianshu.io/upload_images/13918038-6030bfac0c34df21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h1 id="用于布尔型数组的方法"><a href="#用于布尔型数组的方法" class="headerlink" title="用于布尔型数组的方法"></a>用于布尔型数组的方法</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [47]: arr = np.array([-1,2,-3])</span><br><span class="line"></span><br><span class="line">In [48]: (arr &gt; 0).sum()  #计算元素大于０的个数</span><br><span class="line">Out[48]: 1</span><br></pre></td></tr></table></figure>
+<p>另外还有两个方法any和all，它们对布尔型数组非常有用。any用于测试数组中是否存在一个或多个True，而all则检查数组中所有值是否都是True：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">In [192]: bools = np.array([False, False, True, False])</span><br><span class="line"></span><br><span class="line">In [193]: bools.any()</span><br><span class="line">Out[193]: True</span><br><span class="line"></span><br><span class="line">In [194]: bools.all()</span><br><span class="line">Out[194]: False</span><br></pre></td></tr></table></figure></p>
+<p>这两个方法也能用于非布尔型数组，所有非0元素将会被当做True。</p>
+<h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">In [195]: arr = np.random.randn(6)</span><br><span class="line"></span><br><span class="line">In [196]: arr</span><br><span class="line">Out[196]: array([ 0.6095, -0.4938,  1.24  , -0.1357,  1.43  , -0.8469])</span><br><span class="line"></span><br><span class="line">In [197]: arr.sort()</span><br><span class="line"></span><br><span class="line">In [198]: arr</span><br><span class="line">Out[198]: array([-0.8469, -0.4938, -0.1357,  0.6095,  1.24  ,  1.43  ])</span><br></pre></td></tr></table></figure>
+<h1 id="唯一化以及其它集合逻辑"><a href="#唯一化以及其它集合逻辑" class="headerlink" title="唯一化以及其它集合逻辑"></a>唯一化以及其它集合逻辑</h1><p>NumPy提供了一些针对ndarray的基本集合运算，最常用的是np.unique<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">In [56]: arr = np.array([&apos;wt&apos;,&apos;jm&apos;,&apos;wt&apos;])   </span><br><span class="line"></span><br><span class="line">In [57]: np.unique(arr)　　　#找到唯一值，并返回</span><br><span class="line">Out[57]:</span><br><span class="line">array([&apos;jm&apos;, &apos;wt&apos;],</span><br><span class="line">      dtype=&apos;&lt;U2&apos;)</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-b6137d41de9e6f2b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="常用的集合运算"></p>
+<h1 id="线性代数"><a href="#线性代数" class="headerlink" title="线性代数"></a>线性代数</h1><p>NumPy提供了一个用于矩阵乘法的dot函数（既是一个数组方法也是numpy命名空间中的一个函数）<br><img src="https://upload-images.jianshu.io/upload_images/13918038-472fc829c5796d26.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="与线性代数相关的方法"></p>
+<h1 id="伪随机数的生成"><a href="#伪随机数的生成" class="headerlink" title="伪随机数的生成"></a>伪随机数的生成</h1><p>numpy.random模块对Python内置的random进行了补充，增添一些可以高效生成多种概率发布的样本值的方法<br><img src="https://upload-images.jianshu.io/upload_images/13918038-10ea37a05a3fd1ce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="常用的函数"><br><img src="https://upload-images.jianshu.io/upload_images/13918038-e2225612c5e3936a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="常用的函数"></p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/05/30/利用Python进行数据分析－NumPy基础/">利用Python进行数据分析－NumPy基础</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Enda Lin 的个人博客">Enda Lin</a></p>
+  <p><span>发布时间:</span>2019年05月30日 - 12:59</p>
+  <p><span>最后更新:</span>2019年07月08日 - 09:15</p>
+  <p><span>原始链接:</span><a href="/2019/05/30/利用Python进行数据分析－NumPy基础/" title="利用Python进行数据分析－NumPy基础">https://wt-git-repository.github.io/2019/05/30/利用Python进行数据分析－NumPy基础/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://wt-git-repository.github.io/2019/05/30/利用Python进行数据分析－NumPy基础/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>
+</div>
+<script>
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({
+          title: "",
+          text: '复制成功',
+          icon: "success",
+          showConfirmButton: true
+          });
+	});
+    });
+</script>
+
+
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/30/利用Python进行数据分析－数据结构准备（元组、列表、字典、集合、函数、推导式、柯里化、生成器、itertools模块以及文件读写）/" rel="next" title="利用Python进行数据分析－数据结构准备（元组、列表、字典、集合、函数、推导式、柯里化、生成器、itertools模块以及文件读写）">
+                <i class="fa fa-chevron-left"></i> 利用Python进行数据分析－数据结构准备（元组、列表、字典、集合、函数、推导式、柯里化、生成器、itertools模块以及文件读写）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/30/利用Python进行数据分析－Pandas入门/" rel="prev" title="利用Python进行数据分析－Pandas入门">
+                利用Python进行数据分析－Pandas入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/05/30/利用Python进行数据分析－NumPy基础/" data-title="利用Python进行数据分析－NumPy基础" data-url="https://wt-git-repository.github.io/2019/05/30/利用Python进行数据分析－NumPy基础/">
+      </div>
+    
+    <div id="gitalk-container"></div>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avator.jpeg" alt="Enda Lin">
+          <p class="site-author-name" itemprop="name">Enda Lin</p>
+           
+              <p class="site-description motion-element" itemprop="description">所有的伟大都是从零开始</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wt-git-repository" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="endawt.lin@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NumPy"><span class="nav-number">1.</span> <span class="nav-text">NumPy</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NumPy的ndarray：一种多维的数组对象"><span class="nav-number">2.</span> <span class="nav-text">NumPy的ndarray：一种多维的数组对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建ndarray"><span class="nav-number">3.</span> <span class="nav-text">创建ndarray</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用函数"><span class="nav-number">4.</span> <span class="nav-text">常用函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#zeros：创建指定长度或者形状全为０的数组"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">zeros：创建指定长度或者形状全为０的数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ones：创建指定长度或者形状全为１的数组"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">ones：创建指定长度或者形状全为１的数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#empty：可以创建一个没有任何具体值的数组"><span class="nav-number">4.0.0.3.</span> <span class="nav-text">empty：可以创建一个没有任何具体值的数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#arange是Python内置函数range的数组版"><span class="nav-number">4.0.0.4.</span> <span class="nav-text">arange是Python内置函数range的数组版</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建时可以指定类型"><span class="nav-number">4.0.0.5.</span> <span class="nav-text">创建时可以指定类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建后可以修改类型，astype函数"><span class="nav-number">4.0.0.6.</span> <span class="nav-text">创建后可以修改类型，astype函数</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#切片和索引"><span class="nav-number">5.</span> <span class="nav-text">切片和索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#布尔型索引"><span class="nav-number">6.</span> <span class="nav-text">布尔型索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#花式索引"><span class="nav-number">7.</span> <span class="nav-text">花式索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数组装置"><span class="nav-number">8.</span> <span class="nav-text">数组装置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#计算矩阵内积"><span class="nav-number">9.</span> <span class="nav-text">计算矩阵内积</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通用函数：快速的元素级数组函数"><span class="nav-number">10.</span> <span class="nav-text">通用函数：快速的元素级数组函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#将条件逻辑表述为数组运算"><span class="nav-number">11.</span> <span class="nav-text">将条件逻辑表述为数组运算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数学和统计方法"><span class="nav-number">12.</span> <span class="nav-text">数学和统计方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用于布尔型数组的方法"><span class="nav-number">13.</span> <span class="nav-text">用于布尔型数组的方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#排序"><span class="nav-number">14.</span> <span class="nav-text">排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#唯一化以及其它集合逻辑"><span class="nav-number">15.</span> <span class="nav-text">唯一化以及其它集合逻辑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线性代数"><span class="nav-number">16.</span> <span class="nav-text">线性代数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#伪随机数的生成"><span class="nav-number">17.</span> <span class="nav-text">伪随机数的生成</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Enda Lin</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 您是博主的第
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位小伙伴
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="/js/md5.min.js"></script>
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'afbcc6e2a54ed4e2ebd7',
+          clientSecret: '6c36028e964ef689580f33ec9bd19b720f5f131f',
+          repo: 'wt-git-repository.github.io',
+          owner: 'wt-git-repository',
+          admin: ['wt-git-repository'],
+          id: md5(location.href),
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="软件过程管理,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="软件工程规范软件过程的分类 软件主要过程： 软件获取、供应、开发运行和维护的过程。 软件支持过程： 对软件的主要过程提供支持的过程。 软件组织过程：对软件主要过程和支持过程过程的提供组织保证的过程。   软件过程的组成管理工程、工程过程和支持过程。">
+<meta name="keywords" content="软件过程管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件工程管理">
+<meta property="og:url" content="https://wt-git-repository.github.io/2019/06/10/软件工程管理/index.html">
+<meta property="og:site_name" content="Enda Lin">
+<meta property="og:description" content="软件工程规范软件过程的分类 软件主要过程： 软件获取、供应、开发运行和维护的过程。 软件支持过程： 对软件的主要过程提供支持的过程。 软件组织过程：对软件主要过程和支持过程过程的提供组织保证的过程。   软件过程的组成管理工程、工程过程和支持过程。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-adcd361d889935f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-dc308d26bdea2684.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-54ec519a442d7bdd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-957f5eac80a77a00.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-07-08T01:15:52.737Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="软件工程管理">
+<meta name="twitter:description" content="软件工程规范软件过程的分类 软件主要过程： 软件获取、供应、开发运行和维护的过程。 软件支持过程： 对软件的主要过程提供支持的过程。 软件组织过程：对软件主要过程和支持过程过程的提供组织保证的过程。   软件过程的组成管理工程、工程过程和支持过程。">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/13918038-adcd361d889935f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wt-git-repository.github.io/2019/06/10/软件工程管理/">
+
+
+
+
+
+  <title>软件工程管理 | Enda Lin</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Enda Lin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep foolish, keep sharp</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/10/软件工程管理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">软件工程管理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-10T16:14:53+08:00">
+                2019-06-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/10/软件工程管理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/10/软件工程管理/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  2.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="软件工程规范"><a href="#软件工程规范" class="headerlink" title="软件工程规范"></a>软件工程规范</h1><h4 id="软件过程的分类"><a href="#软件过程的分类" class="headerlink" title="软件过程的分类"></a>软件过程的分类</h4><ul>
+<li>软件主要过程： 软件获取、供应、开发运行和维护的过程。</li>
+<li>软件支持过程： 对软件的主要过程提供支持的过程。</li>
+<li>软件组织过程：对软件主要过程和支持过程过程的提供组织保证的过程。</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-adcd361d889935f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="软件过程的组成"><a href="#软件过程的组成" class="headerlink" title="软件过程的组成"></a>软件过程的组成</h4><p>管理工程、工程过程和支持过程。</p>
+<a id="more"></a>
+<h4 id="过程规范"><a href="#过程规范" class="headerlink" title="过程规范"></a>过程规范</h4><p>过程规范指的是对输入、输出和活动所构成的过程进行明文规定或约定俗成的标准。</p>
+<p>作用： 帮助团队实现共同的目标， 一个规范的软件过程必将能带来稳定、高水平的过程质量， 过程规范使软件组织的生产效率更高。</p>
+<h4 id="软件过程规范"><a href="#软件过程规范" class="headerlink" title="软件过程规范"></a>软件过程规范</h4><p>软件过程规范是软件开发组织行动的准则与指南， 可以依据上垒各类过程的特点而建立相应的规范。</p>
+<h4 id="软件过程规范的建立"><a href="#软件过程规范的建立" class="headerlink" title="软件过程规范的建立"></a>软件过程规范的建立</h4><ul>
+<li>软件能力成熟度模型（CMM/CMMI）</li>
+<li>个体软件过程（PSP）</li>
+<li>团体软件过程（TSP）</li>
+<li>IBM-Raional 统一过程（RUP）</li>
+<li>极限编程 （eXtreme Programming，XP）</li>
+<li>微软软件框架（MSF）</li>
+</ul>
+<h4 id="软件生命周期的过程需求"><a href="#软件生命周期的过程需求" class="headerlink" title="软件生命周期的过程需求"></a>软件生命周期的过程需求</h4><ul>
+<li>软件工程过程</li>
+<li>软件支持过程</li>
+<li>软件管理过程</li>
+<li>软件组织过程</li>
+<li>软件客户-供应商的过程</li>
+</ul>
+<h4 id="软件过程模型"><a href="#软件过程模型" class="headerlink" title="软件过程模型"></a>软件过程模型</h4><ul>
+<li>瀑布模型</li>
+<li>螺旋模型</li>
+<li>增量模型</li>
+</ul>
+<h1 id="软件过程成熟度"><a href="#软件过程成熟度" class="headerlink" title="软件过程成熟度"></a>软件过程成熟度</h1><h4 id="CMM"><a href="#CMM" class="headerlink" title="CMM"></a>CMM</h4><p>CMM是软件过程能力成熟度模型， 描述一条从无序混乱到成熟有纪律的过程的改进途径， 描绘出软件组织如何增加对软件开发和维护的过程控制等方面的指导。</p>
+<h4 id="CMMI"><a href="#CMMI" class="headerlink" title="CMMI"></a>CMMI</h4><p>CMMI是能力成熟度模型集成， 前身是CMM</p>
+<h4 id="CMM-CMMI五个等级"><a href="#CMM-CMMI五个等级" class="headerlink" title="CMM/CMMI五个等级"></a>CMM/CMMI五个等级</h4><ul>
+<li>初始级: 具有明显不成熟过程的特点</li>
+<li>可重复级： 建立了管理软件项目的方针和实施这些方针的规程， 使软件项目的有效管理制度化</li>
+<li>已定义级：包含一组协调的、集成的、适度定义的软件工程过程和管理过程，具有良好的文档化、标准化，使软件过程具有可视性、一致性、稳定性和可重复性，软件过程被集成为一个有机的整体</li>
+<li>定量管理级： 在上述已定义级的基础上，可以建立有关软件过程和产品质量的、一致的度量体系，采集详细的数据进行分析，从而对软件产品和过程进行有效的定量控制和管理。</li>
+<li>优化级： 断改善组织的软件过程能力和项目的过程性能，利用来自过程和来自新思想、新技术的先导性试验的定量反馈信息，使持续过程改进成为可能。为了预防缺陷出现，组织有办法识别出弱点并预先针对性地加强过程</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-dc308d26bdea2684.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="CMMI过程域"><a href="#CMMI过程域" class="headerlink" title="CMMI过程域"></a>CMMI过程域</h4><ul>
+<li>工程管理</li>
+<li>支持管理</li>
+<li>项目管理</li>
+<li>过程管理</li>
+</ul>
+<h4 id="PSP-TSP和CMM组成的软件过程框架"><a href="#PSP-TSP和CMM组成的软件过程框架" class="headerlink" title="PSP/TSP和CMM组成的软件过程框架"></a>PSP/TSP和CMM组成的软件过程框架</h4><h1 id="软件过程的组织管理"><a href="#软件过程的组织管理" class="headerlink" title="软件过程的组织管理"></a>软件过程的组织管理</h1><h4 id="组织过程定义-过程裁剪"><a href="#组织过程定义-过程裁剪" class="headerlink" title="组织过程定义-过程裁剪"></a>组织过程定义-过程裁剪</h4><p><img src="https://upload-images.jianshu.io/upload_images/13918038-54ec519a442d7bdd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>剪裁指南和准则的主要作用：</p>
+<ul>
+<li>选择一个适合项目的生命周期模型。</li>
+<li>剪裁和细化组织标准软件过程和所选择的软件生命周期，使之适合项目的具体特征。</li>
+</ul>
+<h4 id="组织过程焦点-执行约定"><a href="#组织过程焦点-执行约定" class="headerlink" title="组织过程焦点-执行约定"></a>组织过程焦点-执行约定</h4><ul>
+<li>组织应该遵循一个文档化的关于协调软件流程的指定和改进活动的组织方针</li>
+<li>高级管理人员发起对软件过程制定和改进的组织活动</li>
+<li>高级管理人员进度软件过程的指定和改进的组织活动</li>
+</ul>
+<h4 id="组织过程焦点-执行能力"><a href="#组织过程焦点-执行能力" class="headerlink" title="组织过程焦点-执行能力"></a>组织过程焦点-执行能力</h4><ul>
+<li>建立一个负责整个组织的软件过程活动的工作组</li>
+<li>为软件过程活动提供足够的资源和资金</li>
+<li>组织软件过程活动的组员进行培训</li>
+<li>软件过程组和其它工程组的组员接受软件过程活动的相关培训</li>
+</ul>
+<h4 id="组织过程焦点-执行活动"><a href="#组织过程焦点-执行活动" class="headerlink" title="组织过程焦点-执行活动"></a>组织过程焦点-执行活动</h4><ul>
+<li>定期评估软件过程并根据评估结果制订相应的更改计划</li>
+<li>组织制定和维护有关软件过程和改进活动的计划</li>
+<li>协调组织的标准软件过程和项目自定义的软件过程的制定和改进工作</li>
+<li>协调组织的软件过程数据库的使用</li>
+<li>新过程、新方法、新工具的评价、监控和推广</li>
+<li>对有关组织和项目的软件过程培训进行统一管理</li>
+<li>及时将有关软件过程制定和改进的活动通知与实施软件过程相关的组和人员</li>
+</ul>
+<h4 id="组织过程焦点-评估"><a href="#组织过程焦点-评估" class="headerlink" title="组织过程焦点-评估"></a>组织过程焦点-评估</h4><ul>
+<li>度量和分析</li>
+<li>实施验证</li>
+</ul>
+<h4 id="PSP过程框架和成熟度模型"><a href="#PSP过程框架和成熟度模型" class="headerlink" title="PSP过程框架和成熟度模型"></a>PSP过程框架和成熟度模型</h4><ul>
+<li>PSP过程框架：PSP过程由一系列方法、表格、脚本等组成，用以指导软件开发人员计划、度量和管理他们的工作。</li>
+<li>PSP成熟度模型：PSP是一个具有4个等级的成熟度框架， <strong>其中四个等级分别为个体度量过程、个体计划过程、个体质量管理过程和个体循环过程。</strong></li>
+</ul>
+<h4 id="TSP"><a href="#TSP" class="headerlink" title="TSP"></a>TSP</h4><h1 id="软件需求管理"><a href="#软件需求管理" class="headerlink" title="软件需求管理"></a>软件需求管理</h1><p>业务需求、用户需求、功能需求</p>
+<h4 id="需求开发"><a href="#需求开发" class="headerlink" title="需求开发"></a>需求开发</h4><p>需求开发的目的是通过调查与分析，获取用户需求并定义产品需求。</p>
+<h4 id="需求获取概述"><a href="#需求获取概述" class="headerlink" title="需求获取概述"></a>需求获取概述</h4><p>需求回去是通过各种途径获取用户的需求信息</p>
+<h4 id="需求获取的方法"><a href="#需求获取的方法" class="headerlink" title="需求获取的方法"></a>需求获取的方法</h4><ul>
+<li>需求研讨会</li>
+<li>头脑风暴</li>
+<li>用例模型</li>
+<li>访谈</li>
+<li>角色扮演</li>
+<li>原型法</li>
+</ul>
+<h4 id="需求跟踪"><a href="#需求跟踪" class="headerlink" title="需求跟踪"></a>需求跟踪</h4><ul>
+<li>需求的标识</li>
+<li>需求的属性</li>
+<li>需求的状态： 已建议、已批准、已实现和已删除</li>
+</ul>
+<p>正向跟踪：以用户需求为切入点，检查《用户需求说明书》或《需求规格说明书》中的每个需求是否都能在后继工作产品中找到对应点。</p>
+<p>逆向跟踪：检查设计文档、代码、测试用例等工作产品是否都能在《需求规格说明书》中找到出处。</p>
+<p>正向跟踪和逆向跟踪合称为<strong>“双向跟踪”</strong>。</p>
+<h4 id="需求变更"><a href="#需求变更" class="headerlink" title="需求变更"></a>需求变更</h4><h1 id="软件过程的技术管理"><a href="#软件过程的技术管理" class="headerlink" title="软件过程的技术管理"></a>软件过程的技术管理</h1><h4 id="技术路线"><a href="#技术路线" class="headerlink" title="技术路线"></a>技术路线</h4><ul>
+<li>软件项目过程的技术解决流程</li>
+<li>技术解决计划的建立和实施</li>
+<li>开发设计</li>
+<li>编程和单元测试</li>
+<li>验证、确认与测试</li>
+</ul>
+<h1 id="软件过程的项目管理"><a href="#软件过程的项目管理" class="headerlink" title="软件过程的项目管理"></a>软件过程的项目管理</h1><h4 id="PMI项目管理知识域"><a href="#PMI项目管理知识域" class="headerlink" title="PMI项目管理知识域"></a>PMI项目管理知识域</h4><ul>
+<li>整合管理</li>
+<li>范围管理</li>
+<li>时间管理</li>
+<li>成本管理</li>
+<li>质量管理</li>
+<li>人力资源管理</li>
+<li>沟通管理</li>
+<li>风险管理</li>
+<li>采购管理</li>
+<li>干系人管理</li>
+</ul>
+<h4 id="PMI将47个管理过程归纳为5大类"><a href="#PMI将47个管理过程归纳为5大类" class="headerlink" title="PMI将47个管理过程归纳为5大类"></a>PMI将47个管理过程归纳为5大类</h4><ul>
+<li>启动过程组：获得授权，定义一个新项目或现有项目的一个新阶段，正式开始该项目或阶段的一组过程。</li>
+<li>规划过程组：明确项目范围，优化目标，为实现目标而制定行动方案的一组过程。</li>
+<li>执行过程组：完成项目管理计划中确定的工作以实现项目目标的一组过程。</li>
+<li>监控过程组：跟踪、审查和调整项目进展与绩效，识别必要的计划变更并启动相应变更的一组过程。</li>
+<li>收尾过程组：为完结所有过程组的所有活动以正式结束项目或阶段而实施的一组过程。</li>
+</ul>
+<h4 id="估算活动持续时间的方法"><a href="#估算活动持续时间的方法" class="headerlink" title="估算活动持续时间的方法"></a>估算活动持续时间的方法</h4><p><strong>三点估算</strong></p>
+<ul>
+<li>最乐观时间（tO）。基于活动的最好情况，所估算的活动持续时间</li>
+<li>最悲观时间（tP）。基于活动的最差情况，所估算的活动持续时间</li>
+<li>最可能时间（tM）。基于最可能获得的资源、最可能取得的资源生产率、对资源可用时间的现实预计、资源对其他参与者的可能依赖及可能发生的各种干扰等，所估算的活动持续时间。</li>
+<li>基于持续时间在三种估算值区间内的假定分布情况（β分布），使用公式来计算期望持续时间tE<blockquote>
+<p>tE = (t0 + 4 * tM + tP) / 6</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-957f5eac80a77a00.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<blockquote>
+<ul>
+<li>正态曲线下，横轴区间（μ-σ,μ+σ）内的面积为68.268949%。<br>P{|X-μ|&lt;σ}=2Φ（1）-1=0.6826</li>
+<li>横轴区间（μ-1.96σ,μ+1.96σ）内的面积为95.449974%。<br>P{|X-μ|&lt;2σ}=2Φ（2）-1=0.9544  </li>
+<li>横轴区间（μ-2.58σ,μ+2.58σ）内的面积为99.730020%。<br>P{|X-μ|&lt;3σ}=2Φ（3）-1=0.9974  </li>
+</ul>
+</blockquote>
+<p><strong>其余公式</strong>  </p>
+<p>PV[Planned Value]计划值：应该完成多少工作？[96版的BCWS]  </p>
+<p>EV[Earned Value]挣值：完成了多少预算工作？[96版的BCWP]  </p>
+<p>AC[Actual Cost]实际成本：完成工作的实际成本是多少？[96版的ACWP]  </p>
+<p>BAC[Budget cost at completion]完工预算：全部工作的预算是多少？不改变成本基准，BAC就不会发生变化  </p>
+<p>EAC[Estimate at completion]完成预估：全部工作的成本是多少？是根据项目的绩效和风险量化对项目最可能的总成本所做的一种预测。  </p>
+<p>ETC完工尚需估算：剩余工作在当前的估算是多少？  </p>
+<p>CPI成本绩效指数：CPI=EV/AC                 CPI&gt;1代表工作价值高，好  </p>
+<p>SPI进度绩效指数：SPI=EV/PV                 SPI&gt;1代表实际进度快，好  </p>
+<p>PC任务完成指数：PC=EV/BA  </p>
+<p>CV成本差异：CV=EV-AC                 CV&gt;0代表成本节约，好  </p>
+<blockquote>
+<p>成本差异比例%=CV/EV=(EV-AC)/EV=1-1/CPI  </p>
+</blockquote>
+<p>SV进度差异：SV=EV-PV                 SV&gt;0代表进度提前，好  </p>
+<blockquote>
+<p>成本差异比例%=SV/PV=(EV-PV)/PV=SPI-1  </p>
+</blockquote>
+<p>EAC=BAC+AC-EV=BAC-CV  </p>
+<p>EAC=BAC/CPI  </p>
+<p>EAC=ETC+AC  </p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/06/10/软件工程管理/">软件工程管理</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Enda Lin 的个人博客">Enda Lin</a></p>
+  <p><span>发布时间:</span>2019年06月10日 - 16:14</p>
+  <p><span>最后更新:</span>2019年07月08日 - 09:15</p>
+  <p><span>原始链接:</span><a href="/2019/06/10/软件工程管理/" title="软件工程管理">https://wt-git-repository.github.io/2019/06/10/软件工程管理/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://wt-git-repository.github.io/2019/06/10/软件工程管理/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>
+</div>
+<script>
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({
+          title: "",
+          text: '复制成功',
+          icon: "success",
+          showConfirmButton: true
+          });
+	});
+    });
+</script>
+
+
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/软件过程管理/" rel="tag"># 软件过程管理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/10/操作系统之进程与线程/" rel="next" title="操作系统之进程与线程">
+                <i class="fa fa-chevron-left"></i> 操作系统之进程与线程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/11/Linux常用命令/" rel="prev" title="centos7常用命令(IP与防火墙相关)">
+                centos7常用命令(IP与防火墙相关) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/06/10/软件工程管理/" data-title="软件工程管理" data-url="https://wt-git-repository.github.io/2019/06/10/软件工程管理/">
+      </div>
+    
+    <div id="gitalk-container"></div>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avator.jpeg" alt="Enda Lin">
+          <p class="site-author-name" itemprop="name">Enda Lin</p>
+           
+              <p class="site-description motion-element" itemprop="description">所有的伟大都是从零开始</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wt-git-repository" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="endawt.lin@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#软件工程规范"><span class="nav-number">1.</span> <span class="nav-text">软件工程规范</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#软件过程的分类"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">软件过程的分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件过程的组成"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">软件过程的组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#过程规范"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">过程规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件过程规范"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">软件过程规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件过程规范的建立"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">软件过程规范的建立</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件生命周期的过程需求"><span class="nav-number">1.0.0.6.</span> <span class="nav-text">软件生命周期的过程需求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件过程模型"><span class="nav-number">1.0.0.7.</span> <span class="nav-text">软件过程模型</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#软件过程成熟度"><span class="nav-number">2.</span> <span class="nav-text">软件过程成熟度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CMM"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">CMM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMMI"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">CMMI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMM-CMMI五个等级"><span class="nav-number">2.0.0.3.</span> <span class="nav-text">CMM/CMMI五个等级</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMMI过程域"><span class="nav-number">2.0.0.4.</span> <span class="nav-text">CMMI过程域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PSP-TSP和CMM组成的软件过程框架"><span class="nav-number">2.0.0.5.</span> <span class="nav-text">PSP/TSP和CMM组成的软件过程框架</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#软件过程的组织管理"><span class="nav-number">3.</span> <span class="nav-text">软件过程的组织管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#组织过程定义-过程裁剪"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">组织过程定义-过程裁剪</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#组织过程焦点-执行约定"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">组织过程焦点-执行约定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#组织过程焦点-执行能力"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">组织过程焦点-执行能力</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#组织过程焦点-执行活动"><span class="nav-number">3.0.0.4.</span> <span class="nav-text">组织过程焦点-执行活动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#组织过程焦点-评估"><span class="nav-number">3.0.0.5.</span> <span class="nav-text">组织过程焦点-评估</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PSP过程框架和成熟度模型"><span class="nav-number">3.0.0.6.</span> <span class="nav-text">PSP过程框架和成熟度模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TSP"><span class="nav-number">3.0.0.7.</span> <span class="nav-text">TSP</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#软件需求管理"><span class="nav-number">4.</span> <span class="nav-text">软件需求管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#需求开发"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">需求开发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#需求获取概述"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">需求获取概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#需求获取的方法"><span class="nav-number">4.0.0.3.</span> <span class="nav-text">需求获取的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#需求跟踪"><span class="nav-number">4.0.0.4.</span> <span class="nav-text">需求跟踪</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#需求变更"><span class="nav-number">4.0.0.5.</span> <span class="nav-text">需求变更</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#软件过程的技术管理"><span class="nav-number">5.</span> <span class="nav-text">软件过程的技术管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#技术路线"><span class="nav-number">5.0.0.1.</span> <span class="nav-text">技术路线</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#软件过程的项目管理"><span class="nav-number">6.</span> <span class="nav-text">软件过程的项目管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#PMI项目管理知识域"><span class="nav-number">6.0.0.1.</span> <span class="nav-text">PMI项目管理知识域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PMI将47个管理过程归纳为5大类"><span class="nav-number">6.0.0.2.</span> <span class="nav-text">PMI将47个管理过程归纳为5大类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#估算活动持续时间的方法"><span class="nav-number">6.0.0.3.</span> <span class="nav-text">估算活动持续时间的方法</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Enda Lin</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 您是博主的第
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位小伙伴
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="/js/md5.min.js"></script>
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'afbcc6e2a54ed4e2ebd7',
+          clientSecret: '6c36028e964ef689580f33ec9bd19b720f5f131f',
+          repo: 'wt-git-repository.github.io',
+          owner: 'wt-git-repository',
+          admin: ['wt-git-repository'],
+          id: md5(location.href),
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
