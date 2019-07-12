@@ -95,7 +95,7 @@
 <meta property="og:description" content="云计算云计算是分布式计算、并行计算、效用计算、网络存储、虚拟化、负载均衡等计算机和网络技术发展融合的产物。 云计算主要包括3种类型： IaaS、PaaS 和SaaS。 云数据库云数据库是部署和虚拟化在云计算环境中的数据库。 MapReduce思想: 分而治之， 把一个大的数据块拆分为多个小的数据块在不同的机器上并行处理。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-ad73fa8729eb659d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-07-08T02:26:54.256Z">
+<meta property="og:updated_time" content="2019-07-11T11:25:25.272Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hadoop学习笔记⑤">
 <meta name="twitter:description" content="云计算云计算是分布式计算、并行计算、效用计算、网络存储、虚拟化、负载均衡等计算机和网络技术发展融合的产物。 云计算主要包括3种类型： IaaS、PaaS 和SaaS。 云数据库云数据库是部署和虚拟化在云计算环境中的数据库。 MapReduce思想: 分而治之， 把一个大的数据块拆分为多个小的数据块在不同的机器上并行处理。">
@@ -353,7 +353,7 @@
                   <span class="post-meta-item-text">Words count in article</span>
                 
                 <span title="Words count in article">
-                  590
+                  1.2k
                 </span>
               
 
@@ -369,7 +369,7 @@
                   <span class="post-meta-item-text">Reading time</span>
                 
                 <span title="Reading time">
-                  2
+                  4
                 </span>
               
             </div>
@@ -404,7 +404,7 @@
 </li>
 <li><p>Map 任务会根据用户自定义的映射规则， 输出一系列的&lt;K, V&gt; 作为中间结果</p>
 </li>
-<li><p>在将Map 任务输出的中间结果交给Reduce 任务处理之前， 需要经过shuffle 处理， 从无序的&lt;key, value&gt; 到有序的&lt;key, value-list&gt;。</p>
+<li><p>在将Map 任务输出的中间结果交给Reduce 任务处理之前， 需要经过<strong>shuffle</strong> 处理， 从无序的&lt;key, value&gt; 到有序的&lt;key, value-list&gt;。</p>
 </li>
 <li><p>Reduce 以一系列&lt;key, value-list&gt; 作为输入， 按照用户定义的逻辑， 将处理结果输出到OutFormat 模块。</p>
 </li>
@@ -412,6 +412,19 @@
 </li>
 </ul>
 <p><img src="https://upload-images.jianshu.io/upload_images/13918038-ad73fa8729eb659d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="Shuffle-过程详解"><a href="#Shuffle-过程详解" class="headerlink" title="Shuffle 过程详解"></a>Shuffle 过程详解</h4><p>Shuffle 是整个MapReduce 的核心， 对Map 输出结果进行分区、排序以及合并等处理并交给Reduce 的过程， Shuffle 分为Map 端操作和Reduce 端操作。</p>
+<p><strong>在Map 端的Shuffle 过程</strong></p>
+<p>每个Map 任务都会被分配到一个缓存， 默认大写是100M</p>
+<p>Map 的输出结果会暂时被写入缓存中， 当缓存满时， 会启动溢写操作， 把缓存中的数据进行分区， 并对同一个分区里面的数据进行合并（合并是指对有着相同Key 值的数据加起来， 以减少需要溢写到磁盘的数据量）， 然后写入磁盘文件（此举可以减少对磁盘的I/O 操作）， 并清空缓存， 每次溢写操作， 都会生成一个溢写文件， 当Map 任务结束之后， 这些溢写文件就会被合并成一个大的磁盘文件(此时会对所有的数据进行合并操作)， 最终会生成一个统一的大文件， 但是这个大文件是被分区的， 然后通知Reduce 来领取属于自己的处理数据， 不同分区的数据会被分发到不同的Reduce 上执行。</p>
+<p>为了使得Map 的写入操作可以持续进行， 需要让缓存留有一定的空间， 而不是等缓存满了之后在进行溢写操作。此处会有一个溢写比例。</p>
+<p>合并例子： &lt;k1, v1&gt; 与&lt;k1, v2&gt; 合并成&lt;k1, &lt;v1, v2&gt;&gt;</p>
+<p><strong>在Reduce 端的Shuffle 过程</strong><br>Reduce 任务从Map 端的不同机器领取属于自己的那一份数据， 然后对数据进行合并， 接着进行处理。</p>
+<p>两个流程：</p>
+<ul>
+<li>领取数据： Reduce会开多个线程去向多个Map 任务所在的机器去领取数据</li>
+<li>归并数据： 从Map 端领取回来的数据会先保存在缓存中， 如果缓存占满了， 会触发溢写操作（此时也会对数据进行合并）， 将数据写到磁盘中， 每次溢写都会产生一个溢写文件， 最后当所有数据都被领取完毕之后， 就会对所有的溢写文件进行归并排序</li>
+<li>将数据输入到Reduce 任务：经过多轮归并会生成多个大文件（Map 端是一个）， 这几个大文件不会继续归并成一个新的大文件， 而是直接输入到Reduce 任务中， 接下来Reduce 任务会执行操作， 将处理结果输出到HDFS 中。</li>
+</ul>
 
       
     </div>
@@ -431,7 +444,7 @@
   <p><span>本文标题:</span><a href="/2019/06/29/hadoop学习笔记⑤/">Hadoop学习笔记⑤</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Enda Lin 的个人博客">Enda Lin</a></p>
   <p><span>发布时间:</span>2019年06月29日 - 09:21</p>
-  <p><span>最后更新:</span>2019年07月08日 - 10:26</p>
+  <p><span>最后更新:</span>2019年07月11日 - 19:25</p>
   <p><span>原始链接:</span><a href="/2019/06/29/hadoop学习笔记⑤/" title="Hadoop学习笔记⑤">https://wt-git-repository.github.io/2019/06/29/hadoop学习笔记⑤/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://wt-git-repository.github.io/2019/06/29/hadoop学习笔记⑤/" aria-label="复制成功！"></i></span>
   </p>
@@ -641,7 +654,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#云计算"><span class="nav-number">1.</span> <span class="nav-text">云计算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#云数据库"><span class="nav-number">2.</span> <span class="nav-text">云数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MapReduce"><span class="nav-number">3.</span> <span class="nav-text">MapReduce</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#工作流程"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">工作流程</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#云计算"><span class="nav-number">1.</span> <span class="nav-text">云计算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#云数据库"><span class="nav-number">2.</span> <span class="nav-text">云数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MapReduce"><span class="nav-number">3.</span> <span class="nav-text">MapReduce</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#工作流程"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">工作流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Shuffle-过程详解"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">Shuffle 过程详解</span></a></li></ol></li></ol></div>
             
 
           </div>
