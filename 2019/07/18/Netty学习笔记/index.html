@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Netty,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Netty in actionChannel、 EventLoop和 ChannelFuture Channel -&amp;gt; socket EventLoop -&amp;gt; 控制流、多线程处理、并发 ChannelFuture -&amp;gt; 异步通知  Channel 接口基本的I/O 操作：（bind()、 connect()、 read()、 和write()） 在基于Java 的网络编程中， 其">
+<meta name="keywords" content="Netty">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Netty学习笔记">
+<meta property="og:url" content="https://wt-git-repository.github.io/2019/07/18/Netty学习笔记/index.html">
+<meta property="og:site_name" content="Enda Lin">
+<meta property="og:description" content="Netty in actionChannel、 EventLoop和 ChannelFuture Channel -&amp;gt; socket EventLoop -&amp;gt; 控制流、多线程处理、并发 ChannelFuture -&amp;gt; 异步通知  Channel 接口基本的I/O 操作：（bind()、 connect()、 read()、 和write()） 在基于Java 的网络编程中， 其">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-27236ab88c913b97.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-81988e248b7dc191.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-ddd2e358d40eba04.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-4085ffe8c8f9466c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-bf92f1b5590bde05.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-e94673142bdb8a6f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-18abb7df860271df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-6d8e9e97109f88f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-8975f267e8b5578c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-07-18T08:02:45.887Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Netty学习笔记">
+<meta name="twitter:description" content="Netty in actionChannel、 EventLoop和 ChannelFuture Channel -&amp;gt; socket EventLoop -&amp;gt; 控制流、多线程处理、并发 ChannelFuture -&amp;gt; 异步通知  Channel 接口基本的I/O 操作：（bind()、 connect()、 read()、 和write()） 在基于Java 的网络编程中， 其">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/13918038-27236ab88c913b97.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wt-git-repository.github.io/2019/07/18/Netty学习笔记/">
+
+
+
+
+
+  <title>Netty学习笔记 | Enda Lin</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Enda Lin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep foolish, keep sharp</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/07/18/Netty学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Netty学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-18T13:39:42+08:00">
+                2019-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/18/Netty学习笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/07/18/Netty学习笔记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  1.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Netty-in-action"><a href="#Netty-in-action" class="headerlink" title="Netty in action"></a>Netty in action</h1><h2 id="Channel、-EventLoop和-ChannelFuture"><a href="#Channel、-EventLoop和-ChannelFuture" class="headerlink" title="Channel、 EventLoop和 ChannelFuture"></a>Channel、 EventLoop和 ChannelFuture</h2><ul>
+<li>Channel -&gt; socket</li>
+<li>EventLoop -&gt; 控制流、多线程处理、并发</li>
+<li>ChannelFuture -&gt; 异步通知</li>
+</ul>
+<h3 id="Channel-接口"><a href="#Channel-接口" class="headerlink" title="Channel 接口"></a>Channel 接口</h3><p>基本的I/O 操作：（bind()、 connect()、 read()、 和write()）</p>
+<p>在基于Java 的网络编程中， 其基本构造是class socket, Netty 的Channel 接口提供的API， 大大降低了直接使用socket 的难度。 此外， Channel 也是拥有许多预定义、 专门实现的广泛类层次结构的根</p>
+<ul>
+<li>EmbeddedChannel</li>
+<li>LocalServerChannel</li>
+<li>NioDatagramChannel</li>
+<li>NioSctpChannel</li>
+<li>NioSocketChannel</li>
+</ul>
+<p><strong>Channel 的生命周期</strong></p>
+<ul>
+<li>ChannelUnRegistered：Channel 已被创建， 但是还没有注册到EventLoop 中</li>
+<li>ChannelRegistered：Channel 已经被注册到EventLoop 中</li>
+<li>ChannelActive：Channel 处于活动状态， 已经连接到远程节点， 可以接收或者发送数据</li>
+<li>ChannelInActive：Channel 没有连接到远程节点</li>
+</ul>
+<a id="more"></a>
+<h3 id="EventLoop"><a href="#EventLoop" class="headerlink" title="EventLoop"></a>EventLoop</h3><p>EventLoop 定义了Netty 的核心抽象， 用于处理连接的生命周期中所发生的事件。</p>
+<ul>
+<li>一个EventLoopGroup 包含一个或者多个EventLoop</li>
+<li>一个EventLoop 在它的生命周期内只有一个Thread 绑定</li>
+<li>所有由EventLoop 处理的I/O 事件都由它专属的Thread 上被处理</li>
+<li>一个Channel 在它的生命周期内只注册一个EventLoop</li>
+<li>一个EventLoop 可能被分配给以一个或者多个Channel</li>
+</ul>
+<p>注意：一个给定的Channel 的I/O 操作都是由相同的Thread 去执行的。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-27236ab88c913b97.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-81988e248b7dc191.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h3 id="ChannelFuture"><a href="#ChannelFuture" class="headerlink" title="ChannelFuture"></a>ChannelFuture</h3><p>Netty 所有操作都是异步的， Netty 提供了ChannelFuture 接口， 其addListener() 方法注册了一个ChannelFutureListener， 以便在一个操作完成之后作一个及时的反馈。</p>
+<h2 id="ChannelHandler-和-ChannelPipeline"><a href="#ChannelHandler-和-ChannelPipeline" class="headerlink" title="ChannelHandler 和 ChannelPipeline"></a>ChannelHandler 和 ChannelPipeline</h2><h3 id="ChannleHandler"><a href="#ChannleHandler" class="headerlink" title="ChannleHandler"></a>ChannleHandler</h3><p>ChannelHandler 充当了所有处理入站和出站数据的应用程序逻辑的容器</p>
+<p>例如：</p>
+<ul>
+<li>ChannelHandlerAdapter</li>
+<li>ChannelInboundHandler：处理入站数据以及各种状态变化， 其中一个子类是SimpleChannelInboundHandler<t></t></li>
+<li>ChannelOutboundHandlerAdapter：处理出站数据并且允许拦截所有的操作</li>
+<li>ChannelDuplexHandler</li>
+</ul>
+<p><strong>ChannelHandler 生命周期方法</strong></p>
+<ul>
+<li>handlerAdded：当ChannelHandler 添加到ChannelPipeline 时被调用</li>
+<li>handlerRemoved：当从ChannelPipeline 中移除ChannelHandler 时被调用</li>
+<li>exceptionCaught：当处理过程中， 在拦截链中遇到异常时被触发</li>
+</ul>
+<p><strong>ChannelInboundHandler</strong></p>
+<p>当某个 ChannelInboundHandler 的实现重写 channelRead()方法时，它将负责显式地<br>释放与池化的 ByteBuf 实例相关的内存。</p>
+<p>Netty 为此提供了一个实用方法 ReferenceCountUtil.release(msg)来释放资源</p>
+<p>SimpleChannelInboundHandler 会自动释放资源，</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-ddd2e358d40eba04.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><strong>ChannelOutboundHandler</strong></p>
+<p>ChannelPromise与ChannelFuture ChannelOutboundHandler中的大部分方法都需要一个<br>ChannelPromise参数，以便在操作完成时得到通知。ChannelPromise是ChannelFuture的一个<br>子类，其定义了一些可写的方法，如setSuccess()和setFailure()，从而使ChannelFuture不可变</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-4085ffe8c8f9466c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="解码器和编码器"><a href="#解码器和编码器" class="headerlink" title="解码器和编码器"></a>解码器和编码器</h4><p>所有由 Netty 提供的编码器/解码器适配器类都实现<br>了 ChannelOutboundHandler 或者 ChannelInboundHandler 接口</p>
+<p>对于入站数据来说，channelRead 方法/事件已经被重写了。对于每个从入站<br>Channel 读取的消息，这个方法都将会被调用。随后，它将调用由预置解码器所提供的 decode()<br>方法，并将已解码的字节转发给 ChannelPipeline 中的下一个 ChannelInboundHandler。<br>出站消息的模式是相反方向的：编码器将消息转换为字节，并将它们转发给下一个<br>ChannelOutboundHandler。</p>
+<h4 id="抽象类-SimpleChannelInboundHandler"><a href="#抽象类-SimpleChannelInboundHandler" class="headerlink" title="抽象类 SimpleChannelInboundHandler"></a>抽象类 SimpleChannelInboundHandler<t></t></h4><p>T 是你要处理的消息的 Java 类型</p>
+<h3 id="ChannelPipeline-拦截过滤器"><a href="#ChannelPipeline-拦截过滤器" class="headerlink" title="ChannelPipeline(拦截过滤器)"></a>ChannelPipeline(拦截过滤器)</h3><p>ChannelPipeline 提供了ChannelHandler 链的容器， 并定义了用于在该链上传播入站和出站事件流的API</p>
+<p>ChannelPipeline 持有所有将应用于入站和出站数据以及事件的 ChannelHandler 实<br>例，这些 ChannelHandler 实现了应用程序用于处理状态变化以及数据处理的逻辑</p>
+<p>当Channel 被创建之后， 它会被分配到专属的Channelpeline</p>
+<p>ChannelHandler 安装到ChannelPipeline 的过程如下：</p>
+<ul>
+<li>一个ChannelInitializer 的实现被注册到了ServerBootstrap 中</li>
+<li>当ChannelInitializer.initChannel() 方法被调用之后， ChannelInitializer 将会在ChannelPipeline 中安装一组自定义的ChannelHandler</li>
+<li>ChannelInitializer 将它自己从ChannelPipeline 中移除</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-bf92f1b5590bde05.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>在Netty 中， 有两种写数据的方式：</p>
+<ul>
+<li>直接写到Channel： 这种方式会导致消息从ChannelPipeline 尾部开始流动</li>
+<li>写到和ChannelHandler 相关联的ChannelHandlerContext 中： 这种方式会导致消息从ChannelPipeline 对应的下一个ChannelHandler 开始流动</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-e94673142bdb8a6f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-18abb7df860271df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h3 id="ChannelHandlerContext"><a href="#ChannelHandlerContext" class="headerlink" title="ChannelHandlerContext"></a>ChannelHandlerContext</h3><p>ChannelHandlerContext 代表了ChannelHandler 和 ChannelPipeline 之间的关联, 每当有ChannelHandler 添加到ChannelPipeline 中时，都会创建ChannelHandlerContext</p>
+<p>ChannelHandlerContext 的主要功能是管理它所关联的ChannelHandler 和在同一个ChannelPipeline 中的其他ChannelHandler 之间的交互</p>
+<p>注意：<br>如果调用Channel 和ChannelPipeline 上面的方法， 它们会沿着这个ChannelPipeline 上进行传播</p>
+<p>如果ChannelHandlerContext 上相同的方法， 只会从当前ChannelHandler 开始传播</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-6d8e9e97109f88f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>通过 ChannelHandlerContext 获取到 Channel 的引用。调用Channel 上的 write()方法将会导致写入事件从尾端到头部地流经 ChannelPipeline</p>
+<h2 id="引导"><a href="#引导" class="headerlink" title="引导"></a>引导</h2><p>两种类型： 客户端（Bootstrap）与服务器端(ServerBootStrap)</p>
+<h2 id="传输"><a href="#传输" class="headerlink" title="传输"></a>传输</h2><p><img src="https://upload-images.jianshu.io/upload_images/13918038-8975f267e8b5578c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/07/18/Netty学习笔记/">Netty学习笔记</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Enda Lin 的个人博客">Enda Lin</a></p>
+  <p><span>发布时间:</span>2019年07月18日 - 13:39</p>
+  <p><span>最后更新:</span>2019年07月18日 - 16:02</p>
+  <p><span>原始链接:</span><a href="/2019/07/18/Netty学习笔记/" title="Netty学习笔记">https://wt-git-repository.github.io/2019/07/18/Netty学习笔记/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://wt-git-repository.github.io/2019/07/18/Netty学习笔记/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>
+</div>
+<script>
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({
+          title: "",
+          text: '复制成功',
+          icon: "success",
+          showConfirmButton: true
+          });
+	});
+    });
+</script>
+
+
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Netty/" rel="tag"># Netty</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/15/MySQL必知必会/" rel="next" title="MySQL必知必会">
+                <i class="fa fa-chevron-left"></i> MySQL必知必会
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/07/18/Netty学习笔记/" data-title="Netty学习笔记" data-url="https://wt-git-repository.github.io/2019/07/18/Netty学习笔记/">
+      </div>
+    
+    <div id="gitalk-container"></div>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avator.jpeg" alt="Enda Lin">
+          <p class="site-author-name" itemprop="name">Enda Lin</p>
+           
+              <p class="site-description motion-element" itemprop="description">所有的伟大都是从零开始</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wt-git-repository" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="endawt.lin@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Netty-in-action"><span class="nav-number">1.</span> <span class="nav-text">Netty in action</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Channel、-EventLoop和-ChannelFuture"><span class="nav-number">1.1.</span> <span class="nav-text">Channel、 EventLoop和 ChannelFuture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Channel-接口"><span class="nav-number">1.1.1.</span> <span class="nav-text">Channel 接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EventLoop"><span class="nav-number">1.1.2.</span> <span class="nav-text">EventLoop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ChannelFuture"><span class="nav-number">1.1.3.</span> <span class="nav-text">ChannelFuture</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ChannelHandler-和-ChannelPipeline"><span class="nav-number">1.2.</span> <span class="nav-text">ChannelHandler 和 ChannelPipeline</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ChannleHandler"><span class="nav-number">1.2.1.</span> <span class="nav-text">ChannleHandler</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解码器和编码器"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">解码器和编码器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象类-SimpleChannelInboundHandler"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">抽象类 SimpleChannelInboundHandler</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ChannelPipeline-拦截过滤器"><span class="nav-number">1.2.2.</span> <span class="nav-text">ChannelPipeline(拦截过滤器)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ChannelHandlerContext"><span class="nav-number">1.2.3.</span> <span class="nav-text">ChannelHandlerContext</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引导"><span class="nav-number">1.3.</span> <span class="nav-text">引导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传输"><span class="nav-number">1.4.</span> <span class="nav-text">传输</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Enda Lin</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 您是博主的第
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位小伙伴
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="/js/md5.min.js"></script>
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'afbcc6e2a54ed4e2ebd7',
+          clientSecret: '6c36028e964ef689580f33ec9bd19b720f5f131f',
+          repo: 'wt-git-repository.github.io',
+          owner: 'wt-git-repository',
+          admin: ['wt-git-repository'],
+          id: md5(location.href),
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
