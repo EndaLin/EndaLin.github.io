@@ -151,3 +151,31 @@ ChannelHandlerContext 的主要功能是管理它所关联的ChannelHandler 和�
 ## 传输
 
 ![image.png](https://upload-images.jianshu.io/upload_images/13918038-8975f267e8b5578c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+## ByteBuf
+
+Netty 的ByteBuf 用于替代Java NIO 的ByteBuff
+
+ByteBuf 维护了两个不同的索引： 一个用于读取、一个用于写入
+
+![image.png](https://upload-images.jianshu.io/upload_images/13918038-071fb67cd185fd83.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+## ByteBuf 的使用模式
+
+### 堆缓冲区
+
+最常用的ByteBuf 模式是将数据存储在JVM 的堆空间里面， 这种模式被称为支撑数组， 它能在没有使用池化的情况下提供快速的分配和释放。
+
+### 直接缓冲区
+
+直接缓冲区的内容将驻留在常规的会被垃圾回收的堆之外
+
+直接缓冲区是网络数据传输的理想选择， 但不是数据处理的理想选择， 因为在直接缓冲区需要被处理的数据， 需要复制到堆中才能被处理
+
+如果你的数据包含在一个在堆中分配的缓冲区， 在通过套接字发送之前， JVM 会将它复制到直接缓冲区， 然后再发送
+
+### 复合缓冲区
+
+它为多个ByteBuf 提供一个聚合视图， 可以根据需要添加或者删除ByteBuf 实例
+
+Netty 通过一个ByteBuf 子类（compositeByteBuf）实现这个模式， 它提供了一个将多个缓冲区表示为单个合并缓冲区的虚拟表示， 所以这里值得注意的是， CompositeByteBuf 实例可能同时包含直接内存和非直接内存。
