@@ -117,7 +117,7 @@ sentinel master mymaster
 sentinel slaves mymaster
 ```
 
-# lettcue
+# lettuce
 依赖
 ```
 <dependency>

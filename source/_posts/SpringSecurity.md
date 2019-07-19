@@ -255,8 +255,17 @@ public UserDetails loadUserByUsername(final String username) throws UsernameNotF
 }
 ```
 
+# 补充
+- addFilterBefore(filter, class) – adds a filter before the position of the specified filter class
+- addFilterAfter(filter, class) – adds a filter after the position of the specified filter class
+- addFilterAt(filter, class) – adds a filter at the location of the specified filter class
+- addFilter(filter) – adds a filter that must be an instance of or extend one of the filters provided by Spring Security
+
+
 
 # 官方文档
+- [Spring Security 官方文档](https://docs.spring.io/spring-security/site/docs/5.2.0.BUILD-SNAPSHOT/reference/htmlsingle/#ns-entry-point-ref)
 - [CasAuthenticationFilter 官方文档](https://docs.spring.io/autorepo/docs/spring-security/3.0.7.RELEASE/apidocs/org/springframework/security/cas/web/CasAuthenticationFilter.html)
 - [AbstractAuthenticationProcessingFilter 官方文档](https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/apidocs/org/springframework/security/web/authentication/AbstractAuthenticationProcessingFilter.html)
 - [简书上的相关解释](https://zhuanlan.zhihu.com/p/35408527)
+- [A Custom Filter in the Spring Security Filter Chain](https://www.baeldung.com/spring-security-custom-filter)
