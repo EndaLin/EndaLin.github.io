@@ -31,3 +31,7 @@ private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
 ## bean 的生命周期
 
 ![image.png](https://upload-images.jianshu.io/upload_images/13918038-0ac90624b41ec2e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+## @ComponentScan
+
+这个注解能够在Spring 中启用组件扫描， 如果没有其他配置， @ComponentScan 默认会扫描当前包及其子包下所有的组件。

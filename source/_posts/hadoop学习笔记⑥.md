@@ -78,6 +78,8 @@ Spark 同时支持一下三种类型：
 - 基于历史数据的交互式查询： 时间跨度通常在数十秒到数分钟之间
 - 基于实时数据流的数据处理： 时间跨度通常在数百毫秒到数秒之间
 
+Spark 专注于数据的处理和分析， 数据的存储还是需要借助Hadoop 分布式文件系统HDFS 来实现。
+
 Spark 生态系统主要包括Spark Core、 Spark SQL、 Spark Streaming、 MLlib和 GraphX 等组件
 
 - **Spark Core**： Spark Core 包含Spark 的基本功能， 如内存计算、任务调度、部署模式、故障恢复、存储管理等， 主要面向批数据处理。 Spark 建立在统一的抽象RDD 之上， 使其可以以基本一致的方式应对大数据处理场景。
@@ -94,10 +96,12 @@ Spark 生态系统主要包括Spark Core、 Spark SQL、 Spark Streaming、 MLli
 - RDD： 弹性分布式数据集， 是分布式内存的一个抽象概念， 提供了一个高度受限的共享内存模型
 - DAG： 有向无环图， 反映RDD 之间的依赖关系
 - Executor： 是运行在工作节点（Worker Node）上的一个进程， 负责运行任务， 并为应用程序存储数据
-- 应用： 用户编写的Spark 应用程序
+- 应用Application： 用户编写的Spark 应用程序
 - 任务： 运行在Executor 上的工作单元
 - 作业： 一个作业包含多个RDD 及作用于相应RDD 上的各种操作
 - 阶段： 是作业的基本调度单位， 一个作业分为多个阶段， 一个阶段又有多个任务task
+
+![对基本概念的定义](https://www.cnblogs.com/shishanyuan/p/4721326.html)
 
 ### 架构设计
 
@@ -145,3 +149,11 @@ Spark 使用Scala 语言实现RDD 的API：
 - 最后一个RDD 经过“行动Action” 操作进行处理， 并输出到外部数据源。
 
 ![image.png](https://upload-images.jianshu.io/upload_images/13918038-20138811a5c16772.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### Spark 部署和应用方式
+
+Spark 可运行在YARN 之上， 与Hadoop 进行统一部署， 资源管理和调度依赖YARN， 分布式存储依赖HDFS
+
+![image.png](https://upload-images.jianshu.io/upload_images/13918038-3810b1bfd746e5bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+Spark 目前最好与Hadoop 进行统一部署
