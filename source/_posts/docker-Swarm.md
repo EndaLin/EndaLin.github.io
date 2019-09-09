@@ -76,6 +76,15 @@ This node joined a swarm as a worker.
 docker service create --replicas 2 -p 80:80 --name nginx nginx:1.13.7-alpine
 ```
 
+
+**查看集群**
+
+在leader 中运行如下命令
+```bash
+docker node ls
+```
+
+
 ### 使用docker-compose 创建集群
 
 **docker service create**： 每次只能启动一个服务
