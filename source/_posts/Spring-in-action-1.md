@@ -1,10 +1,9 @@
 ---
-title: Spring_in_action读书笔记①
+title: Spring in action 读书笔记①
 copyright: true
-date: 2019-07-12 12:39:58
+date: 2019-09-20 09:30:57
 tags: Spring
 ---
-
 
 # bean
 
@@ -34,4 +33,32 @@ private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
 
 ## @ComponentScan
 
-这个注解能够在Spring 中启用组件扫描， 如果没有其他配置， @ComponentScan 默认会扫描当前包及其子包下所有的组件。
+这个注解能够在Spring 中启用组件扫描， 如果没有其他配置， @ComponentScan 默认会扫描**当前包及其子包下所有的组件**。
+
+```Java
+// 指定基础包
+@ComponentScan(basePackages={'package_name'})
+
+// 指定包中的类或者接口
+@ComponentScan(basePackageClasses={'User.class'})
+```
+
+or
+```xml
+<context:component-scan base-package = 'package_name'/>
+```
+
+## 使用JavaConfig 创建bean
+
+```Java
+@Configuration
+public class MyConfig {
+  /**
+  * 默认情况下，bean 的ID 与带有@Bean 注解的方法名是一样的
+  */
+  @Bean
+  public MyBean myBean() {
+    return new MyBean();
+  }
+}
+```
