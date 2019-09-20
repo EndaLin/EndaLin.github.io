@@ -16,7 +16,7 @@ npm install cnpm -g --registry=https://r.npm.taobao.org
 
 npm install
 
-cnpm install -g hexo-cli 
+cnpm install -g hexo-cli
 
 cnpm install hexo --save
 
@@ -26,3 +26,5 @@ cnpm install hexo-deployer-git --save
 
 cnpm install hexo-wordcount --save //字数统计
 ```
+
+## Github actions
