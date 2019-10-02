@@ -48,7 +48,7 @@ A与B之间的通信，需要通过以下2个步骤
 
 ![image.png](https://upload-images.jianshu.io/upload_images/13918038-ac6059838ed563db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-此处由于指令重排，导致1->A2的顺序变成了A2->A1，所以读取了脏数据。
+此处由于指令重排，导致A1->A2的顺序变成了A2->A1，所以读取了脏数据。
 
 一般情况下，处理器都不允许对存在数据依赖的操作做重排序。
 
