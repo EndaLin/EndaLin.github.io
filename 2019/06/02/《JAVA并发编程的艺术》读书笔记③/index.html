@@ -98,7 +98,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-c82ce2df3c4d9e08.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-640d065ce10355d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-ac6059838ed563db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-07-08T01:15:52.722Z">
+<meta property="og:updated_time" content="2019-09-12T07:48:01.428Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《JAVA并发编程的艺术》读书笔记③">
 <meta name="twitter:description" content="JAVA内存模型的基础在命令式编程中，线程之间的通信机制有两种：共享内存和消息传递。  在共享内存的并发模型中，线程之间共享程序的公共状态，通过读写内存中的公共状态来进行隐式通信。 在消息传递的并发模型中，线程之间没有公共状态，线程之间必须通过发送消息来显式进行通信。  JAVA的并发采用的是共享内存模型。 JAVA内存模型的抽象结构 在JAVA中，所有实例域、静态域和数组元素都在堆内存中，堆内存">
@@ -423,7 +423,7 @@
 <p><img src="https://upload-images.jianshu.io/upload_images/13918038-640d065ce10355d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
 <p>如果AB同时执行，可能会得到读取到脏数据，原因如下：</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/13918038-ac6059838ed563db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>此处由于指令重排，导致1-&gt;A2的顺序变成了A2-&gt;A1，所以读取了脏数据。</p>
+<p>此处由于指令重排，导致A1-&gt;A2的顺序变成了A2-&gt;A1，所以读取了脏数据。</p>
 <p>一般情况下，处理器都不允许对存在数据依赖的操作做重排序。</p>
 <h1 id="happens-before"><a href="#happens-before" class="headerlink" title="happens-before"></a>happens-before</h1><p>在JMM中，如果一个操作的结果需要对另一个操作可见，那么这两个操作之间必须要存在happens-before关系。</p>
 <p>A happens-before B, JMM 并不要求A一定要在B之前执行, JMM仅仅要求前一个操作的结果对后一个操作课件,且前一个操作按顺序排在第二个操作之前.</p>
@@ -446,7 +446,7 @@
   <p><span>本文标题:</span><a href="/2019/06/02/《JAVA并发编程的艺术》读书笔记③/">《JAVA并发编程的艺术》读书笔记③</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Enda Lin 的个人博客">Enda Lin</a></p>
   <p><span>发布时间:</span>2019年06月02日 - 19:20</p>
-  <p><span>最后更新:</span>2019年07月08日 - 09:15</p>
+  <p><span>最后更新:</span>2019年09月12日 - 15:48</p>
   <p><span>原始链接:</span><a href="/2019/06/02/《JAVA并发编程的艺术》读书笔记③/" title="《JAVA并发编程的艺术》读书笔记③">https://wt-git-repository.github.io/2019/06/02/《JAVA并发编程的艺术》读书笔记③/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://wt-git-repository.github.io/2019/06/02/《JAVA并发编程的艺术》读书笔记③/" aria-label="复制成功！"></i></span>
   </p>
@@ -584,7 +584,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-count">69</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -597,7 +597,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

@@ -103,7 +103,8 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-18abb7df860271df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-6d8e9e97109f88f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-8975f267e8b5578c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-07-18T08:02:45.887Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-071fb67cd185fd83.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-07-19T07:35:47.083Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Netty学习笔记">
 <meta name="twitter:description" content="Netty in actionChannel、 EventLoop和 ChannelFuture Channel -&amp;gt; socket EventLoop -&amp;gt; 控制流、多线程处理、并发 ChannelFuture -&amp;gt; 异步通知  Channel 接口基本的I/O 操作：（bind()、 connect()、 read()、 和write()） 在基于Java 的网络编程中， 其">
@@ -361,7 +362,7 @@
                   <span class="post-meta-item-text">Words count in article</span>
                 
                 <span title="Words count in article">
-                  1.2k
+                  1.5k
                 </span>
               
 
@@ -377,7 +378,7 @@
                   <span class="post-meta-item-text">Reading time</span>
                 
                 <span title="Reading time">
-                  4
+                  5
                 </span>
               
             </div>
@@ -436,7 +437,7 @@
 <p>例如：</p>
 <ul>
 <li>ChannelHandlerAdapter</li>
-<li>ChannelInboundHandler：处理入站数据以及各种状态变化， 其中一个子类是SimpleChannelInboundHandler<t></t></li>
+<li>ChannelInboundHandler：处理入站数据以及各种状态变化， 其中一个子类是SimpleChannelInboundHandler<t></t></li>
 <li>ChannelOutboundHandlerAdapter：处理出站数据并且允许拦截所有的操作</li>
 <li>ChannelDuplexHandler</li>
 </ul>
@@ -482,6 +483,15 @@
 <p>通过 ChannelHandlerContext 获取到 Channel 的引用。调用Channel 上的 write()方法将会导致写入事件从尾端到头部地流经 ChannelPipeline</p>
 <h2 id="引导"><a href="#引导" class="headerlink" title="引导"></a>引导</h2><p>两种类型： 客户端（Bootstrap）与服务器端(ServerBootStrap)</p>
 <h2 id="传输"><a href="#传输" class="headerlink" title="传输"></a>传输</h2><p><img src="https://upload-images.jianshu.io/upload_images/13918038-8975f267e8b5578c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h2 id="ByteBuf"><a href="#ByteBuf" class="headerlink" title="ByteBuf"></a>ByteBuf</h2><p>Netty 的ByteBuf 用于替代Java NIO 的ByteBuff</p>
+<p>ByteBuf 维护了两个不同的索引： 一个用于读取、一个用于写入</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-071fb67cd185fd83.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h2 id="ByteBuf-的使用模式"><a href="#ByteBuf-的使用模式" class="headerlink" title="ByteBuf 的使用模式"></a>ByteBuf 的使用模式</h2><h3 id="堆缓冲区"><a href="#堆缓冲区" class="headerlink" title="堆缓冲区"></a>堆缓冲区</h3><p>最常用的ByteBuf 模式是将数据存储在JVM 的堆空间里面， 这种模式被称为支撑数组， 它能在没有使用池化的情况下提供快速的分配和释放。</p>
+<h3 id="直接缓冲区"><a href="#直接缓冲区" class="headerlink" title="直接缓冲区"></a>直接缓冲区</h3><p>直接缓冲区的内容将驻留在常规的会被垃圾回收的堆之外</p>
+<p>直接缓冲区是网络数据传输的理想选择， 但不是数据处理的理想选择， 因为在直接缓冲区需要被处理的数据， 需要复制到堆中才能被处理</p>
+<p>如果你的数据包含在一个在堆中分配的缓冲区， 在通过套接字发送之前， JVM 会将它复制到直接缓冲区， 然后再发送</p>
+<h3 id="复合缓冲区"><a href="#复合缓冲区" class="headerlink" title="复合缓冲区"></a>复合缓冲区</h3><p>它为多个ByteBuf 提供一个聚合视图， 可以根据需要添加或者删除ByteBuf 实例</p>
+<p>Netty 通过一个ByteBuf 子类（compositeByteBuf）实现这个模式， 它提供了一个将多个缓冲区表示为单个合并缓冲区的虚拟表示， 所以这里值得注意的是， CompositeByteBuf 实例可能同时包含直接内存和非直接内存。</p>
 
       
     </div>
@@ -501,7 +511,7 @@
   <p><span>本文标题:</span><a href="/2019/07/18/Netty学习笔记/">Netty学习笔记</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Enda Lin 的个人博客">Enda Lin</a></p>
   <p><span>发布时间:</span>2019年07月18日 - 13:39</p>
-  <p><span>最后更新:</span>2019年07月18日 - 16:02</p>
+  <p><span>最后更新:</span>2019年07月19日 - 15:35</p>
   <p><span>原始链接:</span><a href="/2019/07/18/Netty学习笔记/" title="Netty学习笔记">https://wt-git-repository.github.io/2019/07/18/Netty学习笔记/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://wt-git-repository.github.io/2019/07/18/Netty学习笔记/" aria-label="复制成功！"></i></span>
   </p>
@@ -557,6 +567,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/24/MySQL技术内幕与存储引擎①/" rel="prev" title="MySQL技术内幕与存储引擎①">
+                MySQL技术内幕与存储引擎① <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -635,7 +649,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-count">69</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -648,7 +662,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -707,7 +721,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Netty-in-action"><span class="nav-number">1.</span> <span class="nav-text">Netty in action</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Channel、-EventLoop和-ChannelFuture"><span class="nav-number">1.1.</span> <span class="nav-text">Channel、 EventLoop和 ChannelFuture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Channel-接口"><span class="nav-number">1.1.1.</span> <span class="nav-text">Channel 接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EventLoop"><span class="nav-number">1.1.2.</span> <span class="nav-text">EventLoop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ChannelFuture"><span class="nav-number">1.1.3.</span> <span class="nav-text">ChannelFuture</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ChannelHandler-和-ChannelPipeline"><span class="nav-number">1.2.</span> <span class="nav-text">ChannelHandler 和 ChannelPipeline</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ChannleHandler"><span class="nav-number">1.2.1.</span> <span class="nav-text">ChannleHandler</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解码器和编码器"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">解码器和编码器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象类-SimpleChannelInboundHandler"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">抽象类 SimpleChannelInboundHandler</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ChannelPipeline-拦截过滤器"><span class="nav-number">1.2.2.</span> <span class="nav-text">ChannelPipeline(拦截过滤器)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ChannelHandlerContext"><span class="nav-number">1.2.3.</span> <span class="nav-text">ChannelHandlerContext</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引导"><span class="nav-number">1.3.</span> <span class="nav-text">引导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传输"><span class="nav-number">1.4.</span> <span class="nav-text">传输</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Netty-in-action"><span class="nav-number">1.</span> <span class="nav-text">Netty in action</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Channel、-EventLoop和-ChannelFuture"><span class="nav-number">1.1.</span> <span class="nav-text">Channel、 EventLoop和 ChannelFuture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Channel-接口"><span class="nav-number">1.1.1.</span> <span class="nav-text">Channel 接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EventLoop"><span class="nav-number">1.1.2.</span> <span class="nav-text">EventLoop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ChannelFuture"><span class="nav-number">1.1.3.</span> <span class="nav-text">ChannelFuture</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ChannelHandler-和-ChannelPipeline"><span class="nav-number">1.2.</span> <span class="nav-text">ChannelHandler 和 ChannelPipeline</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ChannleHandler"><span class="nav-number">1.2.1.</span> <span class="nav-text">ChannleHandler</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解码器和编码器"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">解码器和编码器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#抽象类-SimpleChannelInboundHandler"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">抽象类 SimpleChannelInboundHandler</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ChannelPipeline-拦截过滤器"><span class="nav-number">1.2.2.</span> <span class="nav-text">ChannelPipeline(拦截过滤器)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ChannelHandlerContext"><span class="nav-number">1.2.3.</span> <span class="nav-text">ChannelHandlerContext</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引导"><span class="nav-number">1.3.</span> <span class="nav-text">引导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传输"><span class="nav-number">1.4.</span> <span class="nav-text">传输</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ByteBuf"><span class="nav-number">1.5.</span> <span class="nav-text">ByteBuf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ByteBuf-的使用模式"><span class="nav-number">1.6.</span> <span class="nav-text">ByteBuf 的使用模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#堆缓冲区"><span class="nav-number">1.6.1.</span> <span class="nav-text">堆缓冲区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直接缓冲区"><span class="nav-number">1.6.2.</span> <span class="nav-text">直接缓冲区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复合缓冲区"><span class="nav-number">1.6.3.</span> <span class="nav-text">复合缓冲区</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
