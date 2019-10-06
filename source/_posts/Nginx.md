@@ -95,6 +95,9 @@ http {
 }
 
 ```
+# 正向代理
+
+在客户端（浏览器）配置代理服务器，通过代理服务器访问指定网址
 
 # 反向代理、负载均衡
 反向代理服务器架设在服务器端，通过缓存经常被请求的页面来缓解服务器的工作量，将客户机请求转发给内部网络上的目标服务器，并将从服务器上得到的结果返回给Internet上请求连接的客户端，此时代理服务器和目标主机对外表现为一个服务器。
@@ -156,6 +159,50 @@ http {
                         proxy_pass http://tomcatServer;
                         index index.html index.jsp;
                 }
+        }
+}
+```
+
+# 动静分离
+
+通过location 指定不同的后缀名实现不同的请求转发，通过expires 参数设置，可以使浏览器缓存过期时间，减少与服务器之间的请求和流量。
+
+具体Expires 定义：给一个资源设定一个过期时间，无需服务器去验证，直接通过浏览器自身确定是否过期，不会产生额外的流量。这种方式适合不经常变动的资源。假如我设置了3d,即三天，表示在三天之内访问这个URL，发送一个请求给服务器，对比服务器该文件最后的更新时间，如果更新时间没有发生变化，则不会从服务器中抓取，返回状态码304，如果有修改，则直接从服务器中直接下载，返回状态200
+
+```
+worker_processes 1;
+
+events {
+	worker_connections 1024;
+}
+
+http {
+        include   mime.types;
+        default_type   application:octet-stream;
+
+        sendfile   on;
+
+        keepalive_timeout  65;
+
+        upstream tomcatServer{
+				        server 10.60.2.128:9000 weight=10;
+								server 10.60.2.128:9091 weight=10;
+				}
+
+        server {
+                listen 80;
+                server_name 10.60.2.128;
+
+								location /welcome81 {
+							        	root    /usr/share/nginx/wwwroot/;
+                        index index.html;
+								}
+
+								location /image {
+								       root /usr/share/nginx/wwwroot/;
+                       # 列出文件目录
+											 autoindex on;
+								}
         }
 }
 ```
