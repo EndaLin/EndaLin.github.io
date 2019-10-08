@@ -104,12 +104,12 @@ COMPOSE_PROJECT_NAME=zk_test docker-compose up
 
 ```bash
 docker run -it --rm \
->         --link zoo1:zk1 \
->         --link zoo2:zk2 \
->         --link zoo3:zk3 \
->         --net zktest_default \
->         --name zkClient \
->         zookeeper
+         --link zk_test_zoo1_1:zk1 \
+         --link zk_test_zoo2_1:zk2 \
+         --link zk_test_zoo3_1:zk3 \
+         --net zktest_default \
+         --name zkClient \
+         zookeeper
 ```
 
 进入容器执行
