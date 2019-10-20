@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="kafka,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="kafkakafka 是一个分布式消息队列，kafka 对消息保存是根据Topic 进行归类，发送者称为Producer，消息接受者称为Consumer，kafka 集群有多个kafka 实例组成，每个实例称为 broker 无论是kafka 集群还是consumer 都依赖Zookeeper 集群保存一些meta 信息， 来保证系统的可用性 在kafka 集群中，有leader 节点和follo">
+<meta name="keywords" content="kafka">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kafka">
+<meta property="og:url" content="https://wt-git-repository.github.io/2019/10/08/kafka/index.html">
+<meta property="og:site_name" content="Enda Lin">
+<meta property="og:description" content="kafkakafka 是一个分布式消息队列，kafka 对消息保存是根据Topic 进行归类，发送者称为Producer，消息接受者称为Consumer，kafka 集群有多个kafka 实例组成，每个实例称为 broker 无论是kafka 集群还是consumer 都依赖Zookeeper 集群保存一些meta 信息， 来保证系统的可用性 在kafka 集群中，有leader 节点和follo">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-10-19T01:41:26.157Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="kafka">
+<meta name="twitter:description" content="kafkakafka 是一个分布式消息队列，kafka 对消息保存是根据Topic 进行归类，发送者称为Producer，消息接受者称为Consumer，kafka 集群有多个kafka 实例组成，每个实例称为 broker 无论是kafka 集群还是consumer 都依赖Zookeeper 集群保存一些meta 信息， 来保证系统的可用性 在kafka 集群中，有leader 节点和follo">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wt-git-repository.github.io/2019/10/08/kafka/">
+
+
+
+
+
+  <title>kafka | Enda Lin</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Enda Lin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep foolish, keep sharp</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/10/08/kafka/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">kafka</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-08T17:21:03+08:00">
+                2019-10-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/10/08/kafka/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/10/08/kafka/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  936
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="kafka"><a href="#kafka" class="headerlink" title="kafka"></a>kafka</h1><p>kafka 是一个分布式消息队列，kafka 对消息保存是根据Topic 进行归类，发送者称为Producer，消息接受者称为Consumer，kafka 集群有多个kafka 实例组成，每个实例称为 broker</p>
+<p>无论是kafka 集群还是consumer 都依赖Zookeeper 集群保存一些meta 信息， 来保证系统的可用性</p>
+<p>在kafka 集群中，有leader 节点和follower 节点，follower 节点是备份数据用的，客户端只有访问leader 节点时才能得到响应，这个与Zookeeper 不同</p>
+<p>在Zookeeper 集群中，客户端可以访问leader 节点也可以访问follower 节点，如果客户端访问follower 节点，如果是写请求，follower节点会把写请求转发到leader 节点中，leader 节点在执行完读写请求后，会把执行结果返回给follower 节点，follower 节点再把结果返回给客户端；如果是读请求，follower 会直接读</p>
+<p>同一组的消费者不能同时消费同一个分区的kafka</p>
+<h1 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">version: <span class="string">'3'</span></span><br><span class="line"></span><br><span class="line">services:</span><br><span class="line">  kafka1:</span><br><span class="line">    image: wurstmeister/kafka</span><br><span class="line">    restart: always</span><br><span class="line">    hostname: kafka1</span><br><span class="line">    container_name: kafka1</span><br><span class="line">    ports:</span><br><span class="line">    - 9092:9092</span><br><span class="line">    environment:</span><br><span class="line">      KAFKA_ADVERTISED_HOST_NAME: kafka1</span><br><span class="line">      KAFKA_ADVERTISED_PORT: 9092</span><br><span class="line">      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181</span><br><span class="line">      KAFKA_LISTENERS: PLAINTEXT://kafka1:9092</span><br><span class="line">      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:9092</span><br><span class="line">    volumes:</span><br><span class="line">    - ./kafka1:/kafka</span><br><span class="line">    extra_hosts:</span><br><span class="line">     - <span class="string">"zoo1:10.60.2.128"</span></span><br><span class="line">     - <span class="string">"zoo2:10.60.2.128"</span></span><br><span class="line">     - <span class="string">"zoo3:10.60.2.128"</span></span><br><span class="line"></span><br><span class="line">  kafka2:</span><br><span class="line">    image: wurstmeister/kafka</span><br><span class="line">    restart: always</span><br><span class="line">    hostname: kafka2</span><br><span class="line">    container_name: kafka2</span><br><span class="line">    ports:</span><br><span class="line">    - 9093:9092</span><br><span class="line">    environment:</span><br><span class="line">      KAFKA_ADVERTISED_HOST_NAME: kafka2</span><br><span class="line">      KAFKA_ADVERTISED_PORT: 9092</span><br><span class="line">      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181</span><br><span class="line">      KAFKA_LISTENERS: PLAINTEXT://kafka2:9092</span><br><span class="line">      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:9092</span><br><span class="line">    volumes:</span><br><span class="line">    - ./kafka2:/kafka</span><br><span class="line">    extra_hosts:</span><br><span class="line">     - <span class="string">"zoo1:10.60.2.128"</span></span><br><span class="line">     - <span class="string">"zoo2:10.60.2.128"</span></span><br><span class="line">     - <span class="string">"zoo3:10.60.2.128"</span></span><br><span class="line"></span><br><span class="line">  kafka3:</span><br><span class="line">    image: wurstmeister/kafka</span><br><span class="line">    restart: always</span><br><span class="line">    hostname: kafka3</span><br><span class="line">    container_name: kafka3</span><br><span class="line">    ports:</span><br><span class="line">    - 9094:9092</span><br><span class="line">    environment:</span><br><span class="line">      KAFKA_ADVERTISED_HOST_NAME: kafka3</span><br><span class="line">      KAFKA_ADVERTISED_PORT: 9092</span><br><span class="line">      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181</span><br><span class="line">      KAFKA_LISTENERS: PLAINTEXT://kafka3:9092</span><br><span class="line">      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka3:9092</span><br><span class="line">    volumes:</span><br><span class="line">    - ./kafka3:/kafka</span><br><span class="line">    extra_hosts:</span><br><span class="line">     - <span class="string">"zoo1:10.60.2.128"</span></span><br><span class="line">     - <span class="string">"zoo2:10.60.2.128"</span></span><br><span class="line">     - <span class="string">"zoo3:10.60.2.128"</span></span><br></pre></td></tr></table></figure>
+<h1 id="kafka-生成过程分析"><a href="#kafka-生成过程分析" class="headerlink" title="kafka 生成过程分析"></a>kafka 生成过程分析</h1><h2 id="写入方式"><a href="#写入方式" class="headerlink" title="写入方式"></a>写入方式</h2><p>producer 采用push 模式将消息发布到broker 中，每条消息都被追加append 到分区patition 中</p>
+<h2 id="分区-partition"><a href="#分区-partition" class="headerlink" title="分区(partition)"></a>分区(partition)</h2><p>消息发送时都会被发送到一个topic，其本质就是一个目录，而topic 是由一些partition logs（分区日志）组成</p>
+<p>每一个分区内的消息都是有序的，生产的消息被不断追加到Partition 中，其中的每一个消息被赋予了唯一的offset 值</p>
+<p><strong>分区的原因：</strong></p>
+<ul>
+<li>方便在集群扩展，每个Partition 可以通过调整以适应它所在的机器，而一个Topic 又可以有多个partition 组成，因此整个集群就可以适应任意大小的数据了</li>
+<li>提高并发，以partition 为单位读写</li>
+</ul>
+<p><strong>分区原则：</strong></p>
+<ul>
+<li>指定了partition， 则直接使用</li>
+<li>未指定partition 但指定key，通过key 的value hash出一个partition</li>
+<li>partition 和key 都未指定，使用轮训选出一个partition</li>
+</ul>
+<h2 id="副本Replication"><a href="#副本Replication" class="headerlink" title="副本Replication"></a>副本Replication</h2><p>同一个partition 可能会有多个replication，一旦broker 挂了，其上所有partition 的数据都不可被消费，同时也不能再往这些partition 中写入数据，此时，就会从partition 中的replication 中重新选举出一个leader ，producer 和consumer 只与这个leader 交互，其它fllower 从leader 中复制数据</p>
+<h2 id="Producer-写入流程"><a href="#Producer-写入流程" class="headerlink" title="Producer 写入流程"></a>Producer 写入流程</h2><ul>
+<li>producer 先从broker-list 获取partition 的leader</li>
+<li>producer 将消息发送给该leader</li>
+<li>leader 将消息写入本地log</li>
+<li>followers 从leader pull 消息，followers 写完之后想leader 发送ack</li>
+</ul>
+<p>leader 写入成功之后，可以立即反馈给客户端，写操作结束，也可以等到followers 写完之后再反馈。而前者的效率是后者的十倍。</p>
+<h2 id="Cuscomer"><a href="#Cuscomer" class="headerlink" title="Cuscomer"></a>Cuscomer</h2><p>kafka 提供了两套consumer API:高级 API和低级API</p>
+<p><strong>高级API</strong><br>优点：</p>
+<ul>
+<li>简单</li>
+<li>不需要自行去管理offset，系统通过zookeeper 自行管理</li>
+<li>不需要管理分区，副本等情况，系统自动管理</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>不能控制offset，不能细化控制分区、副本等等</li>
+</ul>
+<p><strong>低级API</strong></p>
+<p>优点：</p>
+<ul>
+<li>自主控制offset，管理分区、副本<br>缺点：</li>
+<li>太复杂</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/10/08/kafka/">kafka</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Enda Lin 的个人博客">Enda Lin</a></p>
+  <p><span>发布时间:</span>2019年10月08日 - 17:21</p>
+  <p><span>最后更新:</span>2019年10月19日 - 09:41</p>
+  <p><span>原始链接:</span><a href="/2019/10/08/kafka/" title="kafka">https://wt-git-repository.github.io/2019/10/08/kafka/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://wt-git-repository.github.io/2019/10/08/kafka/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>
+</div>
+<script>
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({
+          title: "",
+          text: '复制成功',
+          icon: "success",
+          showConfirmButton: true
+          });
+	});
+    });
+</script>
+
+
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/kafka/" rel="tag"># kafka</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/08/dubbo/" rel="next" title="dubbo">
+                <i class="fa fa-chevron-left"></i> dubbo
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/11/flume/" rel="prev" title="flume">
+                flume <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/10/08/kafka/" data-title="kafka" data-url="https://wt-git-repository.github.io/2019/10/08/kafka/">
+      </div>
+    
+    <div id="gitalk-container"></div>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avator.jpeg" alt="Enda Lin">
+          <p class="site-author-name" itemprop="name">Enda Lin</p>
+           
+              <p class="site-description motion-element" itemprop="description">所有的伟大都是从零开始</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">72</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wt-git-repository" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="endawt.lin@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#kafka"><span class="nav-number">1.</span> <span class="nav-text">kafka</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#部署"><span class="nav-number">2.</span> <span class="nav-text">部署</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kafka-生成过程分析"><span class="nav-number">3.</span> <span class="nav-text">kafka 生成过程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#写入方式"><span class="nav-number">3.1.</span> <span class="nav-text">写入方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分区-partition"><span class="nav-number">3.2.</span> <span class="nav-text">分区(partition)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#副本Replication"><span class="nav-number">3.3.</span> <span class="nav-text">副本Replication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Producer-写入流程"><span class="nav-number">3.4.</span> <span class="nav-text">Producer 写入流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cuscomer"><span class="nav-number">3.5.</span> <span class="nav-text">Cuscomer</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Enda Lin</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 您是博主的第
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位小伙伴
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="/js/md5.min.js"></script>
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'afbcc6e2a54ed4e2ebd7',
+          clientSecret: '6c36028e964ef689580f33ec9bd19b720f5f131f',
+          repo: 'wt-git-repository.github.io',
+          owner: 'wt-git-repository',
+          admin: ['wt-git-repository'],
+          id: md5(location.href),
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

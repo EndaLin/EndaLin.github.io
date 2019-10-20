@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="Enda Lin">
 <meta property="og:description" content="Zoopkeeper 工作机制Zoopkeeper 是一个给予观察者模式设计的分布式服务管理框架，它负责存储和管理大家都关心的数据，接受观察者的注册，一旦数据状态发生了变化，Zoopkeeper 就负责通知已经在Zoopkeeper 上注册的那些观察者做出相应的反应。 Zoopeeker = 文件系统 + 通知机制 Zoopkeeper 特点 Zoopkeeper集群，一个leader, 多个跟随">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-02T13:57:52.145Z">
+<meta property="og:updated_time" content="2019-10-08T10:53:19.069Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Zoopkeeper学习笔记">
 <meta name="twitter:description" content="Zoopkeeper 工作机制Zoopkeeper 是一个给予观察者模式设计的分布式服务管理框架，它负责存储和管理大家都关心的数据，接受观察者的注册，一旦数据状态发生了变化，Zoopkeeper 就负责通知已经在Zoopkeeper 上注册的那些观察者做出相应的反应。 Zoopeeker = 文件系统 + 通知机制 Zoopkeeper 特点 Zoopkeeper集群，一个leader, 多个跟随">
@@ -351,7 +351,7 @@
                   <span class="post-meta-item-text">Words count in article</span>
                 
                 <span title="Words count in article">
-                  505
+                  1.3k
                 </span>
               
 
@@ -367,7 +367,7 @@
                   <span class="post-meta-item-text">Reading time</span>
                 
                 <span title="Reading time">
-                  1
+                  5
                 </span>
               
             </div>
@@ -409,6 +409,71 @@
 <li>客户端能实时洞察到服务器上下线的状态变化</li>
 </ul>
 <h2 id="软负载均衡"><a href="#软负载均衡" class="headerlink" title="软负载均衡"></a>软负载均衡</h2><p>在Zoopkeeper 中记录每台服务器的访问数，让访问数最少的服务器去处理最新的客户端请求</p>
+<h1 id="Zoopeekeer-的安装"><a href="#Zoopeekeer-的安装" class="headerlink" title="Zoopeekeer 的安装"></a>Zoopeekeer 的安装</h1><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.1'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  zoo1:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">zookeeper</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    hostname:</span> <span class="string">zoo1</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">2181</span><span class="string">:2181</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./zoo1/data:/data</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./zoo1/datalog:/datalog</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./zoo1/conf://apache-zookeeper-3.5.5-bin/conf</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="attr">      ZOO_MY_ID:</span> <span class="number">1</span></span><br><span class="line"><span class="attr">      ZOO_SERVERS:</span> <span class="string">server.1=0.0.0.0:2888:3888;2181</span> <span class="string">server.2=zoo2:2888:3888;2181</span> <span class="string">server.3=zoo3:2888:3888;2181</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  zoo2:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">zookeeper</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    hostname:</span> <span class="string">zoo2</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">2182</span><span class="string">:2181</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./zoo2/data:/data</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./zoo2/datalog:/datalog</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./zoo2/conf://apache-zookeeper-3.5.5-bin/conf</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="attr">      ZOO_MY_ID:</span> <span class="number">2</span></span><br><span class="line"><span class="attr">      ZOO_SERVERS:</span> <span class="string">server.1=zoo1:2888:3888;2181</span> <span class="string">server.2=0.0.0.0:2888:3888;2181</span> <span class="string">server.3=zoo3:2888:3888;2181</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  zoo3:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">zookeeper</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    hostname:</span> <span class="string">zoo3</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">2183</span><span class="string">:2181</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./zoo3/data:/data</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./zoo3/datalog:/datalog</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./zoo3/conf://apache-zookeeper-3.5.5-bin/conf</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="attr">      ZOO_MY_ID:</span> <span class="number">3</span></span><br><span class="line"><span class="attr">      ZOO_SERVERS:</span> <span class="string">server.1=zoo1:2888:3888;2181</span> <span class="string">server.2=zoo2:2888:3888;2181</span> <span class="string">server.3=0.0.0.0:2888:3888;2181</span></span><br></pre></td></tr></table></figure>
+<p>配置传输解读</p>
+<ul>
+<li>ZOO_MY_ID：表示第几号服务器</li>
+<li>server.A=B:C:D</li>
+<li><ul>
+<li>A 是一个数字，表示这个是第几号服务器</li>
+</ul>
+</li>
+<li><ul>
+<li>B 是这个服务器的IP 地址</li>
+</ul>
+</li>
+<li><ul>
+<li>C 是这个服务器与集群中的Leader 服务器交换信息的端口</li>
+</ul>
+</li>
+<li><ul>
+<li>D 是万一集群中的Leader 服务器挂了，需要一个端口来重新进行选举，选举出一个新的Leader，这个端口是就是在选举时用来通信的端口</li>
+</ul>
+</li>
+</ul>
+<p>启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">COMPOSE_PROJECT_NAME=zk_test docker-compose up</span><br></pre></td></tr></table></figure>
+<h2 id="docker-作为客户端连接"><a href="#docker-作为客户端连接" class="headerlink" title="docker 作为客户端连接"></a>docker 作为客户端连接</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --rm \</span><br><span class="line">         --link zk_test_zoo1_1:zk1 \</span><br><span class="line">         --link zk_test_zoo2_1:zk2 \</span><br><span class="line">         --link zk_test_zoo3_1:zk3 \</span><br><span class="line">         --net zktest_default \</span><br><span class="line">         --name zkClient \</span><br><span class="line">         zookeeper</span><br></pre></td></tr></table></figure>
+<p>进入容器执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zkCli.sh -server zk1:2181,zk2:2181,zk3:2181</span><br></pre></td></tr></table></figure></p>
+<p>参考：</p>
+<ul>
+<li><a href="https://hub.docker.com/_/zookeeper" target="_blank" rel="noopener">docker - zookeeeper 集群部署</a></li>
+</ul>
+<h1 id="Zookeeper-内部原理"><a href="#Zookeeper-内部原理" class="headerlink" title="Zookeeper 内部原理"></a>Zookeeper 内部原理</h1><h2 id="选举机制paxos"><a href="#选举机制paxos" class="headerlink" title="选举机制paxos"></a>选举机制paxos</h2><ul>
+<li>半数机制：集群中半数以上的机器存活，集群可用，所有Zookeeper 适合安装奇数台服务器</li>
+<li>Zookeeper 选举机制：在配置文件中，没有指定master 和Slave，但是Zookeeper 工作时，使用一个节点是Leader（通过内部选举机制临时产生的）</li>
+</ul>
+<h2 id="节点类型"><a href="#节点类型" class="headerlink" title="节点类型"></a>节点类型</h2><ul>
+<li>持久型：客户端和服务器端断开连接后，创建的节点不删除</li>
+<li>短暂型：客户端和服务器端断开连接后，创建的节点自己删除</li>
+</ul>
+<ul>
+<li>持久化目录节点</li>
+<li>持久化顺序编号目录节点</li>
+<li>临时目录节点</li>
+<li>临时顺序编号目录节点</li>
+</ul>
+<p>/apache-zookeeper-3.5.5-bin/conf</p>
+<h1 id="Zookeeper-监听器原理"><a href="#Zookeeper-监听器原理" class="headerlink" title="Zookeeper 监听器原理"></a>Zookeeper 监听器原理</h1><p>监听器原理详解</p>
+<ul>
+<li>首先要有一个main() 线程</li>
+<li>在main 线程中创建Zookeeper 客户端，这是就会创建两个线程，一个负责网络连接通信（connect），另一个负责监听（listener）</li>
+<li>通过connect 线程将注册的监听时间发送给Zookeeper</li>
+<li>在Zookeeper 的注册监听器列表中将注册的监听时间添加到列表中</li>
+<li>Zookeeper 监听到有数据或者路径变化，就会将这个消息发送到listener 线程</li>
+<li>listener 线程内部调用了process（） 方法</li>
+</ul>
+<p>常见的监听</p>
+<ul>
+<li>监听节点数据的变化</li>
+<li>监听子节点增减的变化</li>
+</ul>
+<h1 id="Zookeeper-写数据流程"><a href="#Zookeeper-写数据流程" class="headerlink" title="Zookeeper 写数据流程"></a>Zookeeper 写数据流程</h1><ul>
+<li>Client 向Zookeeper 的Server1 写数据，发出一个写请求</li>
+<li>如果Server1 不是Leader，那么Server1 会把接收到的请求进一步转发给Leader，因为Zookeeper 的Server 里面有一个是Leader，这个Leader 会将写请求广播给各个Server，各个Server写成功之后就会通知Leader</li>
+<li>当Leader 收到半数以上的Server 写成功之后，那就说明数据写成功了，写成功之后，Leader 会告诉Server1 写成功了</li>
+<li>Server1 就会进一步通知Client 数据写成功了</li>
+</ul>
 
       
     </div>
@@ -428,7 +493,7 @@
   <p><span>本文标题:</span><a href="/2019/10/02/Zoopkeeper学习笔记/">Zoopkeeper学习笔记</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Enda Lin 的个人博客">Enda Lin</a></p>
   <p><span>发布时间:</span>2019年10月02日 - 20:31</p>
-  <p><span>最后更新:</span>2019年10月02日 - 21:57</p>
+  <p><span>最后更新:</span>2019年10月08日 - 18:53</p>
   <p><span>原始链接:</span><a href="/2019/10/02/Zoopkeeper学习笔记/" title="Zoopkeeper学习笔记">https://wt-git-repository.github.io/2019/10/02/Zoopkeeper学习笔记/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://wt-git-repository.github.io/2019/10/02/Zoopkeeper学习笔记/" aria-label="复制成功！"></i></span>
   </p>
@@ -484,6 +549,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/08/dubbo/" rel="prev" title="dubbo">
+                dubbo <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -562,7 +631,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-count">72</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -575,7 +644,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -634,7 +703,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Zoopkeeper-工作机制"><span class="nav-number">1.</span> <span class="nav-text">Zoopkeeper 工作机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Zoopkeeper-特点"><span class="nav-number">2.</span> <span class="nav-text">Zoopkeeper 特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Zoopkeeper-应用场景"><span class="nav-number">3.</span> <span class="nav-text">Zoopkeeper 应用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#统一命名服务"><span class="nav-number">3.1.</span> <span class="nav-text">统一命名服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统一配置服务"><span class="nav-number">3.2.</span> <span class="nav-text">统一配置服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统一集群管理"><span class="nav-number">3.3.</span> <span class="nav-text">统一集群管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软负载均衡"><span class="nav-number">3.4.</span> <span class="nav-text">软负载均衡</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Zoopkeeper-工作机制"><span class="nav-number">1.</span> <span class="nav-text">Zoopkeeper 工作机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Zoopkeeper-特点"><span class="nav-number">2.</span> <span class="nav-text">Zoopkeeper 特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Zoopkeeper-应用场景"><span class="nav-number">3.</span> <span class="nav-text">Zoopkeeper 应用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#统一命名服务"><span class="nav-number">3.1.</span> <span class="nav-text">统一命名服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统一配置服务"><span class="nav-number">3.2.</span> <span class="nav-text">统一配置服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统一集群管理"><span class="nav-number">3.3.</span> <span class="nav-text">统一集群管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软负载均衡"><span class="nav-number">3.4.</span> <span class="nav-text">软负载均衡</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Zoopeekeer-的安装"><span class="nav-number">4.</span> <span class="nav-text">Zoopeekeer 的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-作为客户端连接"><span class="nav-number">4.1.</span> <span class="nav-text">docker 作为客户端连接</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Zookeeper-内部原理"><span class="nav-number">5.</span> <span class="nav-text">Zookeeper 内部原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#选举机制paxos"><span class="nav-number">5.1.</span> <span class="nav-text">选举机制paxos</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#节点类型"><span class="nav-number">5.2.</span> <span class="nav-text">节点类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Zookeeper-监听器原理"><span class="nav-number">6.</span> <span class="nav-text">Zookeeper 监听器原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Zookeeper-写数据流程"><span class="nav-number">7.</span> <span class="nav-text">Zookeeper 写数据流程</span></a></li></ol></div>
             
 
           </div>

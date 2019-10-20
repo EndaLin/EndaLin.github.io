@@ -276,6 +276,582 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/03/《JAVA并发编程的艺术》读书笔记④/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/03/《JAVA并发编程的艺术》读书笔记④/" itemprop="url">《JAVA并发编程的艺术》读书笔记④</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-03T09:24:05+08:00">
+                2019-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/03/《JAVA并发编程的艺术》读书笔记④/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/03/《JAVA并发编程的艺术》读书笔记④/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  792
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="数据依赖性"><a href="#数据依赖性" class="headerlink" title="数据依赖性"></a>数据依赖性</h1><p><img src="https://upload-images.jianshu.io/upload_images/13918038-11fa21b09576a040.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>如果两个操作之间访问同一个变量，且这两个操作有一个为写操作，此时这两个操作就存在数据依赖性。</p>
+<p>编译器和处理器在重排序时，会遵守数据依赖性，编译器和处理器不会改变存在数据依赖关系的两个操作的执行顺序。</p>
+<p>这里所说的数据依赖性针对单个处理器中的指令序列和单个线程中执行的操作，不同处理器之间和不同线程之间的数据依赖性不被编译器和处理器考虑。</p>
+<h1 id="as-if-serial语义"><a href="#as-if-serial语义" class="headerlink" title="as-if-serial语义"></a>as-if-serial语义</h1><p>as-if-serial意思就是说：不管怎么重排序（编译器和处理器为了提高并行度），单线程程序的执行结果不能改变。</p>
+<h1 id="同步程序的顺序一致性效果"><a href="#同步程序的顺序一致性效果" class="headerlink" title="同步程序的顺序一致性效果"></a>同步程序的顺序一致性效果</h1><p><img src="https://upload-images.jianshu.io/upload_images/13918038-057638a8c7f6a0d5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>JMM在具体实现的基本方针是：在不改变正确同步的程序执行结果的前提下，尽可能地为编译器和处理器的优化打开方便之门。</p>
+<p>JMM不保证对64位的long型和double型变量的写操作具有原子性。因为当JVM在一些32位的处理器上运行的时候，如果对64为数据的写操作要求原子性，会有比较大的开销，所以JVM可能会把一个64位的long/double写操作拆分成两个32位的写操作的来执行，这两个32位的写操作可能会被分配到不同的总线事务中，此时对这个64位的变量的写操作不具有原子性。</p>
+<h1 id="未同步程序的执行特性"><a href="#未同步程序的执行特性" class="headerlink" title="未同步程序的执行特性"></a>未同步程序的执行特性</h1><p>对于未同步或未正确同步的多线程程序,JMM只提供最小安全性: 线程执行时读取到的值, 要么是之前某个线程写入的值, 要么是默认值(0, NULL, false), JMM保证线程读操作读到的值不会无中生有.</p>
+<p>为了实现最小安全性, JVM在堆上分配对象时,<strong>首先会对内存空间进行清零, 然后才会在上面分配对象(JVM会同步这两个操作)</strong>, 因此, 在已清零的内存空间分配对象是,域的默认初始化已经完成了.</p>
+<h1 id="锁的内存语义"><a href="#锁的内存语义" class="headerlink" title="锁的内存语义"></a>锁的内存语义</h1><h4 id="锁的释放和获取的内存语义"><a href="#锁的释放和获取的内存语义" class="headerlink" title="锁的释放和获取的内存语义"></a>锁的释放和获取的内存语义</h4><p>当线程获取锁的时候,JMM会把该线程对应的本地内存置为无效,从而是的被监视器保护的临界区代码必须从主内存中读取共享变量.</p>
+<p>对锁释放和锁获取的内存含义做个总结:</p>
+<ul>
+<li>线程A释放一个锁, 实质上是线程A向接下来将要获取这个锁的某个线程发出了线程A对共享变量所做出了修改的消息</li>
+<li>线程B获取一个锁,实质上是线程B接收了之前某个线程(即A线程)对这个变量所作出的修改的消息</li>
+<li><strong>线程A释放锁, 然后线程B获取锁, 这个过程实质上是线程A通过主内存向线程B发送消息.</strong></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/02/《JAVA并发编程的艺术》读书笔记③/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/02/《JAVA并发编程的艺术》读书笔记③/" itemprop="url">《JAVA并发编程的艺术》读书笔记③</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-02T19:20:48+08:00">
+                2019-06-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/02/《JAVA并发编程的艺术》读书笔记③/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/02/《JAVA并发编程的艺术》读书笔记③/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  991
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="JAVA内存模型的基础"><a href="#JAVA内存模型的基础" class="headerlink" title="JAVA内存模型的基础"></a>JAVA内存模型的基础</h1><p>在命令式编程中，线程之间的通信机制有两种：共享内存和消息传递。</p>
+<ul>
+<li>在共享内存的并发模型中，线程之间共享程序的公共状态，通过读写内存中的公共状态来进行隐式通信。</li>
+<li>在消息传递的并发模型中，线程之间没有公共状态，线程之间必须通过发送消息来显式进行通信。</li>
+</ul>
+<p>JAVA的并发采用的是<strong>共享内存模型</strong>。</p>
+<h4 id="JAVA内存模型的抽象结构"><a href="#JAVA内存模型的抽象结构" class="headerlink" title="JAVA内存模型的抽象结构"></a>JAVA内存模型的抽象结构</h4><ul>
+<li>在JAVA中，所有实例域、静态域和数组元素都在堆内存中，堆内存在线程之间共享。</li>
+<li>局部变量、方法定义参数和异常处理函数，在栈内存里面，不会在线程之间共享。</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-32ce6a246e0c8cdd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>线程之间的共享变量存储在主内存中，每个线程都有一个私有的本地内存，本地内存存储了该内存以读写共享变量的副本。<br>A与B之间的通信，需要通过以下2个步骤</p>
+<ul>
+<li>线程A把本地内存A中更新过的共享变量刷新的主内存中。</li>
+<li>线程B到主内存中去读取线程A之前已经更新过的共享变量。</li>
+</ul>
+<h4 id="从源代码到指令序列的重排序"><a href="#从源代码到指令序列的重排序" class="headerlink" title="从源代码到指令序列的重排序"></a>从源代码到指令序列的重排序</h4><p>在执行程序时，为了提高性能，编译器和处理器通常会对指令做重排序，重排序分为三种：</p>
+<ul>
+<li>编译器优化的重排序：编译器在不改变单线程语义的前提下，可以重新安排语句的执行顺序。</li>
+<li>指令级并行的重排序：现代处理器采用了指令级并行技术来将多条指令重叠执行，如果不存在数据依赖性，处理器可以改变语句对应的机器指令的执行顺序。</li>
+<li>内存系统的重排序：由于处理器使用缓存和读写缓冲区，这使得加载和存储操作看上去可能是乱序执行。</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-c82ce2df3c4d9e08.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>对于指令重排，JAVA内存模型的处理器重排序规则可以要求JAVA编译器在生成指令序列时，插入特定类型的内存屏障指令，通过内存屏障指令来禁止特定类型的处理器重排序。</p>
+<p><strong>内存屏障</strong>：指的是重排序时不能把后面的指令重排序到内存屏障之前的位置。</p>
+<h4 id="展示一个由于内存操作重排带来问题的例子（经典）"><a href="#展示一个由于内存操作重排带来问题的例子（经典）" class="headerlink" title="展示一个由于内存操作重排带来问题的例子（经典）"></a>展示一个由于内存操作重排带来问题的例子（经典）</h4><p>在展示之前，首先补充一点知识：现代处理器使用写缓存区临时保存向内存下入的数据，以保证指令流水线持续运行，避免处理器停顿下来等待向内存写入数据而产生延迟，同时，以批处理的方式刷新缓存区，以及合并写缓存区对统一内存地址的多次写，减少堆内存总线的占用。</p>
+<p>这个特性会对内存操作的顺序产生影响：处理器堆内存的读写操作的执行顺序，不一定与内存实际发生的读写操作顺序一致（因为内存操作重排）</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-640d065ce10355d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>如果AB同时执行，可能会得到读取到脏数据，原因如下：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-ac6059838ed563db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>此处由于指令重排，导致A1-&gt;A2的顺序变成了A2-&gt;A1，所以读取了脏数据。</p>
+<p>一般情况下，处理器都不允许对存在数据依赖的操作做重排序。</p>
+<h1 id="happens-before"><a href="#happens-before" class="headerlink" title="happens-before"></a>happens-before</h1><p>在JMM中，如果一个操作的结果需要对另一个操作可见，那么这两个操作之间必须要存在happens-before关系。</p>
+<p>A happens-before B, JMM 并不要求A一定要在B之前执行, JMM仅仅要求前一个操作的结果对后一个操作课件,且前一个操作按顺序排在第二个操作之前.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/02/一条SQL语句在MySQL中的执行流程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/02/一条SQL语句在MySQL中的执行流程/" itemprop="url">一条SQL语句在MySQL中的执行流程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-02T16:24:55+08:00">
+                2019-06-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/02/一条SQL语句在MySQL中的执行流程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/02/一条SQL语句在MySQL中的执行流程/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  568
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="MySQL-架构分析"><a href="#MySQL-架构分析" class="headerlink" title="MySQL 架构分析"></a>MySQL 架构分析</h1><p>首先，我们需要了解MySQL的一个简要的架构</p>
+<ul>
+<li>连接器： 身份验证与权限相关</li>
+<li>查询缓存：执行查询语句时，会先查询缓存（失效率过高，不推荐用）</li>
+<li>分析器：分析SQL语句</li>
+<li>优化器：优化SQL语句</li>
+<li>执行器：执行SQL语句，并从存储引擎用返回数据</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-ee859e1716a3b4e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>值得注意的是，Mysql分为了Server层和存储引擎层：</p>
+<ul>
+<li>Server层： 主要包括连接器、查询缓存、分析器、优化器和执行器等组件，很多功能都是在这一层实现的，如存储过程、触发器、视图、函数等等，还有一个日志模块binglog</li>
+<li>存储引擎模块：支持InnoDB、MyISAM等等，InnoDB为默认的存储模块。</li>
+</ul>
+<h1 id="MySQL的日志模块"><a href="#MySQL的日志模块" class="headerlink" title="MySQL的日志模块"></a>MySQL的日志模块</h1><p>这里，我们需要特别主义redo log 和 binlog这两个日志模块，前者是InnoDB自带的日志模块，后者是MySQL自带的日志模式。</p>
+<h4 id="SQL-语句的类型"><a href="#SQL-语句的类型" class="headerlink" title="SQL 语句的类型"></a>SQL 语句的类型</h4><p>SQL语句的类型主要分为两种</p>
+<ul>
+<li>查询： select</li>
+<li>更新：update、delete</li>
+</ul>
+<h4 id="执行更新语句时，该如何操作这两个日志模块"><a href="#执行更新语句时，该如何操作这两个日志模块" class="headerlink" title="执行更新语句时，该如何操作这两个日志模块"></a>执行更新语句时，该如何操作这两个日志模块</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> tb_student <span class="keyword">set</span> <span class="keyword">name</span> = <span class="string">'wt'</span> <span class="keyword">where</span> <span class="keyword">name</span> = <span class="string">'name'</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>首先，要根据where查询到对应那一条数据</li>
+<li>根据查询到的数据，先进行修改，然后调用引擎接口，写入这一行数据，InnoDB会把数据保存在缓存中，同时记录redo log,此时redo log 进入prepare状态，然后告诉执行器，执行结束</li>
+<li>执行器收到通知后记录binlog，然后调用引擎接口，提交redo log为提交状态</li>
+<li>更新完成</li>
+</ul>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><ul>
+<li>MySQL 主要分为 Server 层和引擎层，Server 层主要包括连接器、查询缓存、分析器、优化器、执行器，同时还有一个日志模块（binlog），这个日志模块所有执行引擎都可以共用,redolog 只有 InnoDB 有。</li>
+<li>引擎层是插件式的，目前主要包括，MyISAM,InnoDB,Memory 等。</li>
+<li>查询语句的执行流程如下：权限校验（如果命中缓存）—》查询缓存—》分析器—》优化器—》权限校验—》执行器—》引擎</li>
+<li>更新语句执行流程如下：分析器—-》权限校验—-》执行器—》引擎—redo log(prepare 状态—》binlog—》redo log(commit状态)</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/01/《JAVA并发编程的艺术》读书笔记②/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1510,531 +2086,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/05/30/利用Python进行数据分析－NumPy基础/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Enda Lin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avator.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Enda Lin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/30/利用Python进行数据分析－NumPy基础/" itemprop="url">利用Python进行数据分析－NumPy基础</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-30T12:59:21+08:00">
-                2019-05-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/05/30/利用Python进行数据分析－NumPy基础/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/30/利用Python进行数据分析－NumPy基础/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article</span>
-                
-                <span title="Words count in article">
-                  2.4k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time</span>
-                
-                <span title="Reading time">
-                  11
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>本文出自＜利用Python进行数据分析　第２版＞　　侵删</p>
-</blockquote>
-<h1 id="NumPy"><a href="#NumPy" class="headerlink" title="NumPy"></a>NumPy</h1><p>NumPy　是Python数值计算最重要的基础包，可以高效处理大数组的数据．</p>
-<h1 id="NumPy的ndarray：一种多维的数组对象"><a href="#NumPy的ndarray：一种多维的数组对象" class="headerlink" title="NumPy的ndarray：一种多维的数组对象"></a>NumPy的ndarray：一种多维的数组对象</h1><p>ndarray是一个快速而又灵活的同构数据多维容器，是一个Ｎ维数组对象，其中所有的元素对象必须要是相同的数据类型，每一个对象包含一个元组和一个属性，分别是shape（一个表示各维度大小的元组）和dtype（一个说明数组数据类型的对象）</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/05/30/利用Python进行数据分析－NumPy基础/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/05/30/利用Python进行数据分析－数据结构准备（元组、列表、字典、集合、函数、推导式、柯里化、生成器、itertools模块以及文件读写）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Enda Lin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avator.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Enda Lin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/30/利用Python进行数据分析－数据结构准备（元组、列表、字典、集合、函数、推导式、柯里化、生成器、itertools模块以及文件读写）/" itemprop="url">利用Python进行数据分析－数据结构准备（元组、列表、字典、集合、函数、推导式、柯里化、生成器、itertools模块以及文件读写）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-30T12:58:45+08:00">
-                2019-05-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/05/30/利用Python进行数据分析－数据结构准备（元组、列表、字典、集合、函数、推导式、柯里化、生成器、itertools模块以及文件读写）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/30/利用Python进行数据分析－数据结构准备（元组、列表、字典、集合、函数、推导式、柯里化、生成器、itertools模块以及文件读写）/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article</span>
-                
-                <span title="Words count in article">
-                  2.9k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time</span>
-                
-                <span title="Reading time">
-                  13
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>本文引用《利用Python进行数据分析·第2版》</p>
-</blockquote>
-<h1 id="元组tuple"><a href="#元组tuple" class="headerlink" title="元组tuple"></a>元组tuple</h1><p>元组是一个固定长度而且不可以改变的序列对象</p>
-<h4 id="定义元组的方法"><a href="#定义元组的方法" class="headerlink" title="定义元组的方法:"></a>定义元组的方法:</h4><h4 id="1-最简单的方法"><a href="#1-最简单的方法" class="headerlink" title="(1) 最简单的方法:"></a>(1) 最简单的方法:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">In [23]: top = 1,2,3</span><br><span class="line"></span><br><span class="line">In [24]: top</span><br><span class="line"></span><br><span class="line">Out[24]: (1, 2, 3)</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/05/30/利用Python进行数据分析－数据结构准备（元组、列表、字典、集合、函数、推导式、柯里化、生成器、itertools模块以及文件读写）/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/05/29/SpringCloud微服务架构实战读书笔记①/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Enda Lin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avator.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Enda Lin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/29/SpringCloud微服务架构实战读书笔记①/" itemprop="url">SpringCloud微服务架构实战读书笔记①</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-29T15:27:56+08:00">
-                2019-05-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/05/29/SpringCloud微服务架构实战读书笔记①/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/29/SpringCloud微服务架构实战读书笔记①/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article</span>
-                
-                <span title="Words count in article">
-                  1.7k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time</span>
-                
-                <span title="Reading time">
-                  6
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="微服务架构概述"><a href="#微服务架构概述" class="headerlink" title="微服务架构概述"></a>微服务架构概述</h1><h3 id="微服务设计原则"><a href="#微服务设计原则" class="headerlink" title="微服务设计原则"></a>微服务设计原则</h3><ul>
-<li>单一设计原则： 单一职责原则指的是一个单元（类、方法或者是服务）关注的应该只是整个系统中单独且有界限的一部分。</li>
-<li>服务自治原则： 服务自治指的是每个微服务都应具备独立的业务能力、依赖与运行环境， 服务与服务之间需要高度解耦， 每个服务从开发、测试、构建到部署都应该可以独立的运行， 而不需要依赖其它服务。</li>
-<li>轻量级通信机制： 微服务之间应该通过轻量级的通信机制进行交互。</li>
-<li>微服务粒度： 根据合理的粒度划分微服务， 而并非越小越好。</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/05/29/SpringCloud微服务架构实战读书笔记①/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2078,7 +2134,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-count">72</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -2091,7 +2147,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

@@ -276,6 +276,587 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/25/hadoop学习笔记②/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/25/hadoop学习笔记②/" itemprop="url">Hadoop学习笔记②</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-25T11:17:14+08:00">
+                2019-06-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/25/hadoop学习笔记②/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/25/hadoop学习笔记②/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  2.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="分布式文件系统HDFS"><a href="#分布式文件系统HDFS" class="headerlink" title="分布式文件系统HDFS"></a>分布式文件系统HDFS</h1><h4 id="计算机集群架构"><a href="#计算机集群架构" class="headerlink" title="计算机集群架构"></a>计算机集群架构</h4><p>集群中的计算机结点存放在机架上， 每个机架可以存放8-64个结点， 同一个机架上的不同节点通过网络互联， 多个不同机架之间采用另一级网络或交换机互联。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-ebe980d9266154b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="分布式文件系统的结构"><a href="#分布式文件系统的结构" class="headerlink" title="分布式文件系统的结构"></a>分布式文件系统的结构</h4><p>分布式文件系统在物理结构上是由计算机集群中的多个节点构成的， 这些节点分为两类：</p>
+<ul>
+<li>主节点或者是<strong>名称节点(NameNode)</strong>：负责文件和目录的创建、删除和重命名等，同时管理着数据节点和文件块的映射关系， 客户端只有访问名称结点才能请求文件块所在的位置，进而找到相应位置读取所需文件块。</li>
+<li>从结点或者是<strong>数据节点(DataNode)</strong>：负责数据的存储和读取， 在存储时， 由名称结点分配存储位置， 然后由客户端把数据直接写入相应数据节点</li>
+</ul>
+<p>在读取数据时， 客户端从名称节点获取数据节点和文件块的映射关系， 然后就可以到相应位置访问文件块。</p>
+<p>数据节点也要根据名称节点的命令创建、删除数据块和冗余复制。</p>
+<p>为了保证数据的完整性， 分布式文件系统通常采用多副本存储， 文件块会被复制为多个副本， 存储在不同的节点上， 而且存储同一个文件块的不同副本的各个节点会分布在不同机架上， 这样， 在单个节点出现故障时， 就可以快速调用副本重启单个节点上的计算过程， 而不用重启整个计算过程。</p>
+<p>分布式文件系统是针对大规模数据存储而设计的（TB级别）， 规模过小会影响性能。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-2c0b31c9aa83662e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="HDFS特性"><a href="#HDFS特性" class="headerlink" title="HDFS特性"></a>HDFS特性</h4><ul>
+<li>兼容廉价硬件设备</li>
+<li>流数据读写</li>
+<li>大数据集</li>
+<li>简单的文件模型</li>
+<li>强大的跨平台特性</li>
+<li>不适合低延迟数据访问， 主要面向大规模数据批量处理而设计的， 采用流式数据读取， 具有很高的吞吐率， 高延迟（对于低延时要求的应用程序， HBase是一个更好的选择）</li>
+<li>无法高效存储大量小文件</li>
+<li>不支持多用户写入以及任意修改文件</li>
+</ul>
+<h4 id="HDFS的-相关概念"><a href="#HDFS的-相关概念" class="headerlink" title="HDFS的 相关概念"></a>HDFS的 相关概念</h4><h5 id="块"><a href="#块" class="headerlink" title="块"></a>块</h5><p>在传统的文件系统中，为了提高磁盘的读写效率， 一般以数据块为单位， 而不是以字节为单位。</p>
+<p>HDFS也采用了块的概念， 默认一个块大小是64MB， 在HDFS中的文件会被拆分成多个块， 每个块作为独立的单元进行存储。</p>
+<p>HDFS在块的大小设计明显大于普通文件系统， 为的是最小化寻址开销（磁盘寻道开销和数据块定位开销）</p>
+<p>通常MapReduce中的Map任务一次只处理一个块中中的数据</p>
+<p>HDFS采用抽象块概念可以带来几个好处：</p>
+<ul>
+<li><strong>支持大规模文件存储</strong>： 一个大规模文件可以被拆分成若干个文件块， 不同的文件块被分发到不同的节点上， 因此一个文件的大小不会受到单个节点的存储容量的限制， 可以远大于任意节点的存储容量。</li>
+<li><strong>简化系统设计</strong>：方便计算一个节点可以存储多少个文件块，其次，方便元数据的管理，元数据不需要和文件夹一起存储，可以由其他系统负责管理元数据。</li>
+<li><strong>适合数据备份</strong>：每个文件块可以冗余存储到多个节点上，大大提高了系统的容错性和可用性。</li>
+</ul>
+<h5 id="名称节点和数据节点"><a href="#名称节点和数据节点" class="headerlink" title="名称节点和数据节点"></a>名称节点和数据节点</h5><p>在<strong>名称节点（NameNode）</strong>中， 负责管理分布式文件系统的命名空间（Namespace）， 保存了两个核心的数据结构， 即FsImage和EditLog。</p>
+<ul>
+<li>FsImage用于维护文件系统树以及文件树中所有的文件和文件夹的元数据</li>
+<li>EditLog是操作日志文件，记录了所有针对文件的创建、删除、重命名等操作。</li>
+</ul>
+<p>名称节点记录了每个文件各个块所在的数据节点的位置信息， 但是不会持久化保存这些数据， 而是在系统每次启动时， 扫描所有数据节点然后重构这些信息。</p>
+<p>名称节点启动时会处于安全模式， 对外只提供读操作。</p>
+<p>名称节点在启动时， 会将FsImage加载到内存中， 然后执行EditLog文件中的各项操作， 使得内存中的元数据保持最新， 然后创建一个新的FsImage和空的EditLog文件， 名称节点启动成功之后进入正常运行状态， HDFS中的更新操作都会写入EditLog中， 而不是直接写入FsImage中， 因为在分布式文件系统中， FsImage都十分庞大， 如果每次的更新都往FsImage里面添加， 会带来十分大的系统开销， 而Editlog十分小， 写入操作是十分高效的。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-ced7050528cc0afa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><strong>数据节点（DataNode）</strong>是分布式文件系统HDFS的工作节点， 负责数据的存储和读取， 会根据客户端或者名称节点的调度来进行数据的存储和检索， 并向名称节点定期发送自己所存储的块列表。</p>
+<h5 id="第二名称节点"><a href="#第二名称节点" class="headerlink" title="第二名称节点"></a>第二名称节点</h5><p>在名称节点运行期间， HDFS会不断发生更新操作， 会使EditLog文件逐渐变大， 当名称节点重启时， 需要逐条执行EditLog的记录， 这个过程就会变得十分缓慢。</p>
+<p>为了解决这个问题， HDFS采用第二名称节点（Secondary NameNode）， 来完成合并EditLog与FsImage的合并操作， 减少EditLog的文件大小， 缩短名称节点重启时间</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-48df04a6fe7edd57.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="HDFS体系结构"><a href="#HDFS体系结构" class="headerlink" title="HDFS体系结构"></a>HDFS体系结构</h4><p>HDFS 采用主/从结构模型， 一个HDFS集群包括一个名称节点和若干个数据节点。</p>
+<p>名称节点是中心服务器， 负责管理文件系统的命名空间以及客户端对文件的访问。</p>
+<p>集群中的数据节点一般是一个节点运行一个数据节点进程， 负责处理文件系统客户端的读写请求， 在名称节点的统一调度之下进行数据块的创建、删除和复制等操作，每个数据节点的数据是保存在本地Linux文件系统中的， 每个数据节点会周期性地向名称节点发送“心跳”信息， 报告自己的状态， 对于没有按时发送心跳信息的数据结构会被标记为死机， 不会在给它分配任务。</p>
+<p>用户在使用HDFS时， 仍然可以像普通文件系统那样， 使用文件名去存储和访问文件， 在系统内部， HDFS会将一个文件切分为若干个数据块， 这些数据块会被分布存储到若干个数据节点上。</p>
+<p><strong>访问流程：</strong>客户端访问文件， 将文件名发送给名称节点-&gt;名称节点根据文件名查找到对应的数据块-&gt;根据数据块信息找到数据节点的位置-&gt; 把数据节点的位置发送给客户端-&gt;客户端直接访问数据节点获取数据信息</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-717cdf9d325f2d87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h5 id="HDFS命名空间管理"><a href="#HDFS命名空间管理" class="headerlink" title="HDFS命名空间管理"></a>HDFS命名空间管理</h5><h5 id="HDFS通信协议"><a href="#HDFS通信协议" class="headerlink" title="HDFS通信协议"></a>HDFS通信协议</h5><p>RPC</p>
+<h5 id="HDFS客户端"><a href="#HDFS客户端" class="headerlink" title="HDFS客户端"></a>HDFS客户端</h5><p>Shell and Java API</p>
+<h4 id="HDFS-的存储原理"><a href="#HDFS-的存储原理" class="headerlink" title="HDFS 的存储原理"></a>HDFS 的存储原理</h4><h5 id="数据的冗余存储"><a href="#数据的冗余存储" class="headerlink" title="数据的冗余存储"></a>数据的冗余存储</h5><p>作为分布式文件系统， 为了保证系统的容错性和可用性， HDFS采用了多副本方式对数据进行冗余存储， 通过一个数据块的多个副本会被分布到不同的数据节点上。</p>
+<p>好处：</p>
+<ul>
+<li>加快数据传输速度： 当多个客户端需要同时访问同一个文件时， 可以让各个客户端分别从不同的数据块副本读取数据， 加快数据的传输速度</li>
+<li>检查数据错误</li>
+<li>保证数据的可靠性</li>
+</ul>
+<h5 id="数据的存取策略"><a href="#数据的存取策略" class="headerlink" title="数据的存取策略"></a>数据的存取策略</h5><p><strong>数据存放</strong>：HDFS采用机架为基础的数据存放策略， HDFS默认的冗余复制因子是3， 每一个文件块会被同时保存到3个地方， 其中， 有两份副本放在同一个机架上的不同机器上， 第三个副本放在不同机架的机器上。<br><img src="https://upload-images.jianshu.io/upload_images/13918038-e1379f62f070f2e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><strong>数据读取</strong></p>
+<p><strong>数据复制</strong></p>
+<h5 id="数据错误与恢复"><a href="#数据错误与恢复" class="headerlink" title="数据错误与恢复"></a>数据错误与恢复</h5><p><strong>名称节点出错</strong></p>
+<ul>
+<li>把名称节点上的元数据同步存储到其他文件系统</li>
+<li>运行一个第二名称节点</li>
+</ul>
+<p><strong>数据节点出错</strong></p>
+<ul>
+<li>心跳检测</li>
+</ul>
+<p><strong>数据出错</strong></p>
+<p>由于网络传输和磁盘错误等因素造成的数据错误。</p>
+<ul>
+<li>采用md5和sha1对数据块进行校验。</li>
+</ul>
+<h4 id="HDFS数据读写过程（待写）"><a href="#HDFS数据读写过程（待写）" class="headerlink" title="HDFS数据读写过程（待写）"></a>HDFS数据读写过程（待写）</h4>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/25/hadoop学习笔记①/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/25/hadoop学习笔记①/" itemprop="url">Hadoop学习笔记①</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-25T09:57:47+08:00">
+                2019-06-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/25/hadoop学习笔记①/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/25/hadoop学习笔记①/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  744
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Hadoop-简介"><a href="#Hadoop-简介" class="headerlink" title="Hadoop 简介"></a>Hadoop 简介</h1><p>Hadoop 是一个开源的、可运行于大规模集群上的分布式计算平台， 实现了MapReduce计算模型和分布式文件系统HDFS等功能</p>
+<p>Hadoop的核心是分布式文件系统HDFS和MapReduce， HDFS是针对谷歌GFS的开源实现， 是面向普通硬件环境的分布式文件系统， 具有支持大规模数据的分布式存储。</p>
+<p>MapReduce允许用户在不了解分布式系统底层细节的情况下开发并行应用程序， 整合分布式文件系统上的数据， 保证分析和处理数据的高效性。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/25/hadoop学习笔记①/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/20/hadoop伪分布式安装（配置文件相关）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/20/hadoop伪分布式安装（配置文件相关）/" itemprop="url">hadoop伪分布式安装（配置文件相关）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-20T15:06:09+08:00">
+                2019-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/20/hadoop伪分布式安装（配置文件相关）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/20/hadoop伪分布式安装（配置文件相关）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  290
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="推荐使用docker去部署hadoop集群"><a href="#推荐使用docker去部署hadoop集群" class="headerlink" title="推荐使用docker去部署hadoop集群"></a>推荐使用docker去部署hadoop集群</h1><p><a href="https://github.com/big-data-europe" target="_blank" rel="noopener">Github - Big Data Europe</a></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/20/hadoop伪分布式安装（配置文件相关）/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/20/hadoop对海量数据处理的解决思路/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1469,539 +2050,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/12/Spring相关知识/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Enda Lin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avator.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Enda Lin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/12/Spring相关知识/" itemprop="url">Spring相关知识</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-12T16:26:14+08:00">
-                2019-06-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/06/12/Spring相关知识/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/12/Spring相关知识/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article</span>
-                
-                <span title="Words count in article">
-                  1.3k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time</span>
-                
-                <span title="Reading time">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Spring-模块（4-x）"><a href="#Spring-模块（4-x）" class="headerlink" title="Spring 模块（4.x）"></a>Spring 模块（4.x）</h1><p>最新的5.x版本中Web模块的Portlet已经废弃， 同时增加了异步响应式处理的WebFlux组件。</p>
-<p><img src="https://camo.githubusercontent.com/d7846803a95e57f57a94197168714bfc58db6432/68747470733a2f2f6d792d626c6f672d746f2d7573652e6f73732d636e2d6265696a696e672e616c6979756e63732e636f6d2f323031392d362f537072696e672545342542382542422545382541362538312545362541382541312545352539442539372e706e67" alt></p>
-<ul>
-<li>Spring Core： 基础模块， Spring其它的功能都依赖于这个类库， 主要提供IOC依赖注入功能</li>
-<li>Spring Aspects： 该模块与AspectJ的集成提供支持</li>
-<li>Spring AOP： 提供了面向切面的编程实现</li>
-<li>Spring JDBC： JAVA数据库连接</li>
-<li>Spring JMS： JAVA消息服务</li>
-<li>Spring ORM： 用于支持Hibernate等ORM工具</li>
-<li>Spring Web：为了创建Web应用程序提供支持</li>
-<li>Spring Test：提供了对Junit和TestNG测试支持</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/06/12/Spring相关知识/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/12/设计模式之建造者模式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Enda Lin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avator.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Enda Lin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/12/设计模式之建造者模式/" itemprop="url">设计模式之建造者模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-12T15:46:35+08:00">
-                2019-06-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/06/12/设计模式之建造者模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/12/设计模式之建造者模式/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article</span>
-                
-                <span title="Words count in article">
-                  26
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time</span>
-                
-                <span title="Reading time">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="待办"><a href="#待办" class="headerlink" title="待办"></a>待办</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://blog.csdn.net/qq_34337272/article/details/80540059" target="_blank" rel="noopener">深入理解建造者模式 ——组装复杂的实例</a><br><a href="https://design-patterns.readthedocs.io/zh_CN/latest/index.html" target="_blank" rel="noopener">图说设计模式</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/12/Java基础知识/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Enda Lin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avator.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Enda Lin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/12/Java基础知识/" itemprop="url">Java基础知识</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-12T09:01:34+08:00">
-                2019-06-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/06/12/Java基础知识/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/12/Java基础知识/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article</span>
-                
-                <span title="Words count in article">
-                  301
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time</span>
-                
-                <span title="Reading time">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>牛客网上，错题相关的知识点</p>
-</blockquote>
-<ul>
-<li><p>子类A继承父类B， A a = new A()， 问代码块的执行顺序</p>
-<blockquote>
-<p>父类B静态代码块 -&gt; 子类A的静态代码块 -&gt; 父类B非静态代码块 -&gt; 父类B的构造函数 -&gt; 子类A非静态代码块 -&gt; 子类A的构造函数</p>
-</blockquote>
-</li>
-<li><p>“&gt;&gt;&gt;”表示无符号右移， 高位用0填充， 如 1&gt;&gt;&gt;2 为0</p>
-</li>
-<li>sleep是线程类（Thread）的方法， wait是Object的方法， 前者不释放对象锁， 后者释放对象锁。</li>
-<li>Float f = 0.1f, (后面必须要加f, 负责会被识别成double)</li>
-<li>接口中的方法默认是public abstract的，且实现接口的类中对应的方法的可见性不能小于接口方法的可见性</li>
-<li>接口中的变量默认是public static final</li>
-<li>接口中不能定义私有方法</li>
-<li>重载是在同一个类中，有多个方法名相同，参数列表不同， 与方法的返回值无关， 与权限修饰符无关。</li>
-<li>Java程序的种类有：内嵌于Web文件夹中，由浏览器来观看的_Applet、可独立运行的Application和服务器端的servlets.</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2045,7 +2098,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">69</span>
+                <span class="site-state-item-count">72</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -2058,7 +2111,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
