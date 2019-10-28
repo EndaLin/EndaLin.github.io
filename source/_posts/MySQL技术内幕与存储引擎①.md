@@ -14,6 +14,8 @@ tags: MySQL
 
 ![image.png](https://upload-images.jianshu.io/upload_images/13918038-eaf94c0cd303d3f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
+<!--more-->
+
 # 连接MySQL
 
 ## TCP/IP
