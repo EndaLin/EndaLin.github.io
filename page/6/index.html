@@ -276,6 +276,758 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/05/RabbitMQ/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/05/RabbitMQ/" itemprop="url">RabbitMQ</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-05T09:27:13+08:00">
+                2019-06-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/05/RabbitMQ/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/05/RabbitMQ/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  564
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="RabbitMQ相关概念"><a href="#RabbitMQ相关概念" class="headerlink" title="RabbitMQ相关概念"></a>RabbitMQ相关概念</h1><h4 id="生产者和消费者"><a href="#生产者和消费者" class="headerlink" title="生产者和消费者"></a>生产者和消费者</h4><ul>
+<li>producer：消息的生产者</li>
+<li>consumer：消息的消费者</li>
+</ul>
+<h4 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h4><ul>
+<li>消息队列：提供了FIFO的处理机制，具有缓存数据的能力</li>
+<li>在RabbitMQ中，队列消息可以设置为持久化、临时或自动删除</li>
+<li><ul>
+<li>持久化队列：队列中的消息会在Server本地磁盘存储一份，防止系统挂掉，导致数据丢失。</li>
+</ul>
+</li>
+<li><ul>
+<li>临时队列：队列中的数据在系统重启后就会丢失。</li>
+</ul>
+</li>
+<li><ul>
+<li>自动删除的队列：当不存在用户连接到Server，队列中的数据就会被自动删除。</li>
+</ul>
+</li>
+</ul>
+<h4 id="ExChange"><a href="#ExChange" class="headerlink" title="ExChange"></a>ExChange</h4><p>类似于交换机，提供消息路由策略。在RabbitMQ中，Producer不是通过信道直接将消息发送给Queue的，而是先发给ExChange，一个ExChange与多个Queue绑定，Producer在传递消息的时候，会传递一个ROUTING_KEY,ExChange会根据这个值按照特定的路由算法，将消息分配给指定的Queue，与Queue一样，ExChange也有持久、临时和自动删除的。</p>
+<h4 id="Binding"><a href="#Binding" class="headerlink" title="Binding"></a>Binding</h4><p>所谓绑定就是一个特定的Exchange与一个特定的Queue绑定起来。ExChange和Queue的绑定可以是多对多的关系。</p>
+<h4 id="Virtual"><a href="#Virtual" class="headerlink" title="Virtual"></a>Virtual</h4><h1 id="RabbitMQ的使用过程"><a href="#RabbitMQ的使用过程" class="headerlink" title="RabbitMQ的使用过程"></a>RabbitMQ的使用过程</h1><ul>
+<li>客户端连接到消息队列服务器，打开一个Channel</li>
+<li>客户端声明一个ExChange，并设置相关属性</li>
+<li>客户端声明一个Queue，并设置相关属性</li>
+<li>客户端使用Routing Key，在ExChange与Queue之间建立好绑定关系</li>
+<li>客户端投递消息到ExChange</li>
+<li>ExChange接收到消息之后，就根据消息的key和已经绑定好的binging，进行消息路由，将消息投递到一个或多个队列里</li>
+</ul>
+<h1 id="docker-compose-yml"><a href="#docker-compose-yml" class="headerlink" title="docker-compose.yml"></a>docker-compose.yml</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">version: '3.1'</span><br><span class="line">services:</span><br><span class="line">    rabbitmq:</span><br><span class="line">        restart: always</span><br><span class="line">        image: rabbitmq:management</span><br><span class="line">        container_name: rabbitmq</span><br><span class="line">        ports:</span><br><span class="line">                - 5672:5672</span><br><span class="line">                - 15672:15672</span><br><span class="line">        environment:</span><br><span class="line">                RABBITMQ_DEFAULT_USER: rabbit</span><br><span class="line">                RABBITMQ_DEFAULT_PASS: 123456</span><br><span class="line">        volumes:</span><br><span class="line">                - ./data:/var/lib/rabbitmq</span><br></pre></td></tr></table></figure>
+<h1 id="消息提供者"><a href="#消息提供者" class="headerlink" title="消息提供者"></a>消息提供者</h1><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  rabbitmq:</span></span><br><span class="line"><span class="attr">    host:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line"><span class="attr">    port:</span> <span class="number">5672</span></span><br><span class="line"><span class="attr">    username:</span> <span class="string">rabbit</span></span><br><span class="line"><span class="attr">    password:</span> <span class="number">123456</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RabbitConfiguration</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Queue <span class="title">queue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Queue(<span class="string">"helloRabbit"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RabbitProvider</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> AmqpTemplate amqpTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String content = <span class="string">"Hello World "</span> + <span class="keyword">new</span> Date();</span><br><span class="line">        System.out.println(<span class="string">"Provider: "</span> + content);</span><br><span class="line">        amqpTemplate.convertAndSend(<span class="string">"helloRabbit"</span>, content);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="消息消费者"><a href="#消息消费者" class="headerlink" title="消息消费者"></a>消息消费者</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@RabbitListener</span>(queues = <span class="string">"helloRabbit"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RabbitConsumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RabbitHandler</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">process</span><span class="params">(String content)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Consumer:"</span> + content);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><ul>
+<li>如何保证消息队列中的数据百分之一百被消费掉</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/03/计算机网络基础知识/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/03/计算机网络基础知识/" itemprop="url">计算机网络基础知识之运输层</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-03T18:39:19+08:00">
+                2019-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/03/计算机网络基础知识/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/03/计算机网络基础知识/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  1.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="运输层"><a href="#运输层" class="headerlink" title="运输层"></a>运输层</h1><h4 id="基本术语"><a href="#基本术语" class="headerlink" title="基本术语"></a>基本术语</h4><ul>
+<li>进程：指计算机正在运行的实体</li>
+<li>应用进程的相互通信： 一台主机的进程和另一台主机的一个进程交换数据的过程</li>
+<li>传输层的复用与分用：复用是指发送方不同的进程可以通过一个传输层协议传送数据， 分用指的是接收方的传输层在剥去报文的首部后能把这些数据正确地交到目的应用进程中。</li>
+<li>TCP：传输控制协议</li>
+<li>UDP：用户数据报协议</li>
+<li>端口：为的是确认对方机器是哪一个进程在和自己交互</li>
+<li>停止等待协议：指发送方每发送完一个分组就停止发送，等待对方确认，在收到确认之后再发送下一个分组。</li>
+<li>流量控制：控制对方的发送速率，既要让接收方来得及接收，也不要使网络发送拥塞</li>
+<li>拥塞控制：防止过多数据注入网络中，防止路由器或者链路过载。</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/03/计算机网络基础知识/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/03/SpringCloud微服务架构实战读书笔记②/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/03/SpringCloud微服务架构实战读书笔记②/" itemprop="url">SpringCloud微服务架构实战读书笔记②</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-03T15:45:27+08:00">
+                2019-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/03/SpringCloud微服务架构实战读书笔记②/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/03/SpringCloud微服务架构实战读书笔记②/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  301
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="使用Feign实现声明式REST调用"><a href="#使用Feign实现声明式REST调用" class="headerlink" title="使用Feign实现声明式REST调用"></a>使用Feign实现声明式REST调用</h1><h4 id="为服务消费者整合Feign"><a href="#为服务消费者整合Feign" class="headerlink" title="为服务消费者整合Feign"></a>为服务消费者整合Feign</h4><ul>
+<li><p>添加依赖</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-cloud-starter-feign&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建一个Feign接口，并添加@FeignClient注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient</span>(name=<span class="string">"applicationName"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserFeignClient</span> </span>&#123;</span><br><span class="line">  <span class="meta">@RequestMapping</span>(value = <span class="string">"/&#123;id&#125;"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> User <span class="title">findById</span><span class="params">(@PathVatiable(<span class="string">"id"</span>)</span>Long id)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>@FeignClient注解</strong>是任意一个服务提供方的名称，用以创建Ribbon负载均衡器。</p>
+</li>
+</ul>
+<h4 id="自定义Feign配置"><a href="#自定义Feign配置" class="headerlink" title="自定义Feign配置"></a>自定义Feign配置</h4><p>修改接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient</span>(name=<span class="string">"applicationName"</span>， configuration = FeignConfiguration.class)</span><br></pre></td></tr></table></figure></p>
+<p>有一点值得注意的是，本例中的FeignConfiguration类不能包括在主程序上下文的@ComponentScan中，否则该类中的配置信息就会被所有的@FeignClient共享， 如果只想定义某个FeignClient客户端的配置，该点需要特别注意。此处可以配置@ComponentScan不扫描配置类的所在包</p>
+<h4 id="手动创建Feign"><a href="#手动创建Feign" class="headerlink" title="手动创建Feign"></a>手动创建Feign</h4><h4 id="Feign对继承的支持"><a href="#Feign对继承的支持" class="headerlink" title="Feign对继承的支持"></a>Feign对继承的支持</h4><h4 id="Feign对压缩的支持"><a href="#Feign对压缩的支持" class="headerlink" title="Feign对压缩的支持"></a>Feign对压缩的支持</h4><h4 id="Feign的日志"><a href="#Feign的日志" class="headerlink" title="Feign的日志"></a>Feign的日志</h4><h4 id="使用Feign构造多参数请求"><a href="#使用Feign构造多参数请求" class="headerlink" title="使用Feign构造多参数请求"></a>使用Feign构造多参数请求</h4><p>Spring Cloud为Feign添加了Spring MVC的注解支持。</p>
+<ul>
+<li><p>例子一</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient</span>(name=<span class="string">"applicationName"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserFeignClient</span> </span>&#123;</span><br><span class="line">  <span class="meta">@GetMapping</span>(value = <span class="string">"/&#123;id&#125;"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> User <span class="title">findById</span><span class="params">(@RequestParam Map&lt;String, Object&gt; map)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>例子二</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient</span>(name=<span class="string">"applicationName"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserFeignClient</span> </span>&#123;</span><br><span class="line">  <span class="meta">@PostMapping</span>(value = <span class="string">"/&#123;id&#125;"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> User <span class="title">findById</span><span class="params">(User user)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/03/MySQL索引与锁/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/03/MySQL索引与锁/" itemprop="url">MySQL索引与锁</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-03T10:58:02+08:00">
+                2019-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/03/MySQL索引与锁/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/03/MySQL索引与锁/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="MySQL存储引擎的基础知识"><a href="#MySQL存储引擎的基础知识" class="headerlink" title="MySQL存储引擎的基础知识"></a>MySQL存储引擎的基础知识</h1><ul>
+<li>MySQL的基本存储结构是页，所有记录都存储在页里面。</li>
+</ul>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/23/164c6d7a53b78847?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt></p>
+<ul>
+<li>每个页之间组成的是一个双向链表。</li>
+<li>每个数据页里面的记录可以组成一个单向链表。<blockquote>
+<ul>
+<li>每个数据页都会为存储在本页里面的数据生成一个页目录，在通过主键查找某条记录时可以使用二分法快速定位</li>
+<li>而根据其它列进行检索时，就只能通过遍历的手段</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<p>在没有任何索引的的表中，select语句的执行会进行如下两次遍历</p>
+<ul>
+<li>遍历双向链表，找到所在页</li>
+<li>遍历页内的单链表，找到所在的记录</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/03/MySQL索引与锁/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/03/《JAVA并发编程的艺术》读书笔记④/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1398,694 +2150,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/05/31/hashCode和equals/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Enda Lin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avator.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Enda Lin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/31/hashCode和equals/" itemprop="url">hashCode和equals</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-31T10:13:46+08:00">
-                2019-05-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/05/31/hashCode和equals/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/31/hashCode和equals/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article</span>
-                
-                <span title="Words count in article">
-                  630
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time</span>
-                
-                <span title="Reading time">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>问题缘由：重写equals时必须要重写hashCode方法</p>
-</blockquote>
-<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>hashCode()的作用是获取哈希码， 也称为散列码，它实际上就是一个int整数， 这个哈希码的作用是确定该对象在哈希表中的索引位置。hashCode定义在JDK的Object中， 这就意味者所有的类都含有hashCode方法</p>
-<p>散列表存储的是键值对， 它的特点是， 能够根据键快速检索出对应的值， 其中就利用到了散列码。</p>
-<p>哈希码的作用是获取对象在哈希表中的索引位置。</p>
-<h4 id="HashSet的插入机制"><a href="#HashSet的插入机制" class="headerlink" title="HashSet的插入机制"></a>HashSet的插入机制</h4><p>HashSet不允许重复的插入， 在每一次插入时， 会根据hashCode来判断对象的插入位置， 同时会与已经存在的hashcode作比较， 如果没有相符的hashCode， 则没有重复的对象， 如果有重复的hashCode, 则会使用equals来判断值是否相等， 若相等则不插入， 若不相等则重新散列到其它位置， 这样可以大大减少equals的次数， 大大提高执行速度。</p>
-<h4 id="重写equals时必须要重写hashCode方法"><a href="#重写equals时必须要重写hashCode方法" class="headerlink" title="重写equals时必须要重写hashCode方法"></a>重写equals时必须要重写hashCode方法</h4><p>因为在使用equals之前，首先是使用hashcode去判断对象的索引位置， hashCode() 的默认行为是对堆上的对象产生独特值。如果没有重写 hashCode()，则该 class 的两个对象无论如何都不会相等（即使这两个对象指向相同的数据）</p>
-<h4 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">import</span> java.lang.Comparable;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConflictHashCodeTest2</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 新建Person对象，</span></span><br><span class="line">        Person p1 = <span class="keyword">new</span> Person(<span class="string">"eee"</span>, <span class="number">100</span>);</span><br><span class="line">        Person p2 = <span class="keyword">new</span> Person(<span class="string">"eee"</span>, <span class="number">100</span>);</span><br><span class="line">        Person p3 = <span class="keyword">new</span> Person(<span class="string">"aaa"</span>, <span class="number">200</span>);</span><br><span class="line">        Person p4 = <span class="keyword">new</span> Person(<span class="string">"EEE"</span>, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 新建HashSet对象</span></span><br><span class="line">        HashSet set = <span class="keyword">new</span> HashSet();</span><br><span class="line">        set.add(p1);</span><br><span class="line">        set.add(p2);</span><br><span class="line">        set.add(p3);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 比较p1 和 p2， 并打印它们的hashCode()</span></span><br><span class="line">        System.out.printf(<span class="string">"p1.equals(p2) : %s; p1(%d) p2(%d)\n"</span>, p1.equals(p2), p1.hashCode(), p2.hashCode());</span><br><span class="line">        <span class="comment">// 比较p1 和 p4， 并打印它们的hashCode()</span></span><br><span class="line">        System.out.printf(<span class="string">"p1.equals(p4) : %s; p1(%d) p4(%d)\n"</span>, p1.equals(p4), p1.hashCode(), p4.hashCode());</span><br><span class="line">        <span class="comment">// 打印set</span></span><br><span class="line">        System.out.printf(<span class="string">"set:%s\n"</span>, set);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@desc</span> Person类。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> age;</span><br><span class="line">        String name;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">            <span class="keyword">this</span>.age = age;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> name + <span class="string">" - "</span> +age;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@desc</span>重写hashCode</span></span><br><span class="line"><span class="comment">         */</span>  </span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>&#123;  </span><br><span class="line">            <span class="keyword">int</span> nameHash =  name.toUpperCase().hashCode();</span><br><span class="line">            <span class="keyword">return</span> nameHash ^ age;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@desc</span> 覆盖equals方法</span></span><br><span class="line"><span class="comment">         */</span>  </span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span></span>&#123;  </span><br><span class="line">            <span class="keyword">if</span>(obj == <span class="keyword">null</span>)&#123;  </span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;  </span><br><span class="line">            &#125;  </span><br><span class="line"></span><br><span class="line">            <span class="comment">//如果是同一个对象返回true，反之返回false  </span></span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">this</span> == obj)&#123;  </span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;  </span><br><span class="line">            &#125;  </span><br><span class="line"></span><br><span class="line">            <span class="comment">//判断是否类型相同  </span></span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.getClass() != obj.getClass())&#123;  </span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;  </span><br><span class="line">            &#125;  </span><br><span class="line"></span><br><span class="line">            Person person = (Person)obj;  </span><br><span class="line">            <span class="keyword">return</span> name.equals(person.name) &amp;&amp; age==person.age;  </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/05/31/LinkedList源码学习/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Enda Lin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avator.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Enda Lin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/31/LinkedList源码学习/" itemprop="url">LinkedList源码学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-31T08:34:52+08:00">
-                2019-05-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/05/31/LinkedList源码学习/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/31/LinkedList源码学习/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article</span>
-                
-                <span title="Words count in article">
-                  3.8k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time</span>
-                
-                <span title="Reading time">
-                  21
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>LinkedList 是一个实现了List和Deque接口的双向链表， List接口都是一个常规的增删改查操作， 而Deque是的LinkedList具有队列的特性， LinkList不是线程安全的，如果先是的LinkedList变成线程安全的，可以使用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List list=Collections.synchronizedList(<span class="keyword">new</span> LinkedList(...));</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/05/31/LinkedList源码学习/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/05/30/String、StringBuilder和StringBuffer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Enda Lin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avator.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Enda Lin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/30/String、StringBuilder和StringBuffer/" itemprop="url">String、StringBuilder和StringBuffer</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-30T19:13:33+08:00">
-                2019-05-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/05/30/String、StringBuilder和StringBuffer/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/30/String、StringBuilder和StringBuffer/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article</span>
-                
-                <span title="Words count in article">
-                  352
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time</span>
-                
-                <span title="Reading time">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="String"><a href="#String" class="headerlink" title="String"></a>String</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">String</span> <span class="keyword">implements</span> <span class="title">Serializable</span>, <span class="title">Comparable</span>&lt;<span class="title">String</span>&gt;, <span class="title">CharSequence</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">char</span>[] value;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> hash;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">6849794470754667710L</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ObjectStreamField[] serialPersistentFields = <span class="keyword">new</span> ObjectStreamField[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Comparator&lt;String&gt; CASE_INSENSITIVE_ORDER = <span class="keyword">new</span> String.CaseInsensitiveComparator();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">String</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = <span class="string">""</span>.value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">String</span><span class="params">(String var1)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = var1.value;</span><br><span class="line">        <span class="keyword">this</span>.hash = var1.hash;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">String</span><span class="params">(<span class="keyword">char</span>[] var1)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = Arrays.copyOf(var1, var1.length);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>从String 的源码中，我们不难发现， String存储的字符串， 对象是final类型的， 不可变， 线程安全。</p>
-<h1 id="StringBuffer-and-StringBuilder"><a href="#StringBuffer-and-StringBuilder" class="headerlink" title="StringBuffer and StringBuilder"></a>StringBuffer and StringBuilder</h1><p>StringBuffer和StringBuilder都继承了AbstractStringBuilder并且使用的基本都是父类的方法，区别在于前程是线程安全的，后者是线程不安全的，前者比后者快。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractStringBuilder</span> <span class="keyword">implements</span> <span class="title">Appendable</span>, <span class="title">CharSequence</span> </span>&#123;</span><br><span class="line">    <span class="keyword">char</span>[] value;</span><br><span class="line">    <span class="keyword">int</span> count;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_ARRAY_SIZE = <span class="number">2147483639</span>;</span><br><span class="line"></span><br><span class="line">    AbstractStringBuilder() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    AbstractStringBuilder(<span class="keyword">int</span> var1) &#123;</span><br><span class="line">        <span class="keyword">this</span>.value = <span class="keyword">new</span> <span class="keyword">char</span>[var1];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h4><p>每次对 String 类型进行改变的时候，都会生成一个新的 String 对象，然后将指针指向新的 String 对象。StringBuffer 每次都会对 StringBuffer 对象本身进行操作，而不是生成新的对象并改变对象引用。相同情况下使用 StringBuilder 相比使用 StringBuffer 仅能获得 10%~15% 左右的性能提升，但却要冒多线程不安全的风险。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
-<li>操作少量的数据: 适用String</li>
-<li>单线程操作字符串缓冲区下操作大量数据: 适用StringBuilder</li>
-<li>多线程操作字符串缓冲区下操作大量数据: 适用StringBuffer</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/05/30/利用Python进行数据分析－Pandas入门/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Enda Lin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avator.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Enda Lin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/30/利用Python进行数据分析－Pandas入门/" itemprop="url">利用Python进行数据分析－Pandas入门</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-30T12:59:56+08:00">
-                2019-05-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/05/30/利用Python进行数据分析－Pandas入门/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/30/利用Python进行数据分析－Pandas入门/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article</span>
-                
-                <span title="Words count in article">
-                  1.1k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time</span>
-                
-                <span title="Reading time">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>本文出自&lt;利用Python进行数据分析 第二版&gt; 侵删</p>
-</blockquote>
-<h1 id="Pandas"><a href="#Pandas" class="headerlink" title="Pandas"></a>Pandas</h1><p>Pandas是一个非常巨大的库，采用了大量Numpy的编程风格，基于Numpy构建，含有使数据清洗和数据分析工作变得更加简单的工具．</p>
-<h1 id="Pandas的数据结构"><a href="#Pandas的数据结构" class="headerlink" title="Pandas的数据结构"></a>Pandas的数据结构</h1><p>Pandas两个主要的数据结构：Series和DataFrame</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/05/30/利用Python进行数据分析－Pandas入门/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2134,7 +2198,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">72</span>
+                <span class="site-state-item-count">76</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -2147,7 +2211,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

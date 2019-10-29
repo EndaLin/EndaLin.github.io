@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="线程池,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Runnable and Callable Runnable 没有返回值 Callable 有返回值  123456789101112131415161718192021222324class MyThread implements Runnable &amp;#123;    @Override    public void run () &amp;#123;    &amp;#125;&amp;#125;class MyTh">
+<meta name="keywords" content="线程池">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java面试题之线程池">
+<meta property="og:url" content="https://wt-git-repository.github.io/2019/10/29/Java面试题之线程池/index.html">
+<meta property="og:site_name" content="Enda Lin">
+<meta property="og:description" content="Runnable and Callable Runnable 没有返回值 Callable 有返回值  123456789101112131415161718192021222324class MyThread implements Runnable &amp;#123;    @Override    public void run () &amp;#123;    &amp;#125;&amp;#125;class MyTh">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2177145-33c7b5ff75cf2bf7.png?imageMogr2/auto-orient/strip|imageView2/2/w/826/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3096083-2286629fbc77d3b5.png?imageMogr2/auto-orient/strip|imageView2/2/w/708/format/webp">
+<meta property="og:updated_time" content="2019-10-29T09:31:45.949Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java面试题之线程池">
+<meta name="twitter:description" content="Runnable and Callable Runnable 没有返回值 Callable 有返回值  123456789101112131415161718192021222324class MyThread implements Runnable &amp;#123;    @Override    public void run () &amp;#123;    &amp;#125;&amp;#125;class MyTh">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2177145-33c7b5ff75cf2bf7.png?imageMogr2/auto-orient/strip|imageView2/2/w/826/format/webp">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wt-git-repository.github.io/2019/10/29/Java面试题之线程池/">
+
+
+
+
+
+  <title>Java面试题之线程池 | Enda Lin</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Enda Lin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep foolish, keep sharp</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/10/29/Java面试题之线程池/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java面试题之线程池</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-29T10:34:06+08:00">
+                2019-10-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/10/29/Java面试题之线程池/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/10/29/Java面试题之线程池/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  1.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Runnable-and-Callable"><a href="#Runnable-and-Callable" class="headerlink" title="Runnable and Callable"></a>Runnable and Callable</h1><ul>
+<li>Runnable 没有返回值</li>
+<li>Callable 有返回值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span> <span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread2</span> <span class="keyword">implements</span> <span class="title">Callable</span>&lt;<span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">call</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">123</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        FutureTask&lt;Integer&gt; futureTask = <span class="keyword">new</span> FutureTask&lt;&gt;(<span class="keyword">new</span> MyThread2());</span><br><span class="line"></span><br><span class="line">        Thread thread = <span class="keyword">new</span> Thread(futureTask, <span class="string">"aa"</span>);</span><br><span class="line">        thread.start();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 阻塞等待线程执行结果</span></span><br><span class="line">        System.out.println(futureTask.get());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h1 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h1><h2 id="线程池优势"><a href="#线程池优势" class="headerlink" title="线程池优势"></a>线程池优势</h2><ul>
+<li><strong>降低资源消耗</strong>。 通过重复利用已创建的线程降低线程创建和销毁造成的消耗。</li>
+<li><strong>提高响应速度</strong>。 当任务到达时，任务可以不需要的等到线程创建就能立即执行。</li>
+<li><strong>提高线程的可管理性</strong>。 线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，</li>
+<li><strong>使用线程池可以进行统一的分配，调优和监控</strong>。</li>
+</ul>
+<h2 id="线程池的创建"><a href="#线程池的创建" class="headerlink" title="线程池的创建"></a>线程池的创建</h2><h3 id="Executors"><a href="#Executors" class="headerlink" title="Executors"></a>Executors</h3><ul>
+<li>Executors.newFixThreadPool(n) : 创建指定个数的线程池</li>
+<li>Executors.newSingleThreadExecutor: 创建只有一个线程的线程池</li>
+<li>Executors.newCacheThreadPool: 适用于不定个数的短期任务的执行，通过内部的调度，根据实际的情况动态地调整线程池中的线程数量</li>
+</ul>
+<p>部分底层创建源码（ThreadPoolExecutor）<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newFixedThreadPool</span><span class="params">(<span class="keyword">int</span> nThreads)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(nThreads, nThreads,</span><br><span class="line">                                  <span class="number">0L</span>, TimeUnit.MILLISECONDS,</span><br><span class="line">                                  <span class="keyword">new</span> LinkedBlockingQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newCachedThreadPool</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">0</span>, Integer.MAX_VALUE,</span><br><span class="line">                                  <span class="number">60L</span>, TimeUnit.SECONDS,</span><br><span class="line">                                  <span class="keyword">new</span> SynchronousQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newSingleThreadExecutor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> FinalizableDelegatedExecutorService</span><br><span class="line">        (<span class="keyword">new</span> ThreadPoolExecutor(<span class="number">1</span>, <span class="number">1</span>,</span><br><span class="line">                                <span class="number">0L</span>, TimeUnit.MILLISECONDS,</span><br><span class="line">                                <span class="keyword">new</span> LinkedBlockingQueue&lt;Runnable&gt;()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>注意</strong></p>
+<ul>
+<li>submit有返回值，而execute没有<br><a href="https://blog.csdn.net/peachpi/article/details/6771946" target="_blank" rel="noopener">ExecutorService的execute和submit方法</a></li>
+</ul>
+<h3 id="ThreadPoolExecutor-阿里推荐"><a href="#ThreadPoolExecutor-阿里推荐" class="headerlink" title="ThreadPoolExecutor(阿里推荐)"></a>ThreadPoolExecutor(阿里推荐)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Creates a new &#123;<span class="doctag">@code</span> ThreadPoolExecutor&#125; with the given initial</span></span><br><span class="line"><span class="comment"> * parameters.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> corePoolSize the number of threads to keep in the pool, even</span></span><br><span class="line"><span class="comment"> *        if they are idle, unless &#123;<span class="doctag">@code</span> allowCoreThreadTimeOut&#125; is set</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> maximumPoolSize the maximum number of threads to allow in the</span></span><br><span class="line"><span class="comment"> *        pool</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> keepAliveTime when the number of threads is greater than</span></span><br><span class="line"><span class="comment"> *        the core, this is the maximum time that excess idle threads</span></span><br><span class="line"><span class="comment"> *        will wait for new tasks before terminating.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> unit the time unit for the &#123;<span class="doctag">@code</span> keepAliveTime&#125; argument</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> workQueue the queue to use for holding tasks before they are</span></span><br><span class="line"><span class="comment"> *        executed.  This queue will hold only the &#123;<span class="doctag">@code</span> Runnable&#125;</span></span><br><span class="line"><span class="comment"> *        tasks submitted by the &#123;<span class="doctag">@code</span> execute&#125; method.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> threadFactory the factory to use when the executor</span></span><br><span class="line"><span class="comment"> *        creates a new thread</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> handler the handler to use when execution is blocked</span></span><br><span class="line"><span class="comment"> *        because the thread bounds and queue capacities are reached</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> IllegalArgumentException if one of the following holds:&lt;br&gt;</span></span><br><span class="line"><span class="comment"> *         &#123;<span class="doctag">@code</span> corePoolSize &lt; 0&#125;&lt;br&gt;</span></span><br><span class="line"><span class="comment"> *         &#123;<span class="doctag">@code</span> keepAliveTime &lt; 0&#125;&lt;br&gt;</span></span><br><span class="line"><span class="comment"> *         &#123;<span class="doctag">@code</span> maximumPoolSize &lt;= 0&#125;&lt;br&gt;</span></span><br><span class="line"><span class="comment"> *         &#123;<span class="doctag">@code</span> maximumPoolSize &lt; corePoolSize&#125;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> NullPointerException if &#123;<span class="doctag">@code</span> workQueue&#125;</span></span><br><span class="line"><span class="comment"> *         or &#123;<span class="doctag">@code</span> threadFactory&#125; or &#123;<span class="doctag">@code</span> handler&#125; is null</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">int</span> maximumPoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">long</span> keepAliveTime,</span></span></span><br><span class="line"><span class="function"><span class="params">                          TimeUnit unit,</span></span></span><br><span class="line"><span class="function"><span class="params">                          BlockingQueue&lt;Runnable&gt; workQueue,</span></span></span><br><span class="line"><span class="function"><span class="params">                          ThreadFactory threadFactory,</span></span></span><br><span class="line"><span class="function"><span class="params">                          RejectedExecutionHandler handler)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (corePoolSize &lt; <span class="number">0</span> ||</span><br><span class="line">        maximumPoolSize &lt;= <span class="number">0</span> ||</span><br><span class="line">        maximumPoolSize &lt; corePoolSize ||</span><br><span class="line">        keepAliveTime &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">    <span class="keyword">if</span> (workQueue == <span class="keyword">null</span> || threadFactory == <span class="keyword">null</span> || handler == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    <span class="keyword">this</span>.acc = System.getSecurityManager() == <span class="keyword">null</span> ?</span><br><span class="line">            <span class="keyword">null</span> :</span><br><span class="line">            AccessController.getContext();</span><br><span class="line">    <span class="keyword">this</span>.corePoolSize = corePoolSize;</span><br><span class="line">    <span class="keyword">this</span>.maximumPoolSize = maximumPoolSize;</span><br><span class="line">    <span class="keyword">this</span>.workQueue = workQueue;</span><br><span class="line">    <span class="keyword">this</span>.keepAliveTime = unit.toNanos(keepAliveTime);</span><br><span class="line">    <span class="keyword">this</span>.threadFactory = threadFactory;</span><br><span class="line">    <span class="keyword">this</span>.handler = handler;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>七大参数</strong></p>
+<ul>
+<li>corePoolSize: 线程池中常驻核心线程数</li>
+<li>maximumPoolSize: 线程池能够容纳同时执行的最大线程数，此值必须大于等于1</li>
+<li>keepAliveTime：多余的空闲线程的存活时间，当前的线程池的数量超过corePoolSize 时，当空闲时间达到keepAliveTime 值时，多余的空闲线程会被销毁直到剩下corePoolSize 个线程为止。</li>
+<li>unit：keepAliveTime 的单位</li>
+<li>workQueue：阻塞任务队列，被提交但尚未被执行的任务（当任务队列满时，线程池会扩充线程数，扩充后的线程数会小于maximumPoolSize）</li>
+<li>threadFactory：表示生成线程的线程工厂，一般使用默认便可</li>
+<li>RejectedExecutionHandler：拒绝策略，当阻塞队列已满而且活跃线程数已经达到了maximumPoolSize 后，会启动拒绝策略，拒绝请求的加入</li>
+<li><ul>
+<li>AbortPolicy(默认)：该策略直接抛出RejectedExecutionException 异常阻止系统的正常运行</li>
+</ul>
+</li>
+<li><ul>
+<li>CallerRunsPolicy：该策略不会抛弃任务也不会抛出异常，而是将任务退回到调用者</li>
+</ul>
+</li>
+<li><ul>
+<li>DiscardOldestPolicy：抛弃队列中等待最久的任务，然后把当前任务加入到队列中再次提交该任务</li>
+</ul>
+</li>
+<li><ul>
+<li>DiscardPolicy：直接丢弃任务，不给予任何的处理，也不抛出异常。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ExecutorService executorService = <span class="keyword">new</span> ThreadPoolExecutor(</span><br><span class="line">        <span class="number">2</span>, </span><br><span class="line">        <span class="number">5</span>, </span><br><span class="line">        <span class="number">5L</span>, </span><br><span class="line">        TimeUnit.SECONDS, </span><br><span class="line">        <span class="keyword">new</span> LinkedBlockingQueue&lt;Runnable&gt;(<span class="number">3</span>), </span><br><span class="line">        Executors.defaultThreadFactory(), </span><br><span class="line">        <span class="keyword">new</span> ThreadPoolExecutor.AbortPolicy());</span><br></pre></td></tr></table></figure>
+<h3 id="线程池的工作流程"><a href="#线程池的工作流程" class="headerlink" title="线程池的工作流程"></a>线程池的工作流程</h3><ul>
+<li>在创建了线程池后，等待提交过来的任务请求</li>
+<li>当调用了execute() 方法添加了一个请求任务后，线程池会做如下判断：</li>
+<li><ul>
+<li>如果正在运行的线程池数量小于corePoolSize，那么马上创建线程运行这个任务</li>
+</ul>
+</li>
+<li><ul>
+<li>如果正在运行的线程数量大于或等于corePoolSize时，那么会将请求任务放到阻塞队列中</li>
+</ul>
+</li>
+<li><ul>
+<li>如果阻塞队列已经满了，而且正在运行的线程数量小于maximumPoolSize，那么会创建非核心线程来立即运行这个任务</li>
+</ul>
+</li>
+<li><ul>
+<li>如果阻塞队列已经满了，而且正在运行的线程数量大于或等于maximumPoolSize，那么线程池会启动拒绝策略</li>
+</ul>
+</li>
+<li>当一个线程执行完任务时，会从队列中取出下一个任务出来继续执行</li>
+<li>当一个线程的空闲时间大于kiveAliveTime 时，会关闭一些线程，直到线程数达到corePoolSize 为止</li>
+</ul>
+<p>几张参考图<br><img src="https://upload-images.jianshu.io/upload_images/2177145-33c7b5ff75cf2bf7.png?imageMogr2/auto-orient/strip|imageView2/2/w/826/format/webp" alt></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3096083-2286629fbc77d3b5.png?imageMogr2/auto-orient/strip|imageView2/2/w/708/format/webp" alt></p>
+<h3 id="线程池线程数的合理配置"><a href="#线程池线程数的合理配置" class="headerlink" title="线程池线程数的合理配置"></a>线程池线程数的合理配置</h3><h4 id="CPU-密集型"><a href="#CPU-密集型" class="headerlink" title="CPU 密集型"></a>CPU 密集型</h4><p>CPU 密集型需要大量的计算，没有阻塞，CPU 一直在全速运行</p>
+<p>一个公式：CPU 核数 + 1个线程的线程池</p>
+<h4 id="IO-密集型"><a href="#IO-密集型" class="headerlink" title="IO 密集型"></a>IO 密集型</h4><p>IO　密集型，需要大量的IO　操作，即大量的阻塞</p>
+<p>在单线程上运行IO　密集型的任务会导致浪费大量CPU　运算能力浪费在等待上，所以在IO　密集型任务中运行多线程k可以大大加速程序的运行</p>
+<p>参考公式：CPU　核数／（１－阻塞系数），阻塞系数在0.8-0.9 之间</p>
+<h1 id="死锁的编码以及定位分析"><a href="#死锁的编码以及定位分析" class="headerlink" title="死锁的编码以及定位分析"></a>死锁的编码以及定位分析</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Resource</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String lockA;</span><br><span class="line">    <span class="keyword">private</span> String lockB;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Resource</span> <span class="params">(String lockA, String lockB)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.lockA = lockA;</span><br><span class="line">        <span class="keyword">this</span>.lockB = lockB;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (lockA) &#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">" 获得"</span> + lockA);</span><br><span class="line">            <span class="keyword">synchronized</span> (lockB) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">" 获得"</span> + lockB);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        String lockA = <span class="string">"lockA"</span>;</span><br><span class="line">        String lockB = <span class="string">"lockB"</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Resource(lockA, lockB), <span class="string">"A"</span>).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Resource(lockB, lockA), <span class="string">"B"</span>).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="定位分析-jps-jstack"><a href="#定位分析-jps-jstack" class="headerlink" title="定位分析(jps + jstack)"></a>定位分析(jps + jstack)</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Java stack information <span class="keyword">for</span> the threads listed above:</span><br><span class="line">===================================================</span><br><span class="line"><span class="string">"B"</span>:</span><br><span class="line">        at Resource.run(Test.java:20)</span><br><span class="line">        - waiting to lock &lt;0x000000076b316f18&gt; (a java.lang.String)</span><br><span class="line">        - locked &lt;0x000000076b316f50&gt; (a java.lang.String)</span><br><span class="line">        at java.lang.Thread.run(Thread.java:748)</span><br><span class="line"><span class="string">"A"</span>:</span><br><span class="line">        at Resource.run(Test.java:20)</span><br><span class="line">        - waiting to lock &lt;0x000000076b316f50&gt; (a java.lang.String)</span><br><span class="line">        - locked &lt;0x000000076b316f18&gt; (a java.lang.String)</span><br><span class="line">        at java.lang.Thread.run(Thread.java:748)</span><br><span class="line"></span><br><span class="line">Found 1 deadlock.</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/10/29/Java面试题之线程池/">Java面试题之线程池</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Enda Lin 的个人博客">Enda Lin</a></p>
+  <p><span>发布时间:</span>2019年10月29日 - 10:34</p>
+  <p><span>最后更新:</span>2019年10月29日 - 17:31</p>
+  <p><span>原始链接:</span><a href="/2019/10/29/Java面试题之线程池/" title="Java面试题之线程池">https://wt-git-repository.github.io/2019/10/29/Java面试题之线程池/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://wt-git-repository.github.io/2019/10/29/Java面试题之线程池/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>
+</div>
+<script>
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({
+          title: "",
+          text: '复制成功',
+          icon: "success",
+          showConfirmButton: true
+          });
+	});
+    });
+</script>
+
+
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/线程池/" rel="tag"># 线程池</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/28/Java面试题之阻塞队列/" rel="next" title="Java面试题之阻塞队列">
+                <i class="fa fa-chevron-left"></i> Java面试题之阻塞队列
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/29/Java面试题之JVM相关/" rel="prev" title="Java面试题之JVM相关">
+                Java面试题之JVM相关 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/10/29/Java面试题之线程池/" data-title="Java面试题之线程池" data-url="https://wt-git-repository.github.io/2019/10/29/Java面试题之线程池/">
+      </div>
+    
+    <div id="gitalk-container"></div>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avator.jpeg" alt="Enda Lin">
+          <p class="site-author-name" itemprop="name">Enda Lin</p>
+           
+              <p class="site-description motion-element" itemprop="description">所有的伟大都是从零开始</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">76</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wt-git-repository" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="endawt.lin@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Runnable-and-Callable"><span class="nav-number">1.</span> <span class="nav-text">Runnable and Callable</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程池"><span class="nav-number">2.</span> <span class="nav-text">线程池</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程池优势"><span class="nav-number">2.1.</span> <span class="nav-text">线程池优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程池的创建"><span class="nav-number">2.2.</span> <span class="nav-text">线程池的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Executors"><span class="nav-number">2.2.1.</span> <span class="nav-text">Executors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ThreadPoolExecutor-阿里推荐"><span class="nav-number">2.2.2.</span> <span class="nav-text">ThreadPoolExecutor(阿里推荐)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程池的工作流程"><span class="nav-number">2.2.3.</span> <span class="nav-text">线程池的工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程池线程数的合理配置"><span class="nav-number">2.2.4.</span> <span class="nav-text">线程池线程数的合理配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CPU-密集型"><span class="nav-number">2.2.4.1.</span> <span class="nav-text">CPU 密集型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IO-密集型"><span class="nav-number">2.2.4.2.</span> <span class="nav-text">IO 密集型</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#死锁的编码以及定位分析"><span class="nav-number">3.</span> <span class="nav-text">死锁的编码以及定位分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定位分析-jps-jstack"><span class="nav-number">3.1.</span> <span class="nav-text">定位分析(jps + jstack)</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Enda Lin</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 您是博主的第
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位小伙伴
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="/js/md5.min.js"></script>
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'afbcc6e2a54ed4e2ebd7',
+          clientSecret: '6c36028e964ef689580f33ec9bd19b720f5f131f',
+          repo: 'wt-git-repository.github.io',
+          owner: 'wt-git-repository',
+          admin: ['wt-git-repository'],
+          id: md5(location.href),
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
