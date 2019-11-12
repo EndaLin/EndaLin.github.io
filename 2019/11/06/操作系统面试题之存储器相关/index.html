@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="操作系统,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="存储器的层次结构寄存器、高速缓存、主存储器、磁盘缓存、固定磁盘、可移动的存储介质 逻辑地址和物理地址用户能看到的程序代码、变量、堆找的地址称之为逻辑地址，它们所在的实际内存区域实际地址是物理地址 将逻辑地址和物理地址分开的好处 实现内存隔离 实现进程和内核保护  内核空间与用户空间内核空间： 程序地址空间中安排给操作系统使用的部分，又称之为虚拟存储器 用户空间： 程序地址空间中安排给用户程序使用的">
+<meta name="keywords" content="操作系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统面试题之存储器相关">
+<meta property="og:url" content="https://wt-git-repository.github.io/2019/11/06/操作系统面试题之存储器相关/index.html">
+<meta property="og:site_name" content="Enda Lin">
+<meta property="og:description" content="存储器的层次结构寄存器、高速缓存、主存储器、磁盘缓存、固定磁盘、可移动的存储介质 逻辑地址和物理地址用户能看到的程序代码、变量、堆找的地址称之为逻辑地址，它们所在的实际内存区域实际地址是物理地址 将逻辑地址和物理地址分开的好处 实现内存隔离 实现进程和内核保护  内核空间与用户空间内核空间： 程序地址空间中安排给操作系统使用的部分，又称之为虚拟存储器 用户空间： 程序地址空间中安排给用户程序使用的">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-a92e7c381e3e68f9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-a8e62726d76d69b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-e14f6af645c23cd2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-3d48f04d30362c70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-18c66469c9bb361b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-a152d87e8c8c479f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-c6741da1dc1982ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-11-06T09:31:56.042Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="操作系统面试题之存储器相关">
+<meta name="twitter:description" content="存储器的层次结构寄存器、高速缓存、主存储器、磁盘缓存、固定磁盘、可移动的存储介质 逻辑地址和物理地址用户能看到的程序代码、变量、堆找的地址称之为逻辑地址，它们所在的实际内存区域实际地址是物理地址 将逻辑地址和物理地址分开的好处 实现内存隔离 实现进程和内核保护  内核空间与用户空间内核空间： 程序地址空间中安排给操作系统使用的部分，又称之为虚拟存储器 用户空间： 程序地址空间中安排给用户程序使用的">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/13918038-a92e7c381e3e68f9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wt-git-repository.github.io/2019/11/06/操作系统面试题之存储器相关/">
+
+
+
+
+
+  <title>操作系统面试题之存储器相关 | Enda Lin</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Enda Lin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">keep foolish, keep sharp</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/11/06/操作系统面试题之存储器相关/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">操作系统面试题之存储器相关</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-06T14:39:19+08:00">
+                2019-11-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/11/06/操作系统面试题之存储器相关/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/11/06/操作系统面试题之存储器相关/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="存储器的层次结构"><a href="#存储器的层次结构" class="headerlink" title="存储器的层次结构"></a>存储器的层次结构</h1><p>寄存器、高速缓存、主存储器、磁盘缓存、固定磁盘、可移动的存储介质</p>
+<h1 id="逻辑地址和物理地址"><a href="#逻辑地址和物理地址" class="headerlink" title="逻辑地址和物理地址"></a>逻辑地址和物理地址</h1><p>用户能看到的程序代码、变量、堆找的地址称之为<strong>逻辑地址</strong>，它们所在的实际内存区域实际地址是<strong>物理地址</strong></p>
+<h2 id="将逻辑地址和物理地址分开的好处"><a href="#将逻辑地址和物理地址分开的好处" class="headerlink" title="将逻辑地址和物理地址分开的好处"></a>将逻辑地址和物理地址分开的好处</h2><ul>
+<li>实现内存隔离</li>
+<li>实现进程和内核保护</li>
+</ul>
+<h1 id="内核空间与用户空间"><a href="#内核空间与用户空间" class="headerlink" title="内核空间与用户空间"></a>内核空间与用户空间</h1><p><strong>内核空间：</strong> 程序地址空间中安排给操作系统使用的部分，又称之为虚拟存储器</p>
+<p><strong>用户空间：</strong> 程序地址空间中安排给用户程序使用的部分，又称为用户虚拟存储器</p>
+<h1 id="分页存储管理和页表"><a href="#分页存储管理和页表" class="headerlink" title="分页存储管理和页表"></a>分页存储管理和页表</h1><ul>
+<li>把装入模块（即链接后的可执行程序）切分为一系列等长的片段，每个片段称为一个页面(页面长度为512B、1KB、2KB、4KB等，小于动态分区的很多碎片），页号依次为0、1、2、…，(具有n-1个页面的进程大小是多少字节)</li>
+<li>也把系统物理内存划分为一系列等长的片段，每个片段称为一个物理块（或一个页帧），物理块长度与页面长度相同,块号为0、1、2、…</li>
+<li>用户程序运行时，操作系统将其各个页面装载到一系列任意的物理块（地址可能不连续）</li>
+</ul>
+<h2 id="进程页号与物理页号的管理"><a href="#进程页号与物理页号的管理" class="headerlink" title="进程页号与物理页号的管理"></a>进程页号与物理页号的管理</h2><p>页表：通常使用数组来组织页表，页表并不保存页号，只保存物理块号。</p>
+<h2 id="在分页系统中，地址转换的流程"><a href="#在分页系统中，地址转换的流程" class="headerlink" title="在分页系统中，地址转换的流程"></a>在分页系统中，地址转换的流程</h2><ul>
+<li>从逻辑地址中提取页号</li>
+<li>根据页号，查询页表，找到对应的物理块号</li>
+<li>用物理块号和块内的地址定位到对应的数据</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-a92e7c381e3e68f9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h2 id="提高地址转换效率"><a href="#提高地址转换效率" class="headerlink" title="提高地址转换效率"></a>提高地址转换效率</h2><p>由于页表保存在内存中，所以1 次内存存取的操作需要两次访存开销（一次查页表，一次读取内存本身）， 会降低系统效率</p>
+<p><strong>解决方案：</strong></p>
+<ul>
+<li>将经常使用的页表项放到<strong>快表</strong> 中，快表比内存快5 倍以上</li>
+<li>MMU 执行地址转换时，在快表和页表中查找物理块号，若快表命中，则立即获取物理块号，若快表不命中，再到主存页表中查找</li>
+<li>由于程序具有局部性特征，设置少量快表项，即可大幅提高地址转换速度</li>
+</ul>
+<h2 id="空闲页表管理"><a href="#空闲页表管理" class="headerlink" title="空闲页表管理"></a>空闲页表管理</h2><ul>
+<li>位示图法</li>
+<li>链表法</li>
+<li>多级页表法</li>
+</ul>
+<h1 id="分段存储管理"><a href="#分段存储管理" class="headerlink" title="分段存储管理"></a>分段存储管理</h1><h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><ul>
+<li>把程序按照内容或者函数分成段，每段有自己的名字，每段各有一个连续的地址空间</li>
+<li>段式管理可以将那些经常访问的段驻留在内存，将那些不常访问到的放到外存中</li>
+</ul>
+<h2 id="段管理"><a href="#段管理" class="headerlink" title="段管理"></a>段管理</h2><p>为了能找到每个逻辑段对应的物理内存的中分区的位置，系统为每个进程建立了一个段映射表，简称“段表”</p>
+<p>每个段在段表中均有一项，段表项中包括如下内容：段号、段的长度、段在内存中的起始地址</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-a8e62726d76d69b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h1 id="段页式存储管理方式"><a href="#段页式存储管理方式" class="headerlink" title="段页式存储管理方式"></a>段页式存储管理方式</h1><p>地址空间划分：作业的地址空间仍按其逻辑结构分段。每个段又被进一步分成若干大小相同的页面。内存空间则分成与页面大小相等的物理块</p>
+<h1 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h1><h2 id="程序运行特性分析"><a href="#程序运行特性分析" class="headerlink" title="程序运行特性分析"></a>程序运行特性分析</h2><p>大型复杂程序通常由很多模块构成，其运行过程有一些特性：有时一次执行过程仅少量模块被调用执行(如powerpoint、matlab、QQ)，或某段时间内仅少量模块被调用执行(如ppt文字录入时)，把大量没有用到的程序代码载入主存，是一种浪费。</p>
+<p>某段时间内仅将部分部分代码、数据模块载入内存，可提高内存利用率，缓解内存不足的问题，传统方法有：</p>
+<ul>
+<li>覆盖(重叠，overlay)：将不会同时执行的模块装载到同一个内存块，但需预先给出模块间调用关系，增加程序员负担。</li>
+<li>动态加载(dynamic loading)：不常用的程序模块以动态链接库(.DLL，.so)方式保存在外存，在需要调用它们的地方用动态装载函数(LoadLibrary, dlopen)加载，虽然可以实现模块共享，但大量的使用这些函数也给程序员带来负担。</li>
+</ul>
+<p>最好是把这些模块选择与加载工作全部交给操作系统：由OS根据系统空闲内存状况，灵活决定将哪些模块加载到内存，哪些模块留在外存，并自动完成模块加载工作。</p>
+<h2 id="虚拟存储器的基本思想"><a href="#虚拟存储器的基本思想" class="headerlink" title="虚拟存储器的基本思想"></a>虚拟存储器的基本思想</h2><ul>
+<li>把辅存的一部分拿来虚拟成实体存储器</li>
+<li>部分加载方法：最近需要访问的代码、需要访问的数据加载到物理内存中，其余数据保存在虚拟存储器中（外存）</li>
+<li>虚拟存储器技术通常与分页式存储管理（paging)或分段式存储管理联合使用</li>
+</ul>
+<h1 id="请求分页系统存储管理"><a href="#请求分页系统存储管理" class="headerlink" title="请求分页系统存储管理"></a>请求分页系统存储管理</h1><ul>
+<li>应用程序在运行之前，仅须将那些当前要运行的少数页面或段，先装入内存便可运行，其余部分暂留在外存（虚拟存储器）上。</li>
+<li>程序在运行时，如果它所要访问的页已调入内存，便可继续执行；但如果程序所要访问的页尚未调入内存（称为缺页），便发出缺页中断请求，由OS利用指定页面调入内存。</li>
+<li>若此时内存已满，无法再装入新页，OS应将内存中暂时不用的页调至外存（虚拟存储器）上，腾出页帧后，再所需页面调入内存（页面置换），使程序得以继续执行</li>
+</ul>
+<h2 id="页表修改"><a href="#页表修改" class="headerlink" title="页表修改"></a>页表修改</h2><p>状态为P:判断页表是在内存中还是在外存中<br><img src="https://upload-images.jianshu.io/upload_images/13918038-e14f6af645c23cd2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h2 id="缺页中断处理过程"><a href="#缺页中断处理过程" class="headerlink" title="缺页中断处理过程"></a>缺页中断处理过程</h2><p><img src="https://upload-images.jianshu.io/upload_images/13918038-3d48f04d30362c70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h2 id="页面置换算法"><a href="#页面置换算法" class="headerlink" title="页面置换算法"></a>页面置换算法</h2><p>请求分页存储系统可用内存不足时，若调入新的页面，就需选择一个内存中被替换页面，将新页面的内容写入该页面所在物理块。</p>
+<h3 id="最佳置换算法OPT：-总是选择以后永不使用的，或许是在最长-未来-时间内不再被访问的页面，进行替换"><a href="#最佳置换算法OPT：-总是选择以后永不使用的，或许是在最长-未来-时间内不再被访问的页面，进行替换" class="headerlink" title="最佳置换算法OPT： 总是选择以后永不使用的，或许是在最长(未来)时间内不再被访问的页面，进行替换"></a>最佳置换算法OPT： 总是选择以后永不使用的，或许是在最长(未来)时间内不再被访问的页面，进行替换</h3><p><img src="https://upload-images.jianshu.io/upload_images/13918038-18c66469c9bb361b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h3 id="先进先出页面置换算法（FIFO）：当需要调入新的页面，但无可用空闲物理块时，总是选择在内存中驻留时间最长的页并予以淘汰，用腾出的物理块来载入新的页面"><a href="#先进先出页面置换算法（FIFO）：当需要调入新的页面，但无可用空闲物理块时，总是选择在内存中驻留时间最长的页并予以淘汰，用腾出的物理块来载入新的页面" class="headerlink" title="先进先出页面置换算法（FIFO）：当需要调入新的页面，但无可用空闲物理块时，总是选择在内存中驻留时间最长的页并予以淘汰，用腾出的物理块来载入新的页面"></a>先进先出页面置换算法（FIFO）：当需要调入新的页面，但无可用空闲物理块时，总是选择在内存中驻留时间最长的页并予以淘汰，用腾出的物理块来载入新的页面</h3><p>先进先出算法没有考虑程序执行的<strong>局部性特征</strong><br><strong>时间局部性</strong>：如果程序中的某条指令一旦执行，则不久以后该指令可能再次执行；如果某数据被访问过，则不久以后该数据可能再次被访问，像循环结构<br><strong>空间局部性</strong>：一旦程序访问了某个存储单元，在不久之后，其附近的存储单元也将被访问，象数组结构</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-a152d87e8c8c479f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h3 id="LRU-置换算法（淘汰最久未使用的页面）"><a href="#LRU-置换算法（淘汰最久未使用的页面）" class="headerlink" title="LRU 置换算法（淘汰最久未使用的页面）"></a>LRU 置换算法（淘汰最久未使用的页面）</h3><p>据程序局部性原理，认为程序最近一段时间内经常访问的地址，也会是不久将来经常访问的地址，认为最后一次访问时间距离当前时间最久的页面，是不久将来访问可能性比较小的页面。<br>硬件对该算法的支持：移位寄存器、堆栈法、计数器法</p>
+<p>虽然LRU算法较好，但要求较多的硬件支持，实现代价（页表存储开销、地址转换过程开销）高，阻碍其应用推广。实际应用中大多采用性能下降不大但实现代价小的LRU近似算法，Clock置换算法是典型代表</p>
+<h3 id="Clock-置换算法"><a href="#Clock-置换算法" class="headerlink" title="Clock 置换算法"></a>Clock 置换算法</h3><p><img src="https://upload-images.jianshu.io/upload_images/13918038-c6741da1dc1982ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/11/06/操作系统面试题之存储器相关/">操作系统面试题之存储器相关</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Enda Lin 的个人博客">Enda Lin</a></p>
+  <p><span>发布时间:</span>2019年11月06日 - 14:39</p>
+  <p><span>最后更新:</span>2019年11月06日 - 17:31</p>
+  <p><span>原始链接:</span><a href="/2019/11/06/操作系统面试题之存储器相关/" title="操作系统面试题之存储器相关">https://wt-git-repository.github.io/2019/11/06/操作系统面试题之存储器相关/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://wt-git-repository.github.io/2019/11/06/操作系统面试题之存储器相关/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>
+</div>
+<script>
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({
+          title: "",
+          text: '复制成功',
+          icon: "success",
+          showConfirmButton: true
+          });
+	});
+    });
+</script>
+
+
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/操作系统/" rel="tag"># 操作系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/06/Java面试题之树相关/" rel="next" title="Java面试题之树相关">
+                <i class="fa fa-chevron-left"></i> Java面试题之树相关
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/11/06/操作系统面试题之存储器相关/" data-title="操作系统面试题之存储器相关" data-url="https://wt-git-repository.github.io/2019/11/06/操作系统面试题之存储器相关/">
+      </div>
+    
+    <div id="gitalk-container"></div>
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avator.jpeg" alt="Enda Lin">
+          <p class="site-author-name" itemprop="name">Enda Lin</p>
+           
+              <p class="site-description motion-element" itemprop="description">所有的伟大都是从零开始</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">78</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wt-git-repository" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="endawt.lin@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#存储器的层次结构"><span class="nav-number">1.</span> <span class="nav-text">存储器的层次结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逻辑地址和物理地址"><span class="nav-number">2.</span> <span class="nav-text">逻辑地址和物理地址</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#将逻辑地址和物理地址分开的好处"><span class="nav-number">2.1.</span> <span class="nav-text">将逻辑地址和物理地址分开的好处</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内核空间与用户空间"><span class="nav-number">3.</span> <span class="nav-text">内核空间与用户空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分页存储管理和页表"><span class="nav-number">4.</span> <span class="nav-text">分页存储管理和页表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程页号与物理页号的管理"><span class="nav-number">4.1.</span> <span class="nav-text">进程页号与物理页号的管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在分页系统中，地址转换的流程"><span class="nav-number">4.2.</span> <span class="nav-text">在分页系统中，地址转换的流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提高地址转换效率"><span class="nav-number">4.3.</span> <span class="nav-text">提高地址转换效率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#空闲页表管理"><span class="nav-number">4.4.</span> <span class="nav-text">空闲页表管理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分段存储管理"><span class="nav-number">5.</span> <span class="nav-text">分段存储管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思想"><span class="nav-number">5.1.</span> <span class="nav-text">基本思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#段管理"><span class="nav-number">5.2.</span> <span class="nav-text">段管理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#段页式存储管理方式"><span class="nav-number">6.</span> <span class="nav-text">段页式存储管理方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟存储器"><span class="nav-number">7.</span> <span class="nav-text">虚拟存储器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#程序运行特性分析"><span class="nav-number">7.1.</span> <span class="nav-text">程序运行特性分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟存储器的基本思想"><span class="nav-number">7.2.</span> <span class="nav-text">虚拟存储器的基本思想</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#请求分页系统存储管理"><span class="nav-number">8.</span> <span class="nav-text">请求分页系统存储管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#页表修改"><span class="nav-number">8.1.</span> <span class="nav-text">页表修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺页中断处理过程"><span class="nav-number">8.2.</span> <span class="nav-text">缺页中断处理过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#页面置换算法"><span class="nav-number">8.3.</span> <span class="nav-text">页面置换算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最佳置换算法OPT：-总是选择以后永不使用的，或许是在最长-未来-时间内不再被访问的页面，进行替换"><span class="nav-number">8.3.1.</span> <span class="nav-text">最佳置换算法OPT： 总是选择以后永不使用的，或许是在最长(未来)时间内不再被访问的页面，进行替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#先进先出页面置换算法（FIFO）：当需要调入新的页面，但无可用空闲物理块时，总是选择在内存中驻留时间最长的页并予以淘汰，用腾出的物理块来载入新的页面"><span class="nav-number">8.3.2.</span> <span class="nav-text">先进先出页面置换算法（FIFO）：当需要调入新的页面，但无可用空闲物理块时，总是选择在内存中驻留时间最长的页并予以淘汰，用腾出的物理块来载入新的页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LRU-置换算法（淘汰最久未使用的页面）"><span class="nav-number">8.3.3.</span> <span class="nav-text">LRU 置换算法（淘汰最久未使用的页面）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Clock-置换算法"><span class="nav-number">8.3.4.</span> <span class="nav-text">Clock 置换算法</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Enda Lin</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 您是博主的第
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      位小伙伴
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="/js/md5.min.js"></script>
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'afbcc6e2a54ed4e2ebd7',
+          clientSecret: '6c36028e964ef689580f33ec9bd19b720f5f131f',
+          repo: 'wt-git-repository.github.io',
+          owner: 'wt-git-repository',
+          admin: ['wt-git-repository'],
+          id: md5(location.href),
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

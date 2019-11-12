@@ -276,6 +276,368 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/09/26/Spark学习笔记②/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/26/Spark学习笔记②/" itemprop="url">Spark学习笔记②</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-26T14:01:01+08:00">
+                2019-09-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/09/26/Spark学习笔记②/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/09/26/Spark学习笔记②/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  318
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Spark-SQL"><a href="#Spark-SQL" class="headerlink" title="Spark SQL"></a>Spark SQL</h1><p>Spark SQL 是Spark中的一个模块，主要用于结构化数据的处理，同时还可以作为分布式的SQL 查询引擎。</p>
+<p>DataFrame 是以列的形式组织的，分布式的数据集合，可以通过很多源来构建，包括结构化的数据文件、Hive 中的表、外部的关系型数据库以及RDD</p>
+<p>#Spark Streaming</p>
+<h2 id="StreamingContext-详解"><a href="#StreamingContext-详解" class="headerlink" title="StreamingContext 详解"></a>StreamingContext 详解</h2><p>一个StreamingContext 定义之后，必须做一下几件事：</p>
+<ul>
+<li>通过创建输入DStream 来创建输入数据源</li>
+<li>通过对DStream 定义transformation 和output算子操作，来定义实时计算逻辑</li>
+<li>调用StreamingContext 的start() 方法，来等待应用程序的终止（可以使用CTRL+C手动停止，或者让它持续不断地运行计算）</li>
+<li>调用StreamingContext 的stop() 方法，来停止应用程序</li>
+</ul>
+<p>需要注意几点：</p>
+<ul>
+<li>只要一个StreamingContext 启动之后，就不能再往其中添加任何计算逻辑了，例如在start() 方法之后，再给某个DStream 执行一个算子</li>
+<li>一个StreamingContext 不能重启，在stop 之后不能再Start</li>
+<li>一个JVM 同时只能有一个StreamContext启动</li>
+<li>调用stop 方法时，会同时停止内部的SparkContext，如果希望继续用SparkContext 创建其它类型的Context，则使用stop(false)</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/09/24/Spark学习笔记①/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/24/Spark学习笔记①/" itemprop="url">Spark学习笔记①</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-24T19:41:23+08:00">
+                2019-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/09/24/Spark学习笔记①/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/09/24/Spark学习笔记①/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  635
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Spark"><a href="#Spark" class="headerlink" title="Spark"></a>Spark</h1><h2 id="Spark-计算模式"><a href="#Spark-计算模式" class="headerlink" title="Spark 计算模式"></a>Spark 计算模式</h2><p>Spark 支持两种RDD 操作：transformation 和action。transformation 操作会针对已有的RDD 创建一个新的RDD，而action 主要是对RDD 进行最后的操作，例如遍历、reduce、保存到文件等等，并可以将结果返回给Driver 程序。</p>
+<p>transformation 具有lazy 特性，一个程序只有transformation 是不会执行的，只有触发了action 操作，才会触发所有的transformation 操作。</p>
+<h2 id="Spark-工作原理"><a href="#Spark-工作原理" class="headerlink" title="Spark 工作原理"></a>Spark 工作原理</h2><h3 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h3><p><strong>客户端Client</strong> 在本地编写Spark 程序，然后在本地将Spark 程序提交到Spark 集群中运行，Spark 从HDFS 中读出来的数据，会分布式存放在不同的Spark 节点上分布式处理。处理后的数据可能会被移动到别的Spark 节点中进行二次处理</p>
+<p>所欲计算操作，都是针对多个计算节点上的数据，进行并行计算的</p>
+<h3 id="迭代式计算"><a href="#迭代式计算" class="headerlink" title="迭代式计算"></a>迭代式计算</h3><p>Spark 计算模型可以分为n 个阶段（MapReduce 只有两个阶段：map、reduce）</p>
+<h2 id="RDD（弹性分布式数据集）"><a href="#RDD（弹性分布式数据集）" class="headerlink" title="RDD（弹性分布式数据集）"></a>RDD（弹性分布式数据集）</h2><ul>
+<li><p>分布式：RDD 有多个分区，多个分区散落在不同的Spark 节点上</p>
+</li>
+<li><p>弹性：RDD 每个分区在Spark 存储时，默认都是在内存中的，如果内存放不下，会放部分数据到磁盘中，这些对用户都是透明的</p>
+</li>
+<li><p>容错性：当Spark 发现RDD 的某个分区的数据丢失后，会重新获取数据，重新计算</p>
+</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/24/Spark学习笔记①/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/09/23/Spark-sample/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1667,359 +2029,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/07/11/SpringSecurity/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Enda Lin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avator.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Enda Lin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/11/SpringSecurity/" itemprop="url">Spring Secutiry 登陆源码分析</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-11T09:18:30+08:00">
-                2019-07-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/07/11/SpringSecurity/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/07/11/SpringSecurity/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article</span>
-                
-                <span title="Words count in article">
-                  1.3k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time</span>
-                
-                <span title="Reading time">
-                  7
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="CasAuthenticationFilter-简介-（版本：3-0-7）"><a href="#CasAuthenticationFilter-简介-（版本：3-0-7）" class="headerlink" title="CasAuthenticationFilter 简介|（版本：3.0.7）"></a>CasAuthenticationFilter 简介|（版本：3.0.7）</h1><p>处理<strong>Cas service ticket</strong></p>
-<h2 id="Service-Tickets"><a href="#Service-Tickets" class="headerlink" title="Service Tickets"></a>Service Tickets</h2><p>一个服务票据是由一串加密的票证字符串组成， 服务票据是用户的浏览器通过Cas Server 认证后， 通过HTTP Redirect 到资源服务器中， 而服务票据是通过其中的请求参数中获取到的。</p>
-<p>过滤器监视着Service URL 以致于它可以接收到服务票据并进行处理，<strong>The CAS server knows which service URL to use via the ServiceProperties.getService()</strong> method。</p>
-<p>Processing the <strong>service ticket</strong> involves creating a <strong>UsernamePasswordAuthenticationToken(the principal and the opaque ticket string as the credentials)</strong> which uses <strong>CAS_STATEFUL_IDENTIFIER</strong> for the principal and the opaque ticket string as the credentials.<strong>(通过服务票据生成 UsernamePasswordAuthenticationToken)</strong></p>
-<p>The configured <strong>AuthenticationManager</strong> is expected to provide a provider that can recognise UsernamePasswordAuthenticationTokens containing this special principal name, and process them accordingly by validation with the CAS server.<strong>（通过AuthenticationManager 依据Cas server 来处理识别该证书）</strong></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/07/11/SpringSecurity/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/07/10/基于Pageable实现分页操作/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Enda Lin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avator.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Enda Lin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/10/基于Pageable实现分页操作/" itemprop="url">基于pageable实现分页操作</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-10T11:49:23+08:00">
-                2019-07-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/07/10/基于Pageable实现分页操作/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/07/10/基于Pageable实现分页操作/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article</span>
-                
-                <span title="Words count in article">
-                  378
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time</span>
-                
-                <span title="Reading time">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><ul>
-<li>Pageable 是Spring Data库中定义的一个接口，该接口是所有分页相关信息的一个抽象，通过该接口，我们可以得到和分页相关所有信息（例如pageNumber、pageSize等），这样，Jpa就能够通过pageable参数来得到一个带分页信息的Sql语句。</li>
-<li>Page类也是Spring Data提供的一个接口，该接口表示一部分数据的集合以及其相关的下一部分数据、数据总数等相关信息，通过该接口，我们可以得到数据的总体信息（数据总数、总页数…）以及当前数据的信息（当前数据的集合、当前页数等）</li>
-</ul>
-<h2 id="通过参数获取Pageable"><a href="#通过参数获取Pageable" class="headerlink" title="通过参数获取Pageable"></a>通过参数获取Pageable</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/params"</span>, method=RequestMethod.GET)</span><br><span class="line"><span class="function"><span class="keyword">public</span> Page&lt;Blog&gt; <span class="title">getEntryByParams</span><span class="params">(@RequestParam(value = <span class="string">"page"</span>, defaultValue = <span class="string">"0"</span>)</span> Integer page,</span></span><br><span class="line"><span class="function">        @<span class="title">RequestParam</span><span class="params">(value = <span class="string">"size"</span>, defaultValue = <span class="string">"15"</span>)</span> Integer size) </span>&#123;</span><br><span class="line">    Sort sort = <span class="keyword">new</span> Sort(Direction.DESC, <span class="string">"id"</span>);</span><br><span class="line">    Pageable pageable = <span class="keyword">new</span> PageRequest(page, size, sort);</span><br><span class="line">    <span class="keyword">return</span> blogRepository.findAll(pageable);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="直接获取Pageable-对象"><a href="#直接获取Pageable-对象" class="headerlink" title="直接获取Pageable 对象"></a>直接获取Pageable 对象</h2><p>当Spring发现这个参数时，Spring会自动的根据request的参数来组装该pageable对象，Spring支持的request参数如下：</p>
-<ul>
-<li>page，第几页，从0开始，默认为第0页</li>
-<li>size，每一页的大小，默认为20</li>
-<li>sort，排序相关的信息，以property,property(,ASC|DESC)的方式组织，例如sort=firstname&amp;sort=lastname,desc表示在按firstname正序排列基础上按lastname倒序排列</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">""</span>, method=RequestMethod.GET)</span><br><span class="line"><span class="function"><span class="keyword">public</span> Page&lt;Blog&gt; <span class="title">getEntryByPageable</span><span class="params">(@PageableDefault(value = <span class="number">15</span>, sort = &#123; <span class="string">"id"</span> &#125;, direction = Sort.Direction.DESC)</span></span></span><br><span class="line"><span class="function">    Pageable pageable) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> blogRepository.findAll(pageable);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
-<li><a href="https://blog.csdn.net/u011848397/article/details/52151673" target="_blank" rel="noopener">Spring Data Jpa: 分页和排序</a></li>
-<li><a href="https://www.jianshu.com/p/67249c7b81d4" target="_blank" rel="noopener">Pageable 前台传参</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2068,7 +2077,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">76</span>
+                <span class="site-state-item-count">78</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -2081,7 +2090,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

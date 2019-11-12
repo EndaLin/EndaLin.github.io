@@ -100,7 +100,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-e72aea911f83c4a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-5c0053b9eedc45f5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-1588298eacdfa291.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-10-20T01:20:49.634Z">
+<meta property="og:updated_time" content="2019-11-07T02:21:14.058Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL技术内幕与存储引擎①">
 <meta name="twitter:description" content="基本概念数据库： 文件的集合， 是依照某种数据模型组织起来并存放于二级存储器中的数据集合 数据库实例：程序， 位于用户与操作系统之间的一层数据管理软件， 用户对数据库的任何操作， 包括数据库定义、数据查询、数据维护、数据库运行控制等都是在数据库实例下运行的， 应用程序只有通过数据库实例才能和数据库打交道">
@@ -448,11 +448,11 @@
 <p>在InnoDB 存储引擎表中，每张表都有一个主键（Primary key），如果在创建表时没有显式地定义主键，那么InnoDB 存储引擎会按如下方式选择或者创建主键：</p>
 <ul>
 <li>首先判断表中是否有非空的唯一索引，如果有，则该列为主键（选择第一个被定义的非空唯一索引）</li>
-<li>如果不符合上述条件，InnoDB 存储引擎将选择表时第一个定义的为空唯一索引为主键。</li>
+<li>如果不符合上述条件，InnoDB 存储引擎将选择表时第一个定义的非空唯一索引为主键。</li>
 </ul>
 <h3 id="InnoDB-逻辑存储结构"><a href="#InnoDB-逻辑存储结构" class="headerlink" title="InnoDB 逻辑存储结构"></a>InnoDB 逻辑存储结构</h3><p><img src="https://upload-images.jianshu.io/upload_images/13918038-e72aea911f83c4a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p><strong>表空间：</strong>表空间可以看做是InnoDB 存储引擎逻辑结构的最高层，所有的数据都存放在表空间中。</p>
-<p><strong>段：</strong>表空间是由各个段组成的，常见的段有数据段、索引段、回滚段等等。</p>
+<p><strong>表空间：</strong> 表空间可以看做是InnoDB 存储引擎逻辑结构的最高层，所有的数据都存放在表空间中。</p>
+<p><strong>段：</strong> 表空间是由各个段组成的，常见的段有数据段、索引段、回滚段等等。</p>
 <p>InnoDB 存储引擎表是索引组织的，因此数据即索引，那么数据段即为<strong>B+树的叶子节点（Leaf node segment）</strong></p>
 <p>索引段即为<strong>B+树的非索引节点（Non-leaf node segment）</strong></p>
 <p><strong>区</strong>是由连续页组成的空间，在任何情况下，每个区的大小都为1 MB，在默认情况下，InnoDB 存储引擎页的大小为16KB，即一个区中一共有16 个连续的页。</p>
@@ -540,7 +540,7 @@
   <p><span>本文标题:</span><a href="/2019/07/24/MySQL技术内幕与存储引擎①/">MySQL技术内幕与存储引擎①</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Enda Lin 的个人博客">Enda Lin</a></p>
   <p><span>发布时间:</span>2019年07月24日 - 11:20</p>
-  <p><span>最后更新:</span>2019年10月20日 - 09:20</p>
+  <p><span>最后更新:</span>2019年11月07日 - 10:21</p>
   <p><span>原始链接:</span><a href="/2019/07/24/MySQL技术内幕与存储引擎①/" title="MySQL技术内幕与存储引擎①">https://wt-git-repository.github.io/2019/07/24/MySQL技术内幕与存储引擎①/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://wt-git-repository.github.io/2019/07/24/MySQL技术内幕与存储引擎①/" aria-label="复制成功！"></i></span>
   </p>
@@ -678,7 +678,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">76</span>
+                <span class="site-state-item-count">78</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -691,7 +691,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

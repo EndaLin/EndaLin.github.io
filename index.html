@@ -276,6 +276,441 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/11/06/操作系统面试题之存储器相关/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/11/06/操作系统面试题之存储器相关/" itemprop="url">操作系统面试题之存储器相关</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-06T14:39:19+08:00">
+                2019-11-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/11/06/操作系统面试题之存储器相关/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/11/06/操作系统面试题之存储器相关/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="存储器的层次结构"><a href="#存储器的层次结构" class="headerlink" title="存储器的层次结构"></a>存储器的层次结构</h1><p>寄存器、高速缓存、主存储器、磁盘缓存、固定磁盘、可移动的存储介质</p>
+<h1 id="逻辑地址和物理地址"><a href="#逻辑地址和物理地址" class="headerlink" title="逻辑地址和物理地址"></a>逻辑地址和物理地址</h1><p>用户能看到的程序代码、变量、堆找的地址称之为<strong>逻辑地址</strong>，它们所在的实际内存区域实际地址是<strong>物理地址</strong></p>
+<h2 id="将逻辑地址和物理地址分开的好处"><a href="#将逻辑地址和物理地址分开的好处" class="headerlink" title="将逻辑地址和物理地址分开的好处"></a>将逻辑地址和物理地址分开的好处</h2><ul>
+<li>实现内存隔离</li>
+<li>实现进程和内核保护</li>
+</ul>
+<h1 id="内核空间与用户空间"><a href="#内核空间与用户空间" class="headerlink" title="内核空间与用户空间"></a>内核空间与用户空间</h1><p><strong>内核空间：</strong> 程序地址空间中安排给操作系统使用的部分，又称之为虚拟存储器</p>
+<p><strong>用户空间：</strong> 程序地址空间中安排给用户程序使用的部分，又称为用户虚拟存储器</p>
+<h1 id="分页存储管理和页表"><a href="#分页存储管理和页表" class="headerlink" title="分页存储管理和页表"></a>分页存储管理和页表</h1><ul>
+<li>把装入模块（即链接后的可执行程序）切分为一系列等长的片段，每个片段称为一个页面(页面长度为512B、1KB、2KB、4KB等，小于动态分区的很多碎片），页号依次为0、1、2、…，(具有n-1个页面的进程大小是多少字节)</li>
+<li>也把系统物理内存划分为一系列等长的片段，每个片段称为一个物理块（或一个页帧），物理块长度与页面长度相同,块号为0、1、2、…</li>
+<li>用户程序运行时，操作系统将其各个页面装载到一系列任意的物理块（地址可能不连续）</li>
+</ul>
+<h2 id="进程页号与物理页号的管理"><a href="#进程页号与物理页号的管理" class="headerlink" title="进程页号与物理页号的管理"></a>进程页号与物理页号的管理</h2><p>页表：通常使用数组来组织页表，页表并不保存页号，只保存物理块号。</p>
+<h2 id="在分页系统中，地址转换的流程"><a href="#在分页系统中，地址转换的流程" class="headerlink" title="在分页系统中，地址转换的流程"></a>在分页系统中，地址转换的流程</h2><ul>
+<li>从逻辑地址中提取页号</li>
+<li>根据页号，查询页表，找到对应的物理块号</li>
+<li>用物理块号和块内的地址定位到对应的数据</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-a92e7c381e3e68f9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h2 id="提高地址转换效率"><a href="#提高地址转换效率" class="headerlink" title="提高地址转换效率"></a>提高地址转换效率</h2><p>由于页表保存在内存中，所以1 次内存存取的操作需要两次访存开销（一次查页表，一次读取内存本身）， 会降低系统效率</p>
+<p><strong>解决方案：</strong></p>
+<ul>
+<li>将经常使用的页表项放到<strong>快表</strong> 中，快表比内存快5 倍以上</li>
+<li>MMU 执行地址转换时，在快表和页表中查找物理块号，若快表命中，则立即获取物理块号，若快表不命中，再到主存页表中查找</li>
+<li>由于程序具有局部性特征，设置少量快表项，即可大幅提高地址转换速度</li>
+</ul>
+<h2 id="空闲页表管理"><a href="#空闲页表管理" class="headerlink" title="空闲页表管理"></a>空闲页表管理</h2><ul>
+<li>位示图法</li>
+<li>链表法</li>
+<li>多级页表法</li>
+</ul>
+<h1 id="分段存储管理"><a href="#分段存储管理" class="headerlink" title="分段存储管理"></a>分段存储管理</h1><h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><ul>
+<li>把程序按照内容或者函数分成段，每段有自己的名字，每段各有一个连续的地址空间</li>
+<li>段式管理可以将那些经常访问的段驻留在内存，将那些不常访问到的放到外存中</li>
+</ul>
+<h2 id="段管理"><a href="#段管理" class="headerlink" title="段管理"></a>段管理</h2><p>为了能找到每个逻辑段对应的物理内存的中分区的位置，系统为每个进程建立了一个段映射表，简称“段表”</p>
+<p>每个段在段表中均有一项，段表项中包括如下内容：段号、段的长度、段在内存中的起始地址</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-a8e62726d76d69b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h1 id="段页式存储管理方式"><a href="#段页式存储管理方式" class="headerlink" title="段页式存储管理方式"></a>段页式存储管理方式</h1><p>地址空间划分：作业的地址空间仍按其逻辑结构分段。每个段又被进一步分成若干大小相同的页面。内存空间则分成与页面大小相等的物理块</p>
+<h1 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h1><h2 id="程序运行特性分析"><a href="#程序运行特性分析" class="headerlink" title="程序运行特性分析"></a>程序运行特性分析</h2><p>大型复杂程序通常由很多模块构成，其运行过程有一些特性：有时一次执行过程仅少量模块被调用执行(如powerpoint、matlab、QQ)，或某段时间内仅少量模块被调用执行(如ppt文字录入时)，把大量没有用到的程序代码载入主存，是一种浪费。</p>
+<p>某段时间内仅将部分部分代码、数据模块载入内存，可提高内存利用率，缓解内存不足的问题，传统方法有：</p>
+<ul>
+<li>覆盖(重叠，overlay)：将不会同时执行的模块装载到同一个内存块，但需预先给出模块间调用关系，增加程序员负担。</li>
+<li>动态加载(dynamic loading)：不常用的程序模块以动态链接库(.DLL，.so)方式保存在外存，在需要调用它们的地方用动态装载函数(LoadLibrary, dlopen)加载，虽然可以实现模块共享，但大量的使用这些函数也给程序员带来负担。</li>
+</ul>
+<p>最好是把这些模块选择与加载工作全部交给操作系统：由OS根据系统空闲内存状况，灵活决定将哪些模块加载到内存，哪些模块留在外存，并自动完成模块加载工作。</p>
+<h2 id="虚拟存储器的基本思想"><a href="#虚拟存储器的基本思想" class="headerlink" title="虚拟存储器的基本思想"></a>虚拟存储器的基本思想</h2><ul>
+<li>把辅存的一部分拿来虚拟成实体存储器</li>
+<li>部分加载方法：最近需要访问的代码、需要访问的数据加载到物理内存中，其余数据保存在虚拟存储器中（外存）</li>
+<li>虚拟存储器技术通常与分页式存储管理（paging)或分段式存储管理联合使用</li>
+</ul>
+<h1 id="请求分页系统存储管理"><a href="#请求分页系统存储管理" class="headerlink" title="请求分页系统存储管理"></a>请求分页系统存储管理</h1><ul>
+<li>应用程序在运行之前，仅须将那些当前要运行的少数页面或段，先装入内存便可运行，其余部分暂留在外存（虚拟存储器）上。</li>
+<li>程序在运行时，如果它所要访问的页已调入内存，便可继续执行；但如果程序所要访问的页尚未调入内存（称为缺页），便发出缺页中断请求，由OS利用指定页面调入内存。</li>
+<li>若此时内存已满，无法再装入新页，OS应将内存中暂时不用的页调至外存（虚拟存储器）上，腾出页帧后，再所需页面调入内存（页面置换），使程序得以继续执行</li>
+</ul>
+<h2 id="页表修改"><a href="#页表修改" class="headerlink" title="页表修改"></a>页表修改</h2><p>状态为P:判断页表是在内存中还是在外存中<br><img src="https://upload-images.jianshu.io/upload_images/13918038-e14f6af645c23cd2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h2 id="缺页中断处理过程"><a href="#缺页中断处理过程" class="headerlink" title="缺页中断处理过程"></a>缺页中断处理过程</h2><p><img src="https://upload-images.jianshu.io/upload_images/13918038-3d48f04d30362c70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h2 id="页面置换算法"><a href="#页面置换算法" class="headerlink" title="页面置换算法"></a>页面置换算法</h2><p>请求分页存储系统可用内存不足时，若调入新的页面，就需选择一个内存中被替换页面，将新页面的内容写入该页面所在物理块。</p>
+<h3 id="最佳置换算法OPT：-总是选择以后永不使用的，或许是在最长-未来-时间内不再被访问的页面，进行替换"><a href="#最佳置换算法OPT：-总是选择以后永不使用的，或许是在最长-未来-时间内不再被访问的页面，进行替换" class="headerlink" title="最佳置换算法OPT： 总是选择以后永不使用的，或许是在最长(未来)时间内不再被访问的页面，进行替换"></a>最佳置换算法OPT： 总是选择以后永不使用的，或许是在最长(未来)时间内不再被访问的页面，进行替换</h3><p><img src="https://upload-images.jianshu.io/upload_images/13918038-18c66469c9bb361b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h3 id="先进先出页面置换算法（FIFO）：当需要调入新的页面，但无可用空闲物理块时，总是选择在内存中驻留时间最长的页并予以淘汰，用腾出的物理块来载入新的页面"><a href="#先进先出页面置换算法（FIFO）：当需要调入新的页面，但无可用空闲物理块时，总是选择在内存中驻留时间最长的页并予以淘汰，用腾出的物理块来载入新的页面" class="headerlink" title="先进先出页面置换算法（FIFO）：当需要调入新的页面，但无可用空闲物理块时，总是选择在内存中驻留时间最长的页并予以淘汰，用腾出的物理块来载入新的页面"></a>先进先出页面置换算法（FIFO）：当需要调入新的页面，但无可用空闲物理块时，总是选择在内存中驻留时间最长的页并予以淘汰，用腾出的物理块来载入新的页面</h3><p>先进先出算法没有考虑程序执行的<strong>局部性特征</strong><br><strong>时间局部性</strong>：如果程序中的某条指令一旦执行，则不久以后该指令可能再次执行；如果某数据被访问过，则不久以后该数据可能再次被访问，像循环结构<br><strong>空间局部性</strong>：一旦程序访问了某个存储单元，在不久之后，其附近的存储单元也将被访问，象数组结构</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-a152d87e8c8c479f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h3 id="LRU-置换算法（淘汰最久未使用的页面）"><a href="#LRU-置换算法（淘汰最久未使用的页面）" class="headerlink" title="LRU 置换算法（淘汰最久未使用的页面）"></a>LRU 置换算法（淘汰最久未使用的页面）</h3><p>据程序局部性原理，认为程序最近一段时间内经常访问的地址，也会是不久将来经常访问的地址，认为最后一次访问时间距离当前时间最久的页面，是不久将来访问可能性比较小的页面。<br>硬件对该算法的支持：移位寄存器、堆栈法、计数器法</p>
+<p>虽然LRU算法较好，但要求较多的硬件支持，实现代价（页表存储开销、地址转换过程开销）高，阻碍其应用推广。实际应用中大多采用性能下降不大但实现代价小的LRU近似算法，Clock置换算法是典型代表</p>
+<h3 id="Clock-置换算法"><a href="#Clock-置换算法" class="headerlink" title="Clock 置换算法"></a>Clock 置换算法</h3><p><img src="https://upload-images.jianshu.io/upload_images/13918038-c6741da1dc1982ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/11/06/Java面试题之树相关/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/11/06/Java面试题之树相关/" itemprop="url">Java面试题之树相关</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-06T10:31:02+08:00">
+                2019-11-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/11/06/Java面试题之树相关/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/11/06/Java面试题之树相关/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  797
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="B-树"><a href="#B-树" class="headerlink" title="B 树"></a>B 树</h1><p>binary search tree，称为二叉搜索树、二叉排序树或者二叉查找树，简称BST</p>
+<p>B 树，即二叉搜索树</p>
+<ul>
+<li>所有非叶子结点都有左右子节点</li>
+<li>所有结点都会存储一个关键字</li>
+<li>非叶子节点的左子节点小于其关键字，右子节点大于其关键字</li>
+</ul>
+<h1 id="AVL-树"><a href="#AVL-树" class="headerlink" title="AVL 树"></a>AVL 树</h1><p> AVL 树是自平衡二叉查找树，在AVL 树中，任何节点的两个子树的高度最大差别为1，查找、插入和删除的平均和最坏情况都是O(log n)</p>
+<h1 id="B-树-1"><a href="#B-树-1" class="headerlink" title="B+ 树"></a>B+ 树</h1><p>特点</p>
+<ul>
+<li>所有关键字都出现在叶子节点中，叶子节点和叶子节点之间是以链表的方式来存储的</li>
+<li>叶子节点是有序的</li>
+</ul>
+<h1 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h1><p>红黑树是满足以下性质的二叉搜索树</p>
+<ul>
+<li>每个结点是红色的或者黑色的</li>
+<li>根结点是黑色的</li>
+<li>如果结点是红色的，其左右叶子结点都是黑色的<blockquote>
+<p>保证了从根节点到叶子节点的最长路径的长度不会超过任何其他路径的两倍</p>
+</blockquote>
+</li>
+<li>每个叶子结点都是黑色的</li>
+<li>对于每个结点，从该结点到其所有子孙叶结点的路径中所包含的黑色结点数量必须相同。</li>
+</ul>
+<h1 id="红黑树和B-树的应用场景"><a href="#红黑树和B-树的应用场景" class="headerlink" title="红黑树和B 树的应用场景"></a>红黑树和B 树的应用场景</h1><ul>
+<li><p>红黑树多用在内部排序，即全放在内存中的，STL的map和set的内部实现就是红黑树。</p>
+</li>
+<li><p>B+树多用于外存上时，B+也被成为一个磁盘友好的数据结构。</p>
+</li>
+</ul>
+<p>红黑树并不追求“完全平衡”——它只要求部分地达到平衡要求，降低了对旋转的要求，从而提高了性能</p>
+<h1 id="为什么用二叉树-而不用散列表"><a href="#为什么用二叉树-而不用散列表" class="headerlink" title="为什么用二叉树 而不用散列表"></a>为什么用二叉树 而不用散列表</h1><ul>
+<li>第一，散列表中的数据是无序存储的，如果要输出有序的数据，需要先进行排序。而对于二叉查找树来说，我们只需要中序遍历，就可以在O(n)的时间复杂度<br>内，输出有序的数据序列。</li>
+<li>第二，散列表扩容耗时很多，而且当遇到散列冲突时，性能不稳定，尽管二叉查找树的性能不稳定，但是在工程中，我们最常用的平衡二叉查找树的性能非常稳<br>定，时间复杂度稳定在O(logn)。</li>
+<li>第三，笼统地来说，尽管散列表的查找等操作的时间复杂度是常量级的，但因为哈希冲突的存在，这个常量不一定比logn小，所以实际的查找速度可能不一定<br>比O(logn)快。加上哈希函数的耗时，也不一定就比平衡二叉查找树的效率高。</li>
+<li>第四，散列表的构造比二叉查找树要复杂，需要考虑的东西很多。比如散列函数的设计、冲突解决办法、扩容、缩容等。平衡二叉查找树只需要考虑平衡性这一<br>个问题，而且这个问题的解决方案比较成熟、固定。</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://blog.csdn.net/chlele0105/article/details/8473846" target="_blank" rel="noopener">B树、B+树、AVL树、红黑树</a></li>
+<li><a href="https://www.jianshu.com/p/86a1fd2d7406" target="_blank" rel="noopener">对B+树，B树，红黑树的理解</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/10/29/Java面试题之JVM相关/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -349,7 +784,7 @@
                   <span class="post-meta-item-text">Words count in article</span>
                 
                 <span title="Words count in article">
-                  0
+                  2.4k
                 </span>
               
 
@@ -365,7 +800,7 @@
                   <span class="post-meta-item-text">Reading time</span>
                 
                 <span title="Reading time">
-                  1
+                  9
                 </span>
               
             </div>
@@ -387,9 +822,103 @@
 
       
         
-          
-            
-          
+          <h1 id="JVM-堆"><a href="#JVM-堆" class="headerlink" title="JVM 堆"></a>JVM 堆</h1><p>在Java 中，堆被划分为两个不同的区域：<strong>新生代和老年代</strong></p>
+<p><strong>新时代</strong>：被划分为三个区域：Eden、From survivor 和 To survivor</p>
+<p>划分的目的是为了使JVM 更好地管理JVM 内存对象，包括内存的分配以及内存的回收</p>
+<p><img src="https://img-blog.csdn.net/20151115124816485" alt></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://blog.csdn.net/gyqjn/article/details/49848473" target="_blank" rel="noopener">Java GC、新生代、老年代</a></p>
+<h1 id="GC"><a href="#GC" class="headerlink" title="GC"></a>GC</h1><h2 id="GC-Roots"><a href="#GC-Roots" class="headerlink" title="GC Roots"></a>GC Roots</h2><p>GC Roots 是tracing GC 的根集合，是一组必须活跃的应用</p>
+<p>通过一系列名为“GC roots” 的对象为起始点，从这个被成为“GC roots” 的对象向下搜索，如果一个对象到GC roots 没有任何的引用链相连，则说明该对象不可用。也就是说，以给定的一个集合的引用作为根出发点，通过引用关系遍历对象图，能被遍历到的（可到达的对象）则被判定为存活，不可达的则被判定为死亡。</p>
+<h2 id="GC-roots-set"><a href="#GC-roots-set" class="headerlink" title="GC roots set"></a>GC roots set</h2><ul>
+<li>虚拟机栈（栈帧中的局部变量表）中应用的对象</li>
+<li>方法区中的类静态属性应用的对象</li>
+<li>方法区中常量引用的对象</li>
+<li>本地方法栈中JNI (Native 方法) 应用的对象</li>
+</ul>
+<h2 id="四大垃圾回收算法"><a href="#四大垃圾回收算法" class="headerlink" title="四大垃圾回收算法"></a>四大垃圾回收算法</h2><ul>
+<li>引用计数</li>
+<li>复制拷贝</li>
+<li>标记-清除算法（Mark-Sweep） （优：节约空间，缺：产生内存碎片）</li>
+<li>标记 - 压缩</li>
+</ul>
+<h2 id="主要的垃圾回收器"><a href="#主要的垃圾回收器" class="headerlink" title="主要的垃圾回收器"></a>主要的垃圾回收器</h2><p>下图展示了7种作用于不同分代的收集器，如果两个收集器之间存在连线，就说明它们可以搭配使用。虚拟机所处的区域，则表示它是属于新生代收集器还是老年代收集器。Hotspot实现了如此多的收集器，正是因为目前并无完美的收集器出现，只是选择对具体应用最适合的收集器。</p>
+<p><img src="https://pic.yupoo.com/crowhawk/56a02e55/3b3c42d2.jpg" alt></p>
+<ul>
+<li>串行垃圾回收器（-XX:+UseSerialGC）<blockquote>
+<p>串行垃圾回收器通过持有应用程序所有的线程进行工作。它为单线程环境设计，只使用一个单独的线程进行垃圾回收，通过冻结所有应用程序线程进行工作，所以可能不适合服务器环境。它最适合的是简单的命令行程序（单CPU、新生代空间较小及对暂停时间要求不是非常高的应用）。是client级别默认的GC方式。</p>
+<p>开启之后会使用，新时代和老年代都会使用串行回收收集器，新生代使用标记-复制算法，老年代使用标记-整理算法</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://pic.yupoo.com/crowhawk/6b90388c/6c281cf0.png" alt></p>
+<ul>
+<li>ParNew 收集器（-XX:+UseParNewGC）<blockquote>
+<p>只对新生代起作用<br>ParNew 回收器也要冻结用户的工作线程，在新时代中使用多线程来运行标记-复制算法来进行垃圾回收，在老年期还是使用单线程和标记-整理算法来进行垃圾回收<br><strong>注意</strong>： ParNew 和SerialOld 已经不再被推荐使用<br><strong>备注</strong>：-XX:ParallelGCThreads 限制线程数量，默认起与CPU 相同数目的线程</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://pic.yupoo.com/crowhawk/605f57b5/75122b84.png" alt></p>
+<ul>
+<li>Parallel Scavenge 收集器（-XX:+UseParallelGC）<blockquote>
+<p>它是JVM的默认垃圾回收器。与串行垃圾回收器不同，它使用多线程进行垃圾回收。相似的是，当执行垃圾回收的时候它也会冻结所有的应用程序线程。<br>新生代和老年代都用多个线程并行去运行<br><img src="https://pic.yupoo.com/crowhawk/9a6b1249/b1800d45.png" alt></p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li><p>CMS并发标记扫描垃圾回收器（-XX:+UseConcMarkSweepGC）</p>
+<blockquote>
+<p>用户线程和垃圾回收线程同时执行，适用于对响应时间有要求的公司<br>只要在老年代开启了CMS，新生代会自动开启ParNew，Serial Old会作为CMS 出错的后备收集器</p>
+<p><strong>四个步骤</strong>:</p>
+<ul>
+<li>初始化标记Initial Mark（冻结用户线程）：只是标记一下GC Roots能直接关联的对象，速度很快</li>
+<li>并发标记Concurrent Mark（GC 线程和用户线程一起工作）：进行GC Roots跟踪过程，这是主要的标记过程，标记所有的对象</li>
+<li>重新标记Remark（冻结用户线程）：为了修正正在并发标记期间，因用户程序继续运行而导致标记发生变动的那一部分对象的标记记录，任然需要暂停所有工作线程。（二次确认）</li>
+<li>并发清除Concurrent sweep（GC 线程和用户线程一起工作）<br><img src="https://pic.yupoo.com/crowhawk/fffcf9a2/f60599b2.png" alt></li>
+</ul>
+</blockquote>
+</li>
+<li><p>G1垃圾回收器（-XX:+UseG1GC）</p>
+<blockquote>
+<p> G1垃圾回收器适用于堆内存很大的情况，他将堆内存分割成不同的区域，并且并发的对其进行垃圾回收,不会产生许多内存碎片，G1 在停顿时间添加了预测机制，用户可以指定停顿时间<br><strong>G1 特点</strong></p>
+<ul>
+<li>G1 能充分利用CPU，多核环境的优势，尽量缩短STW</li>
+<li>G1 整体采用标记-整理算法，局部通过复制算法，不会产生内存碎片</li>
+<li>宏观上看G1 不再区分年轻代和老年代，把内存划分为多个Region 区</li>
+<li>G1 收集器在小范围内进行年轻代和老年代的区分，不再是物理隔离，是一部分Region 的集合而且不需要连续</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/3789193-f149ab73f33539d4.png?imageMogr2/auto-orient/strip|imageView2/2/w/638/format/webp" alt></p>
+<h3 id="如何选择合适的垃圾收集器"><a href="#如何选择合适的垃圾收集器" class="headerlink" title="如何选择合适的垃圾收集器"></a>如何选择合适的垃圾收集器</h3><ul>
+<li>单CPU 或者小内存，单机程序<blockquote>
+<p>-XX:+UseSerialGC</p>
+</blockquote>
+</li>
+<li>多CPU，需要最大的吞吐量，如后台计算型应用<blockquote>
+<p>-XX:+UseParallelGC or -XX:+UseParallelOldGC</p>
+</blockquote>
+</li>
+<li>多CPU，追求低停顿时间，需要快速响应<blockquote>
+<p>-XX:+UseConcMarkSweepGC -XX:+ParNewGC</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="查看默认的垃圾回收器"><a href="#查看默认的垃圾回收器" class="headerlink" title="查看默认的垃圾回收器"></a>查看默认的垃圾回收器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">F:\IDEA\Test&gt;java -XX:+PrintCommandLineFlags -version</span><br><span class="line"></span><br><span class="line">-XX:G1ConcRefinementThreads=8 -XX:GCDrainStackTargetSize=64 -XX:InitialHeapSize=267006528 -XX:MaxHeapSize=4272104448 -XX:+PrintCommandLineFlags -XX:ReservedCodeCacheSize=251658240 -XX:+</span><br><span class="line">SegmentedCodeCache -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseG1GC -XX:-UseLargePagesIndividualAllocation</span><br><span class="line">openjdk version <span class="string">"11.0.3"</span> 2019-04-16</span><br><span class="line">OpenJDK Runtime Environment (build 11.0.3+12-b304.10)</span><br><span class="line">OpenJDK 64-Bit Server VM (build 11.0.3+12-b304.10, mixed mode, sharing)</span><br></pre></td></tr></table></figure>
+<p>结果：-XX:+UseG1GC</p>
+<h2 id="概念补充"><a href="#概念补充" class="headerlink" title="概念补充"></a>概念补充</h2><ul>
+<li><strong>可控制的吞吐量</strong> = 运行用户代码的时间/（运行用户代码的时间+垃圾收集器），高吞吐量意味着利用CPU 的效率高</li>
+</ul>
+<h2 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.jianshu.com/p/5261a62e4d29" target="_blank" rel="noopener">浅析JAVA的垃圾回收机制（GC）</a></p>
+<p><a href="https://crowhawk.github.io/2017/08/15/jvm_3/" target="_blank" rel="noopener">深入理解JVM(3)——7种垃圾收集器</a></p>
+<p><a href="https://www.cnblogs.com/aspirant/p/8662690.html" target="_blank" rel="noopener">JVM的垃圾回收机制 总结(垃圾收集、回收算法、垃圾回收器)</a></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/10/29/Java面试题之JVM相关/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1709,368 +2238,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/09/26/Spark学习笔记②/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Enda Lin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avator.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Enda Lin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/09/26/Spark学习笔记②/" itemprop="url">Spark学习笔记②</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-26T14:01:01+08:00">
-                2019-09-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/09/26/Spark学习笔记②/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/09/26/Spark学习笔记②/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article</span>
-                
-                <span title="Words count in article">
-                  318
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time</span>
-                
-                <span title="Reading time">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Spark-SQL"><a href="#Spark-SQL" class="headerlink" title="Spark SQL"></a>Spark SQL</h1><p>Spark SQL 是Spark中的一个模块，主要用于结构化数据的处理，同时还可以作为分布式的SQL 查询引擎。</p>
-<p>DataFrame 是以列的形式组织的，分布式的数据集合，可以通过很多源来构建，包括结构化的数据文件、Hive 中的表、外部的关系型数据库以及RDD</p>
-<p>#Spark Streaming</p>
-<h2 id="StreamingContext-详解"><a href="#StreamingContext-详解" class="headerlink" title="StreamingContext 详解"></a>StreamingContext 详解</h2><p>一个StreamingContext 定义之后，必须做一下几件事：</p>
-<ul>
-<li>通过创建输入DStream 来创建输入数据源</li>
-<li>通过对DStream 定义transformation 和output算子操作，来定义实时计算逻辑</li>
-<li>调用StreamingContext 的start() 方法，来等待应用程序的终止（可以使用CTRL+C手动停止，或者让它持续不断地运行计算）</li>
-<li>调用StreamingContext 的stop() 方法，来停止应用程序</li>
-</ul>
-<p>需要注意几点：</p>
-<ul>
-<li>只要一个StreamingContext 启动之后，就不能再往其中添加任何计算逻辑了，例如在start() 方法之后，再给某个DStream 执行一个算子</li>
-<li>一个StreamingContext 不能重启，在stop 之后不能再Start</li>
-<li>一个JVM 同时只能有一个StreamContext启动</li>
-<li>调用stop 方法时，会同时停止内部的SparkContext，如果希望继续用SparkContext 创建其它类型的Context，则使用stop(false)</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/09/24/Spark学习笔记①/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Enda Lin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avator.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Enda Lin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/09/24/Spark学习笔记①/" itemprop="url">Spark学习笔记①</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-24T19:41:23+08:00">
-                2019-09-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/09/24/Spark学习笔记①/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/09/24/Spark学习笔记①/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article</span>
-                
-                <span title="Words count in article">
-                  635
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time</span>
-                
-                <span title="Reading time">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Spark"><a href="#Spark" class="headerlink" title="Spark"></a>Spark</h1><h2 id="Spark-计算模式"><a href="#Spark-计算模式" class="headerlink" title="Spark 计算模式"></a>Spark 计算模式</h2><p>Spark 支持两种RDD 操作：transformation 和action。transformation 操作会针对已有的RDD 创建一个新的RDD，而action 主要是对RDD 进行最后的操作，例如遍历、reduce、保存到文件等等，并可以将结果返回给Driver 程序。</p>
-<p>transformation 具有lazy 特性，一个程序只有transformation 是不会执行的，只有触发了action 操作，才会触发所有的transformation 操作。</p>
-<h2 id="Spark-工作原理"><a href="#Spark-工作原理" class="headerlink" title="Spark 工作原理"></a>Spark 工作原理</h2><h3 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h3><p><strong>客户端Client</strong> 在本地编写Spark 程序，然后在本地将Spark 程序提交到Spark 集群中运行，Spark 从HDFS 中读出来的数据，会分布式存放在不同的Spark 节点上分布式处理。处理后的数据可能会被移动到别的Spark 节点中进行二次处理</p>
-<p>所欲计算操作，都是针对多个计算节点上的数据，进行并行计算的</p>
-<h3 id="迭代式计算"><a href="#迭代式计算" class="headerlink" title="迭代式计算"></a>迭代式计算</h3><p>Spark 计算模型可以分为n 个阶段（MapReduce 只有两个阶段：map、reduce）</p>
-<h2 id="RDD（弹性分布式数据集）"><a href="#RDD（弹性分布式数据集）" class="headerlink" title="RDD（弹性分布式数据集）"></a>RDD（弹性分布式数据集）</h2><ul>
-<li><p>分布式：RDD 有多个分区，多个分区散落在不同的Spark 节点上</p>
-</li>
-<li><p>弹性：RDD 每个分区在Spark 存储时，默认都是在内存中的，如果内存放不下，会放部分数据到磁盘中，这些对用户都是透明的</p>
-</li>
-<li><p>容错性：当Spark 发现RDD 的某个分区的数据丢失后，会重新获取数据，重新计算</p>
-</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/09/24/Spark学习笔记①/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2119,7 +2286,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">76</span>
+                <span class="site-state-item-count">78</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -2132,7 +2299,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
