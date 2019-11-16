@@ -70,7 +70,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="MySQL,">
+  <meta name="keywords" content="操作系统,">
 
 
 
@@ -86,18 +86,22 @@
 
 
 
-<meta name="description" content="MySQL 必知必会 MySQL 线程池的最佳连接数 = （CPU 核心数 * 2） + 有效磁盘数 比较运算符能用 = 就不用 &amp;lt;&amp;gt;, 增加索引的利用率 如果只有一条查询结果， 请使用 “LIMIT 1” 为列选择合适的数据类型， 能用SMALLINT 就不用INT， 磁盘和内存消耗越小越好。 将大的DELETE、 UPDATE or INSERT 查询拆成多个小的查询 如果结果集允">
-<meta name="keywords" content="MySQL">
+<meta name="description" content="进程（线程 + 内存 + 文件/网络句柄） 内存：逻辑内存 文件/网络句柄：为所有线程所共有 线程：进程所创建的，进程是线程的容器   孤儿进程指的是父进程死掉的子进程，这些孤儿进程会被init进程（进程号为1）所收养，由init 进程对它们完成状态收集工作 僵尸进程一个子进程的进程描述符在子进程退出时不会释放，只有当父进程通过 wait() 或 waitpid() 获取了子进程信息后才会释放。如">
+<meta name="keywords" content="操作系统">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL必知必会">
-<meta property="og:url" content="https://wt-git-repository.github.io/2019/07/15/MySQL必知必会/index.html">
+<meta property="og:title" content="操作系统面试题之进程与线程相关">
+<meta property="og:url" content="https://wt-git-repository.github.io/2019/11/14/操作系统面试题之进程与线程相关/index.html">
 <meta property="og:site_name" content="Enda Lin">
-<meta property="og:description" content="MySQL 必知必会 MySQL 线程池的最佳连接数 = （CPU 核心数 * 2） + 有效磁盘数 比较运算符能用 = 就不用 &amp;lt;&amp;gt;, 增加索引的利用率 如果只有一条查询结果， 请使用 “LIMIT 1” 为列选择合适的数据类型， 能用SMALLINT 就不用INT， 磁盘和内存消耗越小越好。 将大的DELETE、 UPDATE or INSERT 查询拆成多个小的查询 如果结果集允">
+<meta property="og:description" content="进程（线程 + 内存 + 文件/网络句柄） 内存：逻辑内存 文件/网络句柄：为所有线程所共有 线程：进程所创建的，进程是线程的容器   孤儿进程指的是父进程死掉的子进程，这些孤儿进程会被init进程（进程号为1）所收养，由init 进程对它们完成状态收集工作 僵尸进程一个子进程的进程描述符在子进程退出时不会释放，只有当父进程通过 wait() 或 waitpid() 获取了子进程信息后才会释放。如">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-15T04:53:41.723Z">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/3/21/1699ecde3bb5683b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/3/21/1699ecde3ba97f25?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://uploadfiles.nowcoder.com/files/20190726/450315_1564129031585_EV40SO.png">
+<meta property="og:updated_time" content="2019-11-14T07:38:21.882Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MySQL必知必会">
-<meta name="twitter:description" content="MySQL 必知必会 MySQL 线程池的最佳连接数 = （CPU 核心数 * 2） + 有效磁盘数 比较运算符能用 = 就不用 &amp;lt;&amp;gt;, 增加索引的利用率 如果只有一条查询结果， 请使用 “LIMIT 1” 为列选择合适的数据类型， 能用SMALLINT 就不用INT， 磁盘和内存消耗越小越好。 将大的DELETE、 UPDATE or INSERT 查询拆成多个小的查询 如果结果集允">
+<meta name="twitter:title" content="操作系统面试题之进程与线程相关">
+<meta name="twitter:description" content="进程（线程 + 内存 + 文件/网络句柄） 内存：逻辑内存 文件/网络句柄：为所有线程所共有 线程：进程所创建的，进程是线程的容器   孤儿进程指的是父进程死掉的子进程，这些孤儿进程会被init进程（进程号为1）所收养，由init 进程对它们完成状态收集工作 僵尸进程一个子进程的进程描述符在子进程退出时不会释放，只有当父进程通过 wait() 或 waitpid() 获取了子进程信息后才会释放。如">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/3/21/1699ecde3bb5683b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
 
 
 
@@ -126,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="https://wt-git-repository.github.io/2019/07/15/MySQL必知必会/">
+  <link rel="canonical" href="https://wt-git-repository.github.io/2019/11/14/操作系统面试题之进程与线程相关/">
 
 
 
 
 
-  <title>MySQL必知必会 | Enda Lin</title>
+  <title>操作系统面试题之进程与线程相关 | Enda Lin</title>
   
 
 
@@ -275,7 +279,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/07/15/MySQL必知必会/">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/11/14/操作系统面试题之进程与线程相关/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Enda Lin">
@@ -292,7 +296,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">MySQL必知必会</h1>
+          <h1 class="post-title" itemprop="name headline">操作系统面试题之进程与线程相关</h1>
         
 
         <div class="post-meta">
@@ -304,8 +308,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-15T08:59:33+08:00">
-                2019-07-15
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-14T14:53:35+08:00">
+                2019-11-14
               </time>
             
 
@@ -323,8 +327,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/07/15/MySQL必知必会/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/07/15/MySQL必知必会/" itemprop="commentCount"></span>
+                <a href="/2019/11/14/操作系统面试题之进程与线程相关/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/11/14/操作系统面试题之进程与线程相关/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -351,7 +355,7 @@
                   <span class="post-meta-item-text">Words count in article</span>
                 
                 <span title="Words count in article">
-                  186
+                  472
                 </span>
               
 
@@ -388,18 +392,36 @@
       
 
       
-        <h1 id="MySQL-必知必会"><a href="#MySQL-必知必会" class="headerlink" title="MySQL 必知必会"></a>MySQL 必知必会</h1><ul>
-<li>MySQL 线程池的最佳连接数 = （CPU 核心数 * 2） + 有效磁盘数</li>
-<li>比较运算符能用 = 就不用 &lt;&gt;, 增加索引的利用率</li>
-<li>如果只有一条查询结果， 请使用 “LIMIT 1”</li>
-<li>为列选择合适的数据类型， 能用SMALLINT 就不用INT， 磁盘和内存消耗越小越好。</li>
-<li>将大的DELETE、 UPDATE or INSERT 查询拆成多个小的查询</li>
-<li>如果结果集允许重复， 则使用UNION ALL 代替 UNION</li>
-<li>为了充分利用查询缓存， 请保持SQL 语句查询条件的一致性</li>
-<li>尽量避免使用select *</li>
-<li>where、 Join and Order by 语句的的列尽量被索引</li>
-<li>使用LIMIT 实现分页逻辑， 减少不必要的传输</li>
+        <h1 id="进程（线程-内存-文件-网络句柄）"><a href="#进程（线程-内存-文件-网络句柄）" class="headerlink" title="进程（线程 + 内存 + 文件/网络句柄）"></a>进程（线程 + 内存 + 文件/网络句柄）</h1><ul>
+<li>内存：逻辑内存</li>
+<li>文件/网络句柄：为所有线程所共有</li>
+<li>线程：进程所创建的，进程是线程的容器</li>
 </ul>
+<p><img src="https://user-gold-cdn.xitu.io/2019/3/21/1699ecde3bb5683b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt></p>
+<h2 id="孤儿进程"><a href="#孤儿进程" class="headerlink" title="孤儿进程"></a>孤儿进程</h2><p>指的是父进程死掉的子进程，这些孤儿进程会被init进程（进程号为1）所收养，由init 进程对它们完成状态收集工作</p>
+<h2 id="僵尸进程"><a href="#僵尸进程" class="headerlink" title="僵尸进程"></a>僵尸进程</h2><p>一个子进程的进程描述符在子进程退出时不会释放，只有当父进程通过 wait() 或 waitpid() 获取了子进程信息后才会释放。如果子进程退出，而父进程并没有调用 wait() 或 waitpid()，那么子进程的进程描述符仍然保存在系统中，这种进程称之为僵尸进程。</p>
+<h1 id="线程（栈-PC-TLS）"><a href="#线程（栈-PC-TLS）" class="headerlink" title="线程（栈 + PC + TLS）"></a>线程（栈 + PC + TLS）</h1><ul>
+<li>栈</li>
+<li>PC（程序计数器）：PC就是指向当前的指令，而这个指令是放在内存中。 每个线程都有一串自己的指针，去指向自己当前所在内存的指针</li>
+<li>TLS（Thead Local Storage）: 存储线程所独有的数据</li>
+</ul>
+<p><img src="https://user-gold-cdn.xitu.io/2019/3/21/1699ecde3ba97f25?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt></p>
+<h1 id="进程与线程的区别"><a href="#进程与线程的区别" class="headerlink" title="进程与线程的区别"></a>进程与线程的区别</h1><ul>
+<li>进程是资源调度的最小单位，线程是系统调用的最小单位</li>
+<li>进程有自己独立的内存空间，线程可以共享进程的内存空间</li>
+</ul>
+<h1 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h1><h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><ul>
+<li>系统资源不足</li>
+<li>进程推进的顺序不合适</li>
+<li>资源分配不当</li>
+</ul>
+<h2 id="导致死锁的四个必要条件"><a href="#导致死锁的四个必要条件" class="headerlink" title="导致死锁的四个必要条件"></a>导致死锁的四个必要条件</h2><ul>
+<li>一个进程一次只能访问一个资源，其它进程不能访问已经分配的资源</li>
+<li>一个进程在等待其它资源的时候，继续占有已经抢占到的资源</li>
+<li>一个进程不能强行抢占另一个进程的资源</li>
+<li>存在一个封闭的进程链，导致每一个进程都在等待下一个进程的资源</li>
+</ul>
+<h2 id="银行家算法"><a href="#银行家算法" class="headerlink" title="银行家算法"></a>银行家算法</h2><p><img src="https://uploadfiles.nowcoder.com/files/20190726/450315_1564129031585_EV40SO.png" alt></p>
 
       
     </div>
@@ -416,12 +438,12 @@
   <!-- JS库 sweetalert 可修改路径 -->
   <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <p><span>本文标题:</span><a href="/2019/07/15/MySQL必知必会/">MySQL必知必会</a></p>
+  <p><span>本文标题:</span><a href="/2019/11/14/操作系统面试题之进程与线程相关/">操作系统面试题之进程与线程相关</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Enda Lin 的个人博客">Enda Lin</a></p>
-  <p><span>发布时间:</span>2019年07月15日 - 08:59</p>
-  <p><span>最后更新:</span>2019年07月15日 - 12:53</p>
-  <p><span>原始链接:</span><a href="/2019/07/15/MySQL必知必会/" title="MySQL必知必会">https://wt-git-repository.github.io/2019/07/15/MySQL必知必会/</a>
-    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://wt-git-repository.github.io/2019/07/15/MySQL必知必会/" aria-label="复制成功！"></i></span>
+  <p><span>发布时间:</span>2019年11月14日 - 14:53</p>
+  <p><span>最后更新:</span>2019年11月14日 - 15:38</p>
+  <p><span>原始链接:</span><a href="/2019/11/14/操作系统面试题之进程与线程相关/" title="操作系统面试题之进程与线程相关">https://wt-git-repository.github.io/2019/11/14/操作系统面试题之进程与线程相关/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://wt-git-repository.github.io/2019/11/14/操作系统面试题之进程与线程相关/" aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>
 </div>
@@ -453,7 +475,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+            <a href="/tags/操作系统/" rel="tag"># 操作系统</a>
           
         </div>
       
@@ -466,8 +488,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/13/hadoop学习笔记⑥/" rel="next" title="hadoop学习笔记⑥">
-                <i class="fa fa-chevron-left"></i> hadoop学习笔记⑥
+              <a href="/2019/11/06/操作系统面试题之存储器相关/" rel="next" title="操作系统面试题之存储器相关">
+                <i class="fa fa-chevron-left"></i> 操作系统面试题之存储器相关
               </a>
             
           </div>
@@ -475,10 +497,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/18/Netty学习笔记/" rel="prev" title="Netty学习笔记">
-                Netty学习笔记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -508,7 +526,7 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2019/07/15/MySQL必知必会/" data-title="MySQL必知必会" data-url="https://wt-git-repository.github.io/2019/07/15/MySQL必知必会/">
+      <div class="ds-thread" data-thread-key="2019/11/14/操作系统面试题之进程与线程相关/" data-title="操作系统面试题之进程与线程相关" data-url="https://wt-git-repository.github.io/2019/11/14/操作系统面试题之进程与线程相关/">
       </div>
     
     <div id="gitalk-container"></div>
@@ -629,7 +647,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL-必知必会"><span class="nav-number">1.</span> <span class="nav-text">MySQL 必知必会</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#进程（线程-内存-文件-网络句柄）"><span class="nav-number">1.</span> <span class="nav-text">进程（线程 + 内存 + 文件/网络句柄）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#孤儿进程"><span class="nav-number">1.1.</span> <span class="nav-text">孤儿进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#僵尸进程"><span class="nav-number">1.2.</span> <span class="nav-text">僵尸进程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程（栈-PC-TLS）"><span class="nav-number">2.</span> <span class="nav-text">线程（栈 + PC + TLS）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程与线程的区别"><span class="nav-number">3.</span> <span class="nav-text">进程与线程的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#死锁"><span class="nav-number">4.</span> <span class="nav-text">死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#原因"><span class="nav-number">4.1.</span> <span class="nav-text">原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导致死锁的四个必要条件"><span class="nav-number">4.2.</span> <span class="nav-text">导致死锁的四个必要条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#银行家算法"><span class="nav-number">4.3.</span> <span class="nav-text">银行家算法</span></a></li></ol></li></ol></div>
             
 
           </div>

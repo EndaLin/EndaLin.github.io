@@ -276,6 +276,184 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/10/02/Zoopkeeper学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/02/Zoopkeeper学习笔记/" itemprop="url">Zoopkeeper学习笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-02T20:31:28+08:00">
+                2019-10-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/10/02/Zoopkeeper学习笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/10/02/Zoopkeeper学习笔记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  1.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Zoopkeeper-工作机制"><a href="#Zoopkeeper-工作机制" class="headerlink" title="Zoopkeeper 工作机制"></a>Zoopkeeper 工作机制</h1><p>Zoopkeeper 是一个给予观察者模式设计的分布式服务管理框架，它负责存储和管理大家都关心的数据，接受观察者的注册，一旦数据状态发生了变化，Zoopkeeper 就负责通知已经在Zoopkeeper 上注册的那些观察者做出相应的反应。</p>
+<p>Zoopeeker = 文件系统 + 通知机制</p>
+<h1 id="Zoopkeeper-特点"><a href="#Zoopkeeper-特点" class="headerlink" title="Zoopkeeper 特点"></a>Zoopkeeper 特点</h1><ul>
+<li>Zoopkeeper集群，一个leader, 多个跟随着组成集群</li>
+<li>只要集群中半数以上节点存货，Zoopeekper 集群就能存活</li>
+<li>全局数据的一致性，集群中每一个节点的数据都是一致的</li>
+<li>集群对更新请求是顺序执行的，来自同一个client 的更新请求是按其发送顺序来顺序执行的</li>
+<li>数据更新的原子性：一次数据要么更新成功，要么更新失败</li>
+<li>实时性：在一定时间内，Client 总能读取到最新的数据</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/10/02/Zoopkeeper学习笔记/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/09/26/Spark学习笔记②/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1063,7 +1241,7 @@
                   <span class="post-meta-item-text">Words count in article</span>
                 
                 <span title="Words count in article">
-                  54
+                  85
                 </span>
               
 
@@ -1102,9 +1280,13 @@
       
         
           
-            <h1 id="调用"><a href="#调用" class="headerlink" title="调用"></a>调用</h1><h3 id="同步调用"><a href="#同步调用" class="headerlink" title="同步调用"></a>同步调用</h3><h3 id="异步调用"><a href="#异步调用" class="headerlink" title="异步调用"></a>异步调用</h3><h1 id="回调"><a href="#回调" class="headerlink" title="回调"></a>回调</h1><h3 id="同步回调"><a href="#同步回调" class="headerlink" title="同步回调"></a>同步回调</h3><h3 id="异步回调"><a href="#异步回调" class="headerlink" title="异步回调"></a>异步回调</h3><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+            <h1 id="I-O"><a href="#I-O" class="headerlink" title="I/O"></a>I/O</h1><p>同步和异步说的是消息的通知机制，阻塞非阻塞说的是线程的状态 </p>
+<p><img src="https://oscimg.oschina.net/oscnet/3a4947ebe4a45c2e5632f268ec76db14309.jpg" alt></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a href="https://blog.csdn.net/xiaanming/article/details/8703708#commentBox" target="_blank" rel="noopener">一个经典例子让你彻彻底底理解java回调机制</a></li>
 <li><a href="https://cloud.tencent.com/developer/article/1145116" target="_blank" rel="noopener">同步调用、回调和异步调用区别</a></li>
+<li><a href="https://www.cnblogs.com/crazymakercircle/p/10225159.html" target="_blank" rel="noopener">十分钟看懂Java NIO原理</a></li>
+<li><a href="https://juejin.im/post/5ba3845e6fb9a05cdd2d03c0" target="_blank" rel="noopener">Java NIO 系列文章之 浅析Reactor模式</a></li>
 </ul>
 
           
@@ -1860,175 +2042,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/07/13/hadoop学习笔记⑥/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Enda Lin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avator.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Enda Lin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/13/hadoop学习笔记⑥/" itemprop="url">hadoop学习笔记⑥</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-13T10:30:34+08:00">
-                2019-07-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/07/13/hadoop学习笔记⑥/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/07/13/hadoop学习笔记⑥/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article</span>
-                
-                <span title="Words count in article">
-                  2.5k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time</span>
-                
-                <span title="Reading time">
-                  9
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Shuffle-and-combiner"><a href="#Shuffle-and-combiner" class="headerlink" title="Shuffle and combiner"></a>Shuffle and combiner</h1><p><img src="https://upload-images.jianshu.io/upload_images/13918038-fa94a71367b9778c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/07/13/hadoop学习笔记⑥/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2077,7 +2090,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">78</span>
+                <span class="site-state-item-count">79</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

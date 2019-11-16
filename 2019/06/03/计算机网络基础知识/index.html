@@ -86,21 +86,23 @@
 
 
 
-<meta name="description" content="运输层基本术语 进程：指计算机正在运行的实体 应用进程的相互通信： 一台主机的进程和另一台主机的一个进程交换数据的过程 传输层的复用与分用：复用是指发送方不同的进程可以通过一个传输层协议传送数据， 分用指的是接收方的传输层在剥去报文的首部后能把这些数据正确地交到目的应用进程中。 TCP：传输控制协议 UDP：用户数据报协议 端口：为的是确认对方机器是哪一个进程在和自己交互 停止等待协议：指发送方每">
+<meta name="description" content="OSI 七层模型 TCP/IP 五层模型 应用层状态码 1XX Informational（信息性状态码） 接收的请求正在处理 2XX Success（成功状态码） 请求正常处理完毕 3XX Redirection（重定向状态码） 需要进行附加操作以完成请求 4XX Client Error（客户端错误状态码） 服务器无法处理请求 5XX Server Error（服务器错误状态码） 服务器处理请">
 <meta name="keywords" content="计算机网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机网络基础知识之运输层">
 <meta property="og:url" content="https://wt-git-repository.github.io/2019/06/03/计算机网络基础知识/index.html">
 <meta property="og:site_name" content="Enda Lin">
-<meta property="og:description" content="运输层基本术语 进程：指计算机正在运行的实体 应用进程的相互通信： 一台主机的进程和另一台主机的一个进程交换数据的过程 传输层的复用与分用：复用是指发送方不同的进程可以通过一个传输层协议传送数据， 分用指的是接收方的传输层在剥去报文的首部后能把这些数据正确地交到目的应用进程中。 TCP：传输控制协议 UDP：用户数据报协议 端口：为的是确认对方机器是哪一个进程在和自己交互 停止等待协议：指发送方每">
+<meta property="og:description" content="OSI 七层模型 TCP/IP 五层模型 应用层状态码 1XX Informational（信息性状态码） 接收的请求正在处理 2XX Success（成功状态码） 请求正常处理完毕 3XX Redirection（重定向状态码） 需要进行附加操作以完成请求 4XX Client Error（客户端错误状态码） 服务器无法处理请求 5XX Server Error（服务器错误状态码） 服务器处理请">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://uploadfiles.nowcoder.com/files/20190726/450315_1564129031397_EV4hp8.jpg">
+<meta property="og:image" content="https://uploadfiles.nowcoder.com/files/20190726/450315_1564129031529_EV4Wff.jpg">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-4f839deaa49aa6cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-981cca096c3c7dee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-07-08T01:15:52.734Z">
+<meta property="og:updated_time" content="2019-11-14T07:38:19.273Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机网络基础知识之运输层">
-<meta name="twitter:description" content="运输层基本术语 进程：指计算机正在运行的实体 应用进程的相互通信： 一台主机的进程和另一台主机的一个进程交换数据的过程 传输层的复用与分用：复用是指发送方不同的进程可以通过一个传输层协议传送数据， 分用指的是接收方的传输层在剥去报文的首部后能把这些数据正确地交到目的应用进程中。 TCP：传输控制协议 UDP：用户数据报协议 端口：为的是确认对方机器是哪一个进程在和自己交互 停止等待协议：指发送方每">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/13918038-4f839deaa49aa6cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:description" content="OSI 七层模型 TCP/IP 五层模型 应用层状态码 1XX Informational（信息性状态码） 接收的请求正在处理 2XX Success（成功状态码） 请求正常处理完毕 3XX Redirection（重定向状态码） 需要进行附加操作以完成请求 4XX Client Error（客户端错误状态码） 服务器无法处理请求 5XX Server Error（服务器错误状态码） 服务器处理请">
+<meta name="twitter:image" content="https://uploadfiles.nowcoder.com/files/20190726/450315_1564129031397_EV4hp8.jpg">
 
 
 
@@ -354,7 +356,7 @@
                   <span class="post-meta-item-text">Words count in article</span>
                 
                 <span title="Words count in article">
-                  1.7k
+                  2k
                 </span>
               
 
@@ -391,7 +393,16 @@
       
 
       
-        <h1 id="运输层"><a href="#运输层" class="headerlink" title="运输层"></a>运输层</h1><h4 id="基本术语"><a href="#基本术语" class="headerlink" title="基本术语"></a>基本术语</h4><ul>
+        <h1 id="OSI-七层模型"><a href="#OSI-七层模型" class="headerlink" title="OSI 七层模型"></a>OSI 七层模型</h1><p><img src="https://uploadfiles.nowcoder.com/files/20190726/450315_1564129031397_EV4hp8.jpg" alt></p>
+<h1 id="TCP-IP-五层模型"><a href="#TCP-IP-五层模型" class="headerlink" title="TCP/IP 五层模型"></a>TCP/IP 五层模型</h1><p><img src="https://uploadfiles.nowcoder.com/files/20190726/450315_1564129031529_EV4Wff.jpg" alt></p>
+<h1 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h1><h2 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h2><ul>
+<li>1XX Informational（信息性状态码） 接收的请求正在处理</li>
+<li>2XX Success（成功状态码） 请求正常处理完毕</li>
+<li>3XX Redirection（重定向状态码） 需要进行附加操作以完成请求</li>
+<li>4XX Client Error（客户端错误状态码） 服务器无法处理请求</li>
+<li>5XX Server Error（服务器错误状态码） 服务器处理请求出错</li>
+</ul>
+<h1 id="运输层"><a href="#运输层" class="headerlink" title="运输层"></a>运输层</h1><h4 id="基本术语"><a href="#基本术语" class="headerlink" title="基本术语"></a>基本术语</h4><ul>
 <li>进程：指计算机正在运行的实体</li>
 <li>应用进程的相互通信： 一台主机的进程和另一台主机的一个进程交换数据的过程</li>
 <li>传输层的复用与分用：复用是指发送方不同的进程可以通过一个传输层协议传送数据， 分用指的是接收方的传输层在剥去报文的首部后能把这些数据正确地交到目的应用进程中。</li>
@@ -438,6 +449,10 @@
 <li>客户端收到服务器段的连接释放报文后，必须要对服务器进行确认。<strong>ACK=1，ack=w+1,seq=u+1</strong>客户端进入<strong>TIME—WAIT（时间等待）</strong>状态，然后在进入<strong>CLOSE</strong>状态。</li>
 </ul>
 <p><img src="https://upload-images.jianshu.io/upload_images/13918038-981cca096c3c7dee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h5 id="Time-Wait-的作用"><a href="#Time-Wait-的作用" class="headerlink" title="Time-Wait 的作用"></a>Time-Wait 的作用</h5><ul>
+<li>确保最后一个确认报文能够到达。如果 B 没收到 A 发送来的确认报文，那么就会重新发送连接释放请求报文，A 等待一段时间就是为了处理这种情况的发生。</li>
+<li>等待一段时间是为了让本连接持续时间内所产生的所有报文都从网络中消失，使得下一个新的连接不会出现旧的连接请求报文。</li>
+</ul>
 <h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><ul>
 <li>端口和套接字的意义</li>
 <li>无连接UDP的特点</li>
@@ -465,7 +480,7 @@
   <p><span>本文标题:</span><a href="/2019/06/03/计算机网络基础知识/">计算机网络基础知识之运输层</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Enda Lin 的个人博客">Enda Lin</a></p>
   <p><span>发布时间:</span>2019年06月03日 - 18:39</p>
-  <p><span>最后更新:</span>2019年07月08日 - 09:15</p>
+  <p><span>最后更新:</span>2019年11月14日 - 15:38</p>
   <p><span>原始链接:</span><a href="/2019/06/03/计算机网络基础知识/" title="计算机网络基础知识之运输层">https://wt-git-repository.github.io/2019/06/03/计算机网络基础知识/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://wt-git-repository.github.io/2019/06/03/计算机网络基础知识/" aria-label="复制成功！"></i></span>
   </p>
@@ -603,7 +618,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">78</span>
+                <span class="site-state-item-count">79</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -675,7 +690,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#运输层"><span class="nav-number">1.</span> <span class="nav-text">运输层</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本术语"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">基本术语</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重要知识"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">重要知识</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP三次握手四次挥手"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">TCP三次握手四次挥手</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#问题"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OSI-七层模型"><span class="nav-number">1.</span> <span class="nav-text">OSI 七层模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP-IP-五层模型"><span class="nav-number">2.</span> <span class="nav-text">TCP/IP 五层模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应用层"><span class="nav-number">3.</span> <span class="nav-text">应用层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#状态码"><span class="nav-number">3.1.</span> <span class="nav-text">状态码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运输层"><span class="nav-number">4.</span> <span class="nav-text">运输层</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本术语"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">基本术语</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重要知识"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">重要知识</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP三次握手四次挥手"><span class="nav-number">4.0.0.3.</span> <span class="nav-text">TCP三次握手四次挥手</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Time-Wait-的作用"><span class="nav-number">4.0.0.3.1.</span> <span class="nav-text">Time-Wait 的作用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#问题"><span class="nav-number">4.0.0.4.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">4.0.0.5.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
             
 
           </div>

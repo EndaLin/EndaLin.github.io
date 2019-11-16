@@ -276,6 +276,201 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/01/《JAVA并发编程的艺术》读书笔记②/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/01/《JAVA并发编程的艺术》读书笔记②/" itemprop="url">《JAVA并发编程的艺术》读书笔记②</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-01T18:44:37+08:00">
+                2019-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/01/《JAVA并发编程的艺术》读书笔记②/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/01/《JAVA并发编程的艺术》读书笔记②/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  697
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>JAVA代码在编译之后会变成JAVA字节码，字节码被类加载器加载到JVM里面，JVM执行字节码，将字节码装换成汇编指令在CPU上执行。</p>
+<p>JAVA中所执行的并发机制依赖JVM的实现和CPU的指令。</p>
+<h1 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h1><p>在多线程并发编程中，volatile是轻量级的synchronized，它在多处理器开发中保证了共享变量的可见性，如果volatile变量修饰符使用恰当，它比synchronized的使用或执行成本更低，因为它不会引起线程上下文的切换和调度。</p>
+<h4 id="作用1（保证共享变量的可见性）"><a href="#作用1（保证共享变量的可见性）" class="headerlink" title="作用1（保证共享变量的可见性）"></a>作用1（保证共享变量的可见性）</h4><ul>
+<li>将当前处理器缓存行的数据写会到系统内存中。</li>
+<li>这个写会内存的操作会使其他CPU里缓存了该内存地址的数据无效。</li>
+</ul>
+<h4 id="对作用1的解释："><a href="#对作用1的解释：" class="headerlink" title="对作用1的解释："></a>对作用1的解释：</h4><p>为了提高处理速度，处理器不直接与内存进行通信，而是将内存中的数据读到内部的缓存里面再进行操作，而为了保持缓存的一致性，在多处理器模式下，就实现缓存一致性的协议，每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是否已经过期，当处理器发现自己缓存行对应的内存地址被修改，将会将当前处理器的缓存行设置为无效状态，当处理器对这个数据进行修改操作的时候，就会重新从系统内存中把数据督导处理器缓存中。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-0fc8744f2e22d249.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13918038-45e0d382f422f64e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="volatile实现原则"><a href="#volatile实现原则" class="headerlink" title="volatile实现原则"></a>volatile实现原则</h4><ul>
+<li>Lock前缀指令会引起处理器缓存写回到内存中。</li>
+<li>一个处理器的缓存回写到内存中会导致其他处理器的缓存无效。</li>
+</ul>
+<h4 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h4><ul>
+<li>可见性：对一个Volatile变量的读，总是能够看到任意线程对这个volatile的最后写入。</li>
+<li>原子性：对任意单个volatile的变量的读写具有原子性，但是类似于volatile++这种复合操作不具有原子性。</li>
+</ul>
+<h4 id="volatile写-读建立的happens-before关系"><a href="#volatile写-读建立的happens-before关系" class="headerlink" title="volatile写-读建立的happens-before关系"></a>volatile写-读建立的happens-before关系</h4><ul>
+<li>从内存语义的角度来说，volatile的写-读与锁的释放-获取有相同的内存效果。</li>
+</ul>
+<h1 id="synchronized"><a href="#synchronized" class="headerlink" title="synchronized"></a>synchronized</h1><ul>
+<li>对于普通同步方法，锁是当前实例对象。</li>
+<li>对于静态同步方法，锁是当前类的Class对象。</li>
+<li>对于同步方法块，锁是synchronized括号里配置的对象。</li>
+</ul>
+<h1 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h1><p>原子操作意思就是不可被中断的一个或一系列的操作。</p>
+<h4 id="处理器保证原子操作的措施"><a href="#处理器保证原子操作的措施" class="headerlink" title="处理器保证原子操作的措施"></a>处理器保证原子操作的措施</h4><ul>
+<li>总线锁：举个例子，当CPU获取到共享变量时，会发出LOCK#信号去组织其它处理器对这个变量的请求</li>
+<li>缓存锁：</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/06/01/《JAVA并发编程的艺术》读书笔记①/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1835,181 +2030,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/05/29/ArrayList源码学习/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Enda Lin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avator.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Enda Lin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/29/ArrayList源码学习/" itemprop="url">ArrayList源码学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-29T09:40:06+08:00">
-                2019-05-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/05/29/ArrayList源码学习/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/29/ArrayList源码学习/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article</span>
-                
-                <span title="Words count in article">
-                  4.7k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time</span>
-                
-                <span title="Reading time">
-                  26
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="ArrayList简介"><a href="#ArrayList简介" class="headerlink" title="ArrayList简介"></a>ArrayList简介</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">RandomAccess</span>, <span class="title">Cloneable</span>, <span class="title">Serializable</span></span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>ArrayList 底层是数组队列， 属于动态数组， 可以根据实际的需要去动态地调整数组的大小</li>
-<li>ArrayList 继承了AbstractList类，说明它提供了增删改查等功能</li>
-<li>ArrayList 实现了RandomAccess接口， 说明实现这个接口的List集合是支持随机访问的</li>
-<li>ArrayList 实现了Cloneable接口， 说明它是可克隆的</li>
-<li>ArrayList 实现了Serialiable接口， 说明它是可以被序列化的
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/05/29/ArrayList源码学习/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </li></ul></div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2058,7 +2078,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">78</span>
+                <span class="site-state-item-count">79</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

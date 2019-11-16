@@ -101,7 +101,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-18c66469c9bb361b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-a152d87e8c8c479f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/13918038-c6741da1dc1982ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-11-06T09:31:56.042Z">
+<meta property="og:updated_time" content="2019-11-13T07:53:49.608Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="操作系统面试题之存储器相关">
 <meta name="twitter:description" content="存储器的层次结构寄存器、高速缓存、主存储器、磁盘缓存、固定磁盘、可移动的存储介质 逻辑地址和物理地址用户能看到的程序代码、变量、堆找的地址称之为逻辑地址，它们所在的实际内存区域实际地址是物理地址 将逻辑地址和物理地址分开的好处 实现内存隔离 实现进程和内核保护  内核空间与用户空间内核空间： 程序地址空间中安排给操作系统使用的部分，又称之为虚拟存储器 用户空间： 程序地址空间中安排给用户程序使用的">
@@ -409,6 +409,7 @@
 <li>也把系统物理内存划分为一系列等长的片段，每个片段称为一个物理块（或一个页帧），物理块长度与页面长度相同,块号为0、1、2、…</li>
 <li>用户程序运行时，操作系统将其各个页面装载到一系列任意的物理块（地址可能不连续）</li>
 </ul>
+<a id="more"></a>
 <h2 id="进程页号与物理页号的管理"><a href="#进程页号与物理页号的管理" class="headerlink" title="进程页号与物理页号的管理"></a>进程页号与物理页号的管理</h2><p>页表：通常使用数组来组织页表，页表并不保存页号，只保存物理块号。</p>
 <h2 id="在分页系统中，地址转换的流程"><a href="#在分页系统中，地址转换的流程" class="headerlink" title="在分页系统中，地址转换的流程"></a>在分页系统中，地址转换的流程</h2><ul>
 <li>从逻辑地址中提取页号</li>
@@ -481,7 +482,7 @@
   <p><span>本文标题:</span><a href="/2019/11/06/操作系统面试题之存储器相关/">操作系统面试题之存储器相关</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Enda Lin 的个人博客">Enda Lin</a></p>
   <p><span>发布时间:</span>2019年11月06日 - 14:39</p>
-  <p><span>最后更新:</span>2019年11月06日 - 17:31</p>
+  <p><span>最后更新:</span>2019年11月13日 - 15:53</p>
   <p><span>原始链接:</span><a href="/2019/11/06/操作系统面试题之存储器相关/" title="操作系统面试题之存储器相关">https://wt-git-repository.github.io/2019/11/06/操作系统面试题之存储器相关/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://wt-git-repository.github.io/2019/11/06/操作系统面试题之存储器相关/" aria-label="复制成功！"></i></span>
   </p>
@@ -537,6 +538,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/14/操作系统面试题之进程与线程相关/" rel="prev" title="操作系统面试题之进程与线程相关">
+                操作系统面试题之进程与线程相关 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -615,7 +620,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">78</span>
+                <span class="site-state-item-count">79</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>

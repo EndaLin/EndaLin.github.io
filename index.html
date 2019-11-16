@@ -276,6 +276,200 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/11/14/操作系统面试题之进程与线程相关/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Enda Lin">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Enda Lin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/11/14/操作系统面试题之进程与线程相关/" itemprop="url">操作系统面试题之进程与线程相关</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-14T14:53:35+08:00">
+                2019-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/11/14/操作系统面试题之进程与线程相关/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/11/14/操作系统面试题之进程与线程相关/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article</span>
+                
+                <span title="Words count in article">
+                  472
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time</span>
+                
+                <span title="Reading time">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="进程（线程-内存-文件-网络句柄）"><a href="#进程（线程-内存-文件-网络句柄）" class="headerlink" title="进程（线程 + 内存 + 文件/网络句柄）"></a>进程（线程 + 内存 + 文件/网络句柄）</h1><ul>
+<li>内存：逻辑内存</li>
+<li>文件/网络句柄：为所有线程所共有</li>
+<li>线程：进程所创建的，进程是线程的容器</li>
+</ul>
+<p><img src="https://user-gold-cdn.xitu.io/2019/3/21/1699ecde3bb5683b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt></p>
+<h2 id="孤儿进程"><a href="#孤儿进程" class="headerlink" title="孤儿进程"></a>孤儿进程</h2><p>指的是父进程死掉的子进程，这些孤儿进程会被init进程（进程号为1）所收养，由init 进程对它们完成状态收集工作</p>
+<h2 id="僵尸进程"><a href="#僵尸进程" class="headerlink" title="僵尸进程"></a>僵尸进程</h2><p>一个子进程的进程描述符在子进程退出时不会释放，只有当父进程通过 wait() 或 waitpid() 获取了子进程信息后才会释放。如果子进程退出，而父进程并没有调用 wait() 或 waitpid()，那么子进程的进程描述符仍然保存在系统中，这种进程称之为僵尸进程。</p>
+<h1 id="线程（栈-PC-TLS）"><a href="#线程（栈-PC-TLS）" class="headerlink" title="线程（栈 + PC + TLS）"></a>线程（栈 + PC + TLS）</h1><ul>
+<li>栈</li>
+<li>PC（程序计数器）：PC就是指向当前的指令，而这个指令是放在内存中。 每个线程都有一串自己的指针，去指向自己当前所在内存的指针</li>
+<li>TLS（Thead Local Storage）: 存储线程所独有的数据</li>
+</ul>
+<p><img src="https://user-gold-cdn.xitu.io/2019/3/21/1699ecde3ba97f25?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt></p>
+<h1 id="进程与线程的区别"><a href="#进程与线程的区别" class="headerlink" title="进程与线程的区别"></a>进程与线程的区别</h1><ul>
+<li>进程是资源调度的最小单位，线程是系统调用的最小单位</li>
+<li>进程有自己独立的内存空间，线程可以共享进程的内存空间</li>
+</ul>
+<h1 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h1><h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><ul>
+<li>系统资源不足</li>
+<li>进程推进的顺序不合适</li>
+<li>资源分配不当</li>
+</ul>
+<h2 id="导致死锁的四个必要条件"><a href="#导致死锁的四个必要条件" class="headerlink" title="导致死锁的四个必要条件"></a>导致死锁的四个必要条件</h2><ul>
+<li>一个进程一次只能访问一个资源，其它进程不能访问已经分配的资源</li>
+<li>一个进程在等待其它资源的时候，继续占有已经抢占到的资源</li>
+<li>一个进程不能强行抢占另一个进程的资源</li>
+<li>存在一个封闭的进程链，导致每一个进程都在等待下一个进程的资源</li>
+</ul>
+<h2 id="银行家算法"><a href="#银行家算法" class="headerlink" title="银行家算法"></a>银行家算法</h2><p><img src="https://uploadfiles.nowcoder.com/files/20190726/450315_1564129031585_EV40SO.png" alt></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/11/06/操作系统面试题之存储器相关/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -387,8 +581,7 @@
 
       
         
-          
-            <h1 id="存储器的层次结构"><a href="#存储器的层次结构" class="headerlink" title="存储器的层次结构"></a>存储器的层次结构</h1><p>寄存器、高速缓存、主存储器、磁盘缓存、固定磁盘、可移动的存储介质</p>
+          <h1 id="存储器的层次结构"><a href="#存储器的层次结构" class="headerlink" title="存储器的层次结构"></a>存储器的层次结构</h1><p>寄存器、高速缓存、主存储器、磁盘缓存、固定磁盘、可移动的存储介质</p>
 <h1 id="逻辑地址和物理地址"><a href="#逻辑地址和物理地址" class="headerlink" title="逻辑地址和物理地址"></a>逻辑地址和物理地址</h1><p>用户能看到的程序代码、变量、堆找的地址称之为<strong>逻辑地址</strong>，它们所在的实际内存区域实际地址是<strong>物理地址</strong></p>
 <h2 id="将逻辑地址和物理地址分开的好处"><a href="#将逻辑地址和物理地址分开的好处" class="headerlink" title="将逻辑地址和物理地址分开的好处"></a>将逻辑地址和物理地址分开的好处</h2><ul>
 <li>实现内存隔离</li>
@@ -401,61 +594,13 @@
 <li>也把系统物理内存划分为一系列等长的片段，每个片段称为一个物理块（或一个页帧），物理块长度与页面长度相同,块号为0、1、2、…</li>
 <li>用户程序运行时，操作系统将其各个页面装载到一系列任意的物理块（地址可能不连续）</li>
 </ul>
-<h2 id="进程页号与物理页号的管理"><a href="#进程页号与物理页号的管理" class="headerlink" title="进程页号与物理页号的管理"></a>进程页号与物理页号的管理</h2><p>页表：通常使用数组来组织页表，页表并不保存页号，只保存物理块号。</p>
-<h2 id="在分页系统中，地址转换的流程"><a href="#在分页系统中，地址转换的流程" class="headerlink" title="在分页系统中，地址转换的流程"></a>在分页系统中，地址转换的流程</h2><ul>
-<li>从逻辑地址中提取页号</li>
-<li>根据页号，查询页表，找到对应的物理块号</li>
-<li>用物理块号和块内的地址定位到对应的数据</li>
-</ul>
-<p><img src="https://upload-images.jianshu.io/upload_images/13918038-a92e7c381e3e68f9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h2 id="提高地址转换效率"><a href="#提高地址转换效率" class="headerlink" title="提高地址转换效率"></a>提高地址转换效率</h2><p>由于页表保存在内存中，所以1 次内存存取的操作需要两次访存开销（一次查页表，一次读取内存本身）， 会降低系统效率</p>
-<p><strong>解决方案：</strong></p>
-<ul>
-<li>将经常使用的页表项放到<strong>快表</strong> 中，快表比内存快5 倍以上</li>
-<li>MMU 执行地址转换时，在快表和页表中查找物理块号，若快表命中，则立即获取物理块号，若快表不命中，再到主存页表中查找</li>
-<li>由于程序具有局部性特征，设置少量快表项，即可大幅提高地址转换速度</li>
-</ul>
-<h2 id="空闲页表管理"><a href="#空闲页表管理" class="headerlink" title="空闲页表管理"></a>空闲页表管理</h2><ul>
-<li>位示图法</li>
-<li>链表法</li>
-<li>多级页表法</li>
-</ul>
-<h1 id="分段存储管理"><a href="#分段存储管理" class="headerlink" title="分段存储管理"></a>分段存储管理</h1><h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><ul>
-<li>把程序按照内容或者函数分成段，每段有自己的名字，每段各有一个连续的地址空间</li>
-<li>段式管理可以将那些经常访问的段驻留在内存，将那些不常访问到的放到外存中</li>
-</ul>
-<h2 id="段管理"><a href="#段管理" class="headerlink" title="段管理"></a>段管理</h2><p>为了能找到每个逻辑段对应的物理内存的中分区的位置，系统为每个进程建立了一个段映射表，简称“段表”</p>
-<p>每个段在段表中均有一项，段表项中包括如下内容：段号、段的长度、段在内存中的起始地址</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13918038-a8e62726d76d69b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h1 id="段页式存储管理方式"><a href="#段页式存储管理方式" class="headerlink" title="段页式存储管理方式"></a>段页式存储管理方式</h1><p>地址空间划分：作业的地址空间仍按其逻辑结构分段。每个段又被进一步分成若干大小相同的页面。内存空间则分成与页面大小相等的物理块</p>
-<h1 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h1><h2 id="程序运行特性分析"><a href="#程序运行特性分析" class="headerlink" title="程序运行特性分析"></a>程序运行特性分析</h2><p>大型复杂程序通常由很多模块构成，其运行过程有一些特性：有时一次执行过程仅少量模块被调用执行(如powerpoint、matlab、QQ)，或某段时间内仅少量模块被调用执行(如ppt文字录入时)，把大量没有用到的程序代码载入主存，是一种浪费。</p>
-<p>某段时间内仅将部分部分代码、数据模块载入内存，可提高内存利用率，缓解内存不足的问题，传统方法有：</p>
-<ul>
-<li>覆盖(重叠，overlay)：将不会同时执行的模块装载到同一个内存块，但需预先给出模块间调用关系，增加程序员负担。</li>
-<li>动态加载(dynamic loading)：不常用的程序模块以动态链接库(.DLL，.so)方式保存在外存，在需要调用它们的地方用动态装载函数(LoadLibrary, dlopen)加载，虽然可以实现模块共享，但大量的使用这些函数也给程序员带来负担。</li>
-</ul>
-<p>最好是把这些模块选择与加载工作全部交给操作系统：由OS根据系统空闲内存状况，灵活决定将哪些模块加载到内存，哪些模块留在外存，并自动完成模块加载工作。</p>
-<h2 id="虚拟存储器的基本思想"><a href="#虚拟存储器的基本思想" class="headerlink" title="虚拟存储器的基本思想"></a>虚拟存储器的基本思想</h2><ul>
-<li>把辅存的一部分拿来虚拟成实体存储器</li>
-<li>部分加载方法：最近需要访问的代码、需要访问的数据加载到物理内存中，其余数据保存在虚拟存储器中（外存）</li>
-<li>虚拟存储器技术通常与分页式存储管理（paging)或分段式存储管理联合使用</li>
-</ul>
-<h1 id="请求分页系统存储管理"><a href="#请求分页系统存储管理" class="headerlink" title="请求分页系统存储管理"></a>请求分页系统存储管理</h1><ul>
-<li>应用程序在运行之前，仅须将那些当前要运行的少数页面或段，先装入内存便可运行，其余部分暂留在外存（虚拟存储器）上。</li>
-<li>程序在运行时，如果它所要访问的页已调入内存，便可继续执行；但如果程序所要访问的页尚未调入内存（称为缺页），便发出缺页中断请求，由OS利用指定页面调入内存。</li>
-<li>若此时内存已满，无法再装入新页，OS应将内存中暂时不用的页调至外存（虚拟存储器）上，腾出页帧后，再所需页面调入内存（页面置换），使程序得以继续执行</li>
-</ul>
-<h2 id="页表修改"><a href="#页表修改" class="headerlink" title="页表修改"></a>页表修改</h2><p>状态为P:判断页表是在内存中还是在外存中<br><img src="https://upload-images.jianshu.io/upload_images/13918038-e14f6af645c23cd2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h2 id="缺页中断处理过程"><a href="#缺页中断处理过程" class="headerlink" title="缺页中断处理过程"></a>缺页中断处理过程</h2><p><img src="https://upload-images.jianshu.io/upload_images/13918038-3d48f04d30362c70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h2 id="页面置换算法"><a href="#页面置换算法" class="headerlink" title="页面置换算法"></a>页面置换算法</h2><p>请求分页存储系统可用内存不足时，若调入新的页面，就需选择一个内存中被替换页面，将新页面的内容写入该页面所在物理块。</p>
-<h3 id="最佳置换算法OPT：-总是选择以后永不使用的，或许是在最长-未来-时间内不再被访问的页面，进行替换"><a href="#最佳置换算法OPT：-总是选择以后永不使用的，或许是在最长-未来-时间内不再被访问的页面，进行替换" class="headerlink" title="最佳置换算法OPT： 总是选择以后永不使用的，或许是在最长(未来)时间内不再被访问的页面，进行替换"></a>最佳置换算法OPT： 总是选择以后永不使用的，或许是在最长(未来)时间内不再被访问的页面，进行替换</h3><p><img src="https://upload-images.jianshu.io/upload_images/13918038-18c66469c9bb361b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h3 id="先进先出页面置换算法（FIFO）：当需要调入新的页面，但无可用空闲物理块时，总是选择在内存中驻留时间最长的页并予以淘汰，用腾出的物理块来载入新的页面"><a href="#先进先出页面置换算法（FIFO）：当需要调入新的页面，但无可用空闲物理块时，总是选择在内存中驻留时间最长的页并予以淘汰，用腾出的物理块来载入新的页面" class="headerlink" title="先进先出页面置换算法（FIFO）：当需要调入新的页面，但无可用空闲物理块时，总是选择在内存中驻留时间最长的页并予以淘汰，用腾出的物理块来载入新的页面"></a>先进先出页面置换算法（FIFO）：当需要调入新的页面，但无可用空闲物理块时，总是选择在内存中驻留时间最长的页并予以淘汰，用腾出的物理块来载入新的页面</h3><p>先进先出算法没有考虑程序执行的<strong>局部性特征</strong><br><strong>时间局部性</strong>：如果程序中的某条指令一旦执行，则不久以后该指令可能再次执行；如果某数据被访问过，则不久以后该数据可能再次被访问，像循环结构<br><strong>空间局部性</strong>：一旦程序访问了某个存储单元，在不久之后，其附近的存储单元也将被访问，象数组结构</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13918038-a152d87e8c8c479f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h3 id="LRU-置换算法（淘汰最久未使用的页面）"><a href="#LRU-置换算法（淘汰最久未使用的页面）" class="headerlink" title="LRU 置换算法（淘汰最久未使用的页面）"></a>LRU 置换算法（淘汰最久未使用的页面）</h3><p>据程序局部性原理，认为程序最近一段时间内经常访问的地址，也会是不久将来经常访问的地址，认为最后一次访问时间距离当前时间最久的页面，是不久将来访问可能性比较小的页面。<br>硬件对该算法的支持：移位寄存器、堆栈法、计数器法</p>
-<p>虽然LRU算法较好，但要求较多的硬件支持，实现代价（页表存储开销、地址转换过程开销）高，阻碍其应用推广。实际应用中大多采用性能下降不大但实现代价小的LRU近似算法，Clock置换算法是典型代表</p>
-<h3 id="Clock-置换算法"><a href="#Clock-置换算法" class="headerlink" title="Clock 置换算法"></a>Clock 置换算法</h3><p><img src="https://upload-images.jianshu.io/upload_images/13918038-c6741da1dc1982ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/11/06/操作系统面试题之存储器相关/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2060,184 +2205,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wt-git-repository.github.io/2019/10/02/Zoopkeeper学习笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Enda Lin">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avator.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Enda Lin">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/02/Zoopkeeper学习笔记/" itemprop="url">Zoopkeeper学习笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-02T20:31:28+08:00">
-                2019-10-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/10/02/Zoopkeeper学习笔记/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/10/02/Zoopkeeper学习笔记/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article</span>
-                
-                <span title="Words count in article">
-                  1.3k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time</span>
-                
-                <span title="Reading time">
-                  5
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Zoopkeeper-工作机制"><a href="#Zoopkeeper-工作机制" class="headerlink" title="Zoopkeeper 工作机制"></a>Zoopkeeper 工作机制</h1><p>Zoopkeeper 是一个给予观察者模式设计的分布式服务管理框架，它负责存储和管理大家都关心的数据，接受观察者的注册，一旦数据状态发生了变化，Zoopkeeper 就负责通知已经在Zoopkeeper 上注册的那些观察者做出相应的反应。</p>
-<p>Zoopeeker = 文件系统 + 通知机制</p>
-<h1 id="Zoopkeeper-特点"><a href="#Zoopkeeper-特点" class="headerlink" title="Zoopkeeper 特点"></a>Zoopkeeper 特点</h1><ul>
-<li>Zoopkeeper集群，一个leader, 多个跟随着组成集群</li>
-<li>只要集群中半数以上节点存货，Zoopeekper 集群就能存活</li>
-<li>全局数据的一致性，集群中每一个节点的数据都是一致的</li>
-<li>集群对更新请求是顺序执行的，来自同一个client 的更新请求是按其发送顺序来顺序执行的</li>
-<li>数据更新的原子性：一次数据要么更新成功，要么更新失败</li>
-<li>实时性：在一定时间内，Client 总能读取到最新的数据</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/10/02/Zoopkeeper学习笔记/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2286,7 +2253,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">78</span>
+                <span class="site-state-item-count">79</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
