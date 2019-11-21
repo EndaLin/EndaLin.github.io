@@ -9,7 +9,7 @@ tags: JVM
 
 在Java 中，堆被划分为两个不同的区域：**新生代和老年代**
 
-**新时代**：被划分为三个区域：Eden、From survivor 和 To survivor
+**新生代**：被划分为三个区域：Eden、From survivor 和 To survivor
 
 划分的目的是为了使JVM 更好地管理JVM 内存对象，包括内存的分配以及内存的回收
 
